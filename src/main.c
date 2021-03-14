@@ -1,12 +1,16 @@
 #include <stdio.h>
+#include <string.h>
+
 #include "tableOperation.h"
+#include "solver.h"
+#include "fileOperation.h"
 
 
 int main(int argc, char ** argv)
 {
 	int i;
-	table* Table;
-	FILE * infile;
+	table* gameTable;
+	FILE * inFile;
 	
 	//Walidacja danych i obslsuga flag wywolania
 	
