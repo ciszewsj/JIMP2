@@ -54,7 +54,10 @@ int Neumann(table* gameTable, int x, int y, int typeOfArea)
 	}
 	else
 	{
-		
+		neighbour = neighbour + isFlatAlive(gameTable, x-1, y);
+		neighbour = neighbour + isFlatAlive(gameTable, x, y-1);
+		neighbour = neighbour + isFlatAlive(gameTable, x+1, y);
+		neighbour = neighbour + isFlatAlive(gameTable, x, y+1);
 	}
 	return neighbour;
 }
@@ -72,7 +75,10 @@ int Moore(table* gameTable, int x, int y, int typeOfArea)
 	}
 	else
 	{
-		
+		neighbour = neighbour + isFlatAlive(gameTable, x-1, y);
+		neighbour = neighbour + isFlatAlive(gameTable, x, y-1);
+		neighbour = neighbour + isFlatAlive(gameTable, x+1, y);
+		neighbour = neighbour + isFlatAlive(gameTable, x, y+1);
 	}
 	return neighbour;
 }
