@@ -13,6 +13,14 @@ int main(int argc, char ** argv)
 	int typeOfProximity = 0;
 	int typeOfArea = 0;
 	int compareValue = 1;
+	int isHelp = 0;
+	int ifPrintOnScreen = 1;
+	int ifSaveEveryIteration = 0;
+	int ifSaveAsPicture = 0;
+	int ifSaveAsTxT = 0;
+	int ifSbS = 0;
+	
+	char * outFileName = NULL;
 	
 	FILE * inFile = NULL;
 	
@@ -28,9 +36,17 @@ int main(int argc, char ** argv)
 		printTable(gameTable);
 		printf("\n\n");
 		compareValue = solveIteration(&gameTable, typeOfProximity, typeOfArea);
+		
+		if (compareValue == 0)
+		{
+			break;
+		}
 	}
-	printf("Iteracja %d gry:\n", i);
-	printTable(gameTable);
-	
+	if (compareValue == 1)
+	{
+		printf("Iteracja %d gry:\n", i);
+		printTable(gameTable);
+	}
+		
 	return 0;
 }
