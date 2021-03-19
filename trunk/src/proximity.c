@@ -32,7 +32,9 @@ int isRoundAlive(table* gameTable, int x, int y)
 }
 int isFlatAlive(table* gameTable, int x, int y)
 {
-	if (x >= gameTable->columns)
+	if (x < 0 || y < 0)
+		return 0;
+	else if (x >= gameTable->columns)
 		return 0;
 	else if (y >= gameTable->rows)
 		return 0;
@@ -75,21 +77,21 @@ int Moore(table* gameTable, int x, int y, int typeOfArea)
 	}
 	else
 	{
-		neighbour = neighbour + isFlatAlive(gameTable, x-1, y);
-		neighbour = neighbour + isFlatAlive(gameTable, x, y-1);
-		neighbour = neighbour + isFlatAlive(gameTable, x+1, y);
-		neighbour = neighbour + isFlatAlive(gameTable, x, y+1);
+		neighbour = neighbour + isFlatAlive(gameTable, x-1, y-1);
+		neighbour = neighbour + isFlatAlive(gameTable, x+1, y-1);
+		neighbour = neighbour + isFlatAlive(gameTable, x-1, y+1);
+		neighbour = neighbour + isFlatAlive(gameTable, x+1, y+1);
 	}
 	return neighbour;
 }
 
-int numberOfNeighbours(table* gameTable, int x, int y, int TypeOfProximity, int typeOfArea)
+int numberOfNeighbours(table* gameTable, int x, int y, int typeOfProximity, int typeOfArea)
 {
-	if (TypeOfProximity == 0)
+	if (typeOfProximity == 0)
 	{
 		return Moore(gameTable, x ,y, typeOfArea);
 	}
-	else if(TypeOfProximity == 1)
+	else if(typeOfProximity == 1)
 	{
 		return Neumann(gameTable, x, y, typeOfArea);
 	}
