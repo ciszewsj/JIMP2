@@ -113,12 +113,12 @@ int main(int argc, char ** argv)
 		else if (strcmp(argv[i], "-proximity") == 0)
 		{
 			i++;
-			if (strcmp(argv[i], "moore"))
+			if (strcmp(argv[i], "moore") == 0)
 			{
 				typeOfProximity = 0;
 				i++;
 			}
-			else if (strcmp(argv[i], "neumann"))
+			else if (strcmp(argv[i], "neumann") == 0)
 			{
 				typeOfProximity = 1;
 				i++;
