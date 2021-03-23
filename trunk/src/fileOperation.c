@@ -2,24 +2,33 @@
 #include "tableOperation.h"
 
 table* readFromFile(FILE* file)
+
 {
-	table* gameTable;
-	int i,j;
-	char c;
-	if (file == NULL)
+	int size[2];
+	table *gameTable;
+	char buf;
+
+	for (int i = 0; i < 2; i++) {
+		fscanf(file, "%d", &size[i]);
+	}
+
+	gameTable = initTable(size[0],size[1]);
+	if(gameTable == NULL)
+		return NULL;
+
+	for (int i = 0; i < size[0]; i++) 
 	{
-		gameTable = initTable(3,3);
-		for (i=0; i<3; i++)
-		{
-			if (i%2 == 0)
-				c='0';
-			else
-				c='1';
-			for (j=0; j<3; j++)
-			{
-				gameTable->board[i][j] = c;
-			}
+		for (int j = 0; j < size[1]; j++){
+			if(fscanf(file, "%c",&buf) == 0)
+				return NULL;
+			if (buf != '0' && buf != '1')
+				return NULL;
+			gameTable->board[i][j] = buf;
 		}
 	}
+	
+	if(fscanf(file, "%c",&buf) != 0)
+		return NULL;
+	
 	return gameTable;
 }
