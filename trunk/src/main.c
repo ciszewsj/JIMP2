@@ -18,7 +18,7 @@ void printWrongArgumentName(char* argumentName)
 int isNumber(char* str)
 {
 	int i;
-	for (i=0; i<strlen(str); i++)
+	for (i = 0; i < strlen(str); i++)
 	{
 		if (isdigit(str[i]) == 0)
 			return 0;
@@ -41,10 +41,11 @@ int main(int argc, char ** argv)
 	int ifSbS = 0;
 	
 	char * outFileName = NULL;
+	char * inFileName = NULL;
 	
 	FILE * inFile = NULL;
 	
-	table* gameTable;
+	table* gameTable = NULL;
 	
 	i = 1;
 	while (i < argc)
@@ -53,7 +54,13 @@ int main(int argc, char ** argv)
 		if (strcmp(argv[i], "-dataFile") == 0)
 		{
 			i++;
-			printf ("Dane wejściowe zawarte w podanym pliku mają nieprawidłowy format. Zalecamy poprawienie danych wejściowych, lub podanie innego pliku.\n");
+			inFileName = argv[i];
+			inFile = fopen(inFileName, "r");
+			if (inFile == NULL)
+			{
+				printf("Plik o podanej nazwie nie istnieje. Należy podać nazwę istniejącego pliku wejściowego.\n");
+			}
+			i++;
 		}
 		else if (strcmp(argv[i], "-flatArea") == 0)
 		{
@@ -149,10 +156,23 @@ int main(int argc, char ** argv)
 	}
 	
 	
+	if (inFile != NULL)
+	{
+		gameTable = readFromFile(inFile);
+		
+	}
+	else
+	{
+		gameTable = initDefaultTable();
+	}
 	
-	gameTable = readFromFile(inFile);
+	if (gameTable == NULL)
+	{
+		printf ("Dane wejściowe zawarte w podanym pliku mają nieprawidłowy format. Zalecamy poprawienie danych wejściowych, lub podanie innego pliku.\n");
+		return 1;
+	}
 	
-	for (i=0; i<numberOfIteration; i++)
+	for (i = 0; i < numberOfIteration; i++)
 	{
 		printf("Iteracja %d gry:\n", i);
 		printTable(gameTable);

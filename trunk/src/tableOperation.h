@@ -9,6 +9,8 @@ struct table_struct{
 
 table* initTable(int columns, int rows); 
 
+table* initDefaultTable();
+
 void destroyTable(table* Table);
 
 int compareTable(table* gameTable1, table* gameTable2);

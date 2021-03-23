@@ -3,13 +3,14 @@
 
 
 table* readFromFile(FILE* file)
-
 {
 	int size[2];
+	int i, j;
 	table *gameTable;
 	char buf;
 
-	for (int i = 0; i < 2; i++) {
+	for (i = 0; i < 2; i++)
+	{
 		fscanf(file, "%d", &size[i]);
 	}
 
@@ -17,9 +18,9 @@ table* readFromFile(FILE* file)
 	if(gameTable == NULL)
 		return NULL;
 
-	for (int i = 0; i < size[0]; i++) 
+	for (i = 0; i < size[0]; i++) 
 	{
-		for (int j = 0; j < size[1]; j++){
+		for (j = 0; j < size[1]; j++){
 			if(fscanf(file, "%c",&buf) == 0)
 				return NULL;
 			if (buf != '0' && buf != '1')

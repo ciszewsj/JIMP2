@@ -27,9 +27,9 @@ int solveIteration(table** gameTable, int typeOfProximity, int typeOfArea)
 	int diffrence = 0;
 	int i, j;
 	table* newGameTable = initTable(gameTable[0]->columns, gameTable[0]->rows);
-	for (i=0; i<gameTable[0]->columns; i++)
+	for (i = 0; i < gameTable[0]->columns; i++)
 	{
-		for (j=0; j<gameTable[0]->rows; j++)
+		for (j = 0; j < gameTable[0]->rows; j++)
 		{
 			newGameTable->board[i][j] = conditionType(gameTable[0], i, j, typeOfProximity, typeOfArea);
 		}

@@ -17,10 +17,31 @@ table* initTable(int columns, int rows)
 	return newTable;
 }
 
+table* initDefaultTable()
+{
+	int i,j;
+	table* newTable = initTable(3, 3);
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			if (j == 1)
+			{	
+				newTable->board[i][j] = '1';
+			}
+			else
+			{
+				newTable->board[i][j] = '0';
+			}
+		}
+	}
+	return newTable;
+}
+
 void destroyTable(table* Table)
 {
 	int i;
-	for (i=0; i<Table->columns; i++)
+	for (i = 0; i < Table->columns; i++)
 	{
 		free(Table->board[i]);
 	}
@@ -31,9 +52,9 @@ void destroyTable(table* Table)
 int compareTable(table* gameTable1, table* gameTable2)
 {
 	int i, j;
-	for (i=0; i<gameTable1->columns; i++)
+	for (i = 0; i < gameTable1->columns; i++)
 	{
-		for (j=0; j<gameTable1->rows; j++)
+		for (j = 0; j < gameTable1->rows; j++)
 		{
 			if (gameTable1->board[i][j] != gameTable2->board[i][j])
 				return 1;
@@ -45,7 +66,7 @@ int compareTable(table* gameTable1, table* gameTable2)
 void printTable(table* gameTable)
 {
 	int i,j;
-	for (i=0; i<gameTable->columns; i++)
+	for (i = 0; i<gameTable->columns; i++)
 	{
 		for (j=0; j<gameTable->rows; j++)
 		{
