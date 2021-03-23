@@ -5,32 +5,57 @@
 table* readFromFile(FILE* file)
 {
 	int size[2];
-	int i, j;
+	int numberOfChar;
+	int i;
 	table *gameTable;
 	char buf;
 
 	for (i = 0; i < 2; i++)
 	{
-		fscanf(file, "%d", &size[i]);
+		if (fscanf(file, "%d", &size[i]) == EOF)
+		{
+			return NULL;
+		}
+		if (size[i] < 3)
+		{
+			printf ("t%d\n", 2);
+			return NULL;
+		}
 	}
 
 	gameTable = initTable(size[0],size[1]);
 	if(gameTable == NULL)
-		return NULL;
-
-	for (i = 0; i < size[0]; i++) 
 	{
-		for (j = 0; j < size[1]; j++){
-			if(fscanf(file, "%c",&buf) == 0)
-				return NULL;
-			if (buf != '0' && buf != '1')
-				return NULL;
-			gameTable->board[i][j] = buf;
-		}
+		return NULL;
 	}
 	
-	if(fscanf(file, "%c",&buf) != 0)
-		return NULL;
+	i=0;
+	numberOfChar = size[0] * size[1];
+	while(i < numberOfChar)
+	{
+		if(fscanf(file, "%c",&buf) == EOF)
+		{
+			return NULL;
+		}
+		if (buf == '0' || buf == '1')
+		{
+			gameTable->board[i / gameTable->columns][i % gameTable->columns] = buf;
+			i++;
+		}
+		else if (buf == '\n' || buf == ' ' || buf == 18)
+		{
+			
+		}
+		/*else
+		{
+			return NULL;
+		}*/
+		
+	}
 	
+	if(fscanf(file, "%c",&buf) != EOF)
+	{
+		return NULL;
+	}
 	return gameTable;
 }

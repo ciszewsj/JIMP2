@@ -66,9 +66,9 @@ int compareTable(table* gameTable1, table* gameTable2)
 void printTable(table* gameTable)
 {
 	int i,j;
-	for (i = 0; i<gameTable->columns; i++)
+	for (i = 0; i<gameTable->rows; i++)
 	{
-		for (j=0; j<gameTable->rows; j++)
+		for (j=0; j<gameTable->columns; j++)
 		{
 			printf("%c ", gameTable->board[i][j]);
 		}
