@@ -42,15 +42,14 @@ table* readFromFile(FILE* file)
 			gameTable->board[i / gameTable->columns][i % gameTable->columns] = buf;
 			i++;
 		}
-		else if (buf == '\n' || buf == ' ' || buf == 18)
+		else if (buf > 32 && buf <128)
+		{
+			return NULL;
+		}
+		else
 		{
 			
 		}
-		/*else
-		{
-			return NULL;
-		}*/
-		
 	}
 	
 	if(fscanf(file, "%c",&buf) != EOF)
@@ -58,4 +57,9 @@ table* readFromFile(FILE* file)
 		return NULL;
 	}
 	return gameTable;
+}
+
+void saveToFile(table* gameTable, char* outFileName, int toTxt, int toPicture)
+{
+	printf("Zapis");
 }
