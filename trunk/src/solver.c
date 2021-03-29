@@ -5,19 +5,19 @@
 char conditionType(table* gameTable, int x, int y, int typeOfProximity, int typeOfArea)
 {
 	int neighbour = numberOfNeighbours(gameTable, x, y, typeOfProximity, typeOfArea);
-	if (gameTable->board[x][y] == '0')
+	if (gameTable->board[x][y] == deadCell)
 	{
 		if (neighbour == 3)
-			return '1';
+			return aliveCell;
 		else
-			return '0';
+			return deadCell;
 	}
 	else
 	{
 		if(neighbour == 2 || neighbour == 3)
-			return '1';
+			return aliveCell;
 		else
-			return '0';
+			return deadCell;
 	}
 	return 'e';
 }

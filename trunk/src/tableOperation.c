@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "tableOperation.h"
 
+char aliveCell = '1';
+char deadCell = '0';
+
 table* initTable(int columns, int rows)
 {
 	int i;
@@ -27,11 +30,11 @@ table* initDefaultTable()
 		{
 			if (j == 1)
 			{	
-				newTable->board[i][j] = '1';
+				newTable->board[i][j] = aliveCell;
 			}
 			else
 			{
-				newTable->board[i][j] = '0';
+				newTable->board[i][j] = deadCell;
 			}
 		}
 	}

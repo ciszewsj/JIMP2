@@ -1,6 +1,9 @@
 #ifndef _TABLE_OPERATION_
 #define _TABLE_OPERATION_
 
+extern char aliveCell;
+extern char deadCell;
+
 struct tableStruct{
 	int columns;
 	int rows;

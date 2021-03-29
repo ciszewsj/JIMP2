@@ -17,4 +17,5 @@ struct argumentsStruct{
 }typedef arguments;
 
 arguments* validateArguments(int argc, char ** argv);
+void destroyArguments(arguments* argumentsList);
 #endif

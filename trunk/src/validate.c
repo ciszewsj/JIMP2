@@ -310,3 +310,14 @@ arguments* validateArguments(int argc, char ** argv)
 	}
 	return argumentsList;
 }
+
+void destroyArguments(arguments* argumentsList)
+{
+	free(argumentsList->inFileName);
+	free(argumentsList->inFile);
+	free(argumentsList->outFileName);
+	free(argumentsList);
+	
+}
+
+

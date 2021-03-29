@@ -25,7 +25,7 @@ int isRoundAlive(table* gameTable, int x, int y)
 {
 	x = findX(gameTable,x);
 	y = findY(gameTable,y);
-	if (gameTable->board[x][y] == '1')
+	if (gameTable->board[x][y] == aliveCell)
 		return 1;
 	else 
 		return 0;
@@ -38,7 +38,7 @@ int isFlatAlive(table* gameTable, int x, int y)
 		return 0;
 	else if (y >= gameTable->rows)
 		return 0;
-	else if (gameTable->board[x][y] == '1')
+	else if (gameTable->board[x][y] == aliveCell)
 		return 1;
 	else 
 		return 0;

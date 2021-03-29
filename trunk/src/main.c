@@ -6,6 +6,7 @@
 #include "validate.h"
 
 
+
 int main(int argc, char ** argv)
 {
 	int compareValue = 1;
@@ -13,10 +14,12 @@ int main(int argc, char ** argv)
 	
 	table* gameTable = NULL;
 	
-	arguments* argumentsList;
+	arguments* argumentsList = validateArguments(argc, argv);
 	
-	
-	argumentsList = validateArguments(argc, argv);
+	if (argumentsList == NULL)
+	{
+		return 100;
+	}
 	
 	if (argumentsList->inFile != NULL)
 	{
@@ -79,6 +82,8 @@ int main(int argc, char ** argv)
 	{
 		printf("Pomoc programu lifeGameEmulator:\n");
 	}
-		
+	
+	destroyArguments(argumentsList);
+	
 	return 0;
 }

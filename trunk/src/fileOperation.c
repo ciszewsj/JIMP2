@@ -9,7 +9,7 @@ table* readFromFile(FILE* file)
 	int i;
 	table *gameTable;
 	char buf;
-
+	
 	for (i = 0; i < 2; i++)
 	{
 		if (fscanf(file, "%d", &size[i]) == EOF)
@@ -37,7 +37,7 @@ table* readFromFile(FILE* file)
 		{
 			return NULL;
 		}
-		if (buf == '0' || buf == '1')
+		if (buf == aliveCell || buf == deadCell)
 		{
 			gameTable->board[i / gameTable->columns][i % gameTable->columns] = buf;
 			i++;
