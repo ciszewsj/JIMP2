@@ -1,7 +1,7 @@
 #ifndef _TABLE_OPERATION_
 #define _TABLE_OPERATION_
 
-struct table_struct{
+struct tableStruct{
 	int columns;
 	int rows;
 	char ** board;
