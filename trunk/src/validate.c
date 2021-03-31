@@ -133,7 +133,7 @@ arguments* validateArguments(int argc, char ** argv)
 				}
 			}
 		}
-		else if (strcmp(argv[i],"–outputFilename") == 0)
+		else if (strcmp(argv[i],"-outputFilename") == 0)
 		{
 			i++;
 			if (i < argc)
@@ -230,7 +230,7 @@ arguments* validateArguments(int argc, char ** argv)
 				}
 			}
 		}
-		else if (strcmp(argv[i], "–saveAsTxt") == 0)
+		else if (strcmp(argv[i], "-saveAsTxT") == 0)
 		{
 			i++;
 			if (i < argc)
@@ -252,7 +252,7 @@ arguments* validateArguments(int argc, char ** argv)
 				}
 			}
 		}
-		else if (strcmp(argv[i], "–saveEveryIteration") == 0)
+		else if (strcmp(argv[i], "-saveEveryIteration") == 0)
 		{
 			i++;
 			if (i < argc)
