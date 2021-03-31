@@ -208,7 +208,7 @@ arguments* validateArguments(int argc, char ** argv)
 				}
 			}
 		}
-		else if (strcmp(argv[i], "–saveAsPicture") == 0)
+		else if (strcmp(argv[i], "-saveAsPicture") == 0)
 		{
 			i++;
 			if (i < argc)

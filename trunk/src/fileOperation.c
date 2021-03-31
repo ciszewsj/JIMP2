@@ -4,7 +4,7 @@
 
 
 #include "tableOperation.h"
-
+#include "printBmp.h"
 
 table* readFromFile(FILE* file)
 {
@@ -98,15 +98,19 @@ void saveToTxt(table* gameTable, char* outFileName)
 void saveToFile(table* gameTable, char* outFileName, int toTxt, int toPicture)
 {
 	char* freeTxtOutName = NULL;
+	char* freePictureName = NULL;
 	if (toTxt == 1)
 	{
-		freeTxtOutName = avalibleTxtFileName(outFileName);
+		freeTxtOutName = avalibleFileName(outFileName, "txt");
 		saveToTxt(gameTable, freeTxtOutName);
 		printf("Zapisano iterację do pliku tekstowego: %s\n", freeTxtOutName);
 		free(freeTxtOutName);
 	}
 	if (toPicture == 1)
 	{
-		
+		freePictureName = avalibleFileName(outFileName, "bmp");
+		generateGameTableBitmap(gameTable, freePictureName);
+		printf("Zapisano iterację do pliku tekstowego: %s\n", freePictureName);
+		free(freePictureName);
 	}
 }
