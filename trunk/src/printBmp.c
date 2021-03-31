@@ -61,7 +61,7 @@ unsigned char* createBitmapInfoHeader (int height, int width)
     return infoHeader;
 }
 
-void generateBitmapImage(unsigned char* image, int height, int width, char* imageFileName)
+void generateBitmapImage(unsigned char** image, int height, int width, char* imageFileName)
 {
     int widthInBytes = width * BYTES_PER_PIXEL;
 
@@ -83,7 +83,7 @@ void generateBitmapImage(unsigned char* image, int height, int width, char* imag
 	
     for (i = 0; i < height; i++)
 	{
-        fwrite(image + (i*widthInBytes), BYTES_PER_PIXEL, width, imageFile);
+        fwrite(image[i], BYTES_PER_PIXEL, width, imageFile);
         fwrite(padding, 1, paddingSize, imageFile);
     }
     fclose(imageFile);
@@ -92,34 +92,53 @@ void generateBitmapImage(unsigned char* image, int height, int width, char* imag
 
 void generateGameTableBitmap(table* gameTable, char* outFileName)
 {
-	int i, j, k;
-	unsigned char* image = NULL;
-	image = calloc(gameTable->columns*gameTable->rows*3, sizeof(unsigned char));
-	
-	//for (i = 0; i < gameTable->columns*gameTable->rows*3; i++)
-	//{
-//		image[i] = 255;
-	//}
-	for (i = 0; i < gameTable->columns; i++)
+	int i, j, k, h;
+	unsigned char **image = NULL;
+	unsigned char *helpImageTable = NULL;
+	image = calloc(gameTable->rows, sizeof(unsigned char *));
+	for (i = 0; i < gameTable->rows; i++)
 	{
-		for (j = 0; j < gameTable->rows; j++)
+		image[i] = calloc(gameTable->columns * 3, sizeof(unsigned char));
+	}
+	
+	h = 0;
+	
+	for (j = 0; j < gameTable->rows; j++)
+	{
+		for (i = 0; i < gameTable->columns; i++)
 		{
-			for (k = 0; k < 3; k++)
+			
+			if (gameTable->board[j][i] == aliveCell)
 			{
-				if (gameTable->board[i][j] == aliveCell)
-				{
-					image[((gameTable->columns-1-i)*gameTable->rows*3+j*3+k)*sizeof(unsigned char)] = 0;
+				for (k = 0; k < 3; k++)
+				{					
+					image[h/(gameTable->columns*3)][h%(gameTable->columns*3) * sizeof(unsigned char)] = 0;
+					h++;
 				}
-				else
+			}
+			else
+			{
+				for (k = 0; k < 3; k++)
 				{
-					image[((gameTable->columns-1-i)*gameTable->rows*3+j*3+k)*sizeof(unsigned char)] = 255;
+					image[h/(gameTable->columns*3)][h%(gameTable->columns*3) * sizeof(unsigned char)] = 255;
+					h++;
 				}
 			}
 		}
 	}
 	
-	
+	for (i = 0; i < gameTable->rows/2; i++)
+	{
+		helpImageTable = image[i];
+		image[i] = image[gameTable->rows - i - 1];
+		image[gameTable->rows - i - 1] = helpImageTable;
+	}
 	generateBitmapImage(image, gameTable->rows, gameTable->columns, outFileName);
+	
+	for (i = 0; i < gameTable->rows; i++)
+	{
+		free(image[i]);
+	}
 	
 	free(image);
 }

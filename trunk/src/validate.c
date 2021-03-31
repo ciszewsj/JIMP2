@@ -55,22 +55,17 @@ arguments* validateArguments(int argc, char ** argv)
 			{
 				argumentsList->inFileName = calloc(1, strlen(argv[i])+1);
 				strcat(argumentsList->inFileName, argv[i]);
-				printf ("TU?\n");
 				i++;
 				while(i < argc)
 				{
 					if (argv[i][0]!='-')
 					{
-						printf ("TU?\n");
 						if(realloc(argumentsList->inFileName, strlen(argumentsList->inFileName) + strlen(argv[i]) + 2) == NULL)
 						{
 							return NULL;
 						}
-						printf ("TU?\n");
 						strcat(argumentsList->inFileName, " \0");
-						printf ("TU?\n");
 						strcat(argumentsList->inFileName, argv[i]);
-						printf ("TU?\n");
 						i++;
 					}
 					else
@@ -78,7 +73,6 @@ arguments* validateArguments(int argc, char ** argv)
 						break;
 					}
 				}
-				printf ("%s\n",argumentsList->inFileName);
 				argumentsList->inFile = fopen(argumentsList->inFileName, "r");
 				if (argumentsList->inFile == NULL)
 				{
@@ -162,7 +156,6 @@ arguments* validateArguments(int argc, char ** argv)
 						break;
 					}
 				}
-				printf ("%s\n",argumentsList->outFileName);
 			}
 		}
 		else if (strcmp(argv[i], "–printOnScreen") == 0)
