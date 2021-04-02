@@ -68,31 +68,34 @@ arguments* validateArguments(int argc, char ** argv)
 			i++;
 			if (i < argc)
 			{
-				argumentsList->inFileName = calloc(1, strlen(argv[i])+1);
-				strcat(argumentsList->inFileName, argv[i]);
-				i++;
-				while(i < argc)
+				if (argv[i][0] != '-')
 				{
-					
-					if (argv[i][0] != '-')
+					argumentsList->inFileName = calloc(1, strlen(argv[i])+1);
+					strcat(argumentsList->inFileName, argv[i]);
+					i++;
+					while(i < argc)
 					{
-						if(realloc(argumentsList->inFileName, strlen(argumentsList->inFileName) + strlen(argv[i]) + 2) == NULL)
+						
+						if (argv[i][0] != '-')
 						{
-							return NULL;
+							if(realloc(argumentsList->inFileName, strlen(argumentsList->inFileName) + strlen(argv[i]) + 2) == NULL)
+							{
+								return NULL;
+							}
+							strcat(argumentsList->inFileName, " \0");
+							strcat(argumentsList->inFileName, argv[i]);
+							i++;
 						}
-						strcat(argumentsList->inFileName, " \0");
-						strcat(argumentsList->inFileName, argv[i]);
-						i++;
+						else
+						{
+							break;
+						}
 					}
-					else
+					argumentsList->inFile = fopen(argumentsList->inFileName, "r");
+					if (argumentsList->inFile == NULL)
 					{
-						break;
+						printf("Plik o podanej nazwie: %s nie istnieje. Należy podać nazwę istniejącego pliku wejściowego.\n", argumentsList->inFileName);
 					}
-				}
-				argumentsList->inFile = fopen(argumentsList->inFileName, "r");
-				if (argumentsList->inFile == NULL)
-				{
-					printf("Plik o podanej nazwie: %s nie istnieje. Należy podać nazwę istniejącego pliku wejściowego.\n", argumentsList->inFileName);
 				}
 			}
 		}
@@ -148,28 +151,31 @@ arguments* validateArguments(int argc, char ** argv)
 			i++;
 			if (i < argc)
 			{
-				if (argumentsList->outFileName != NULL)
+				if (argv[i][0]!='-')
 				{
-					free(argumentsList->outFileName);
-				}
-				argumentsList->outFileName = calloc(1, strlen(argv[i])+1);
-				strcat(argumentsList->outFileName, argv[i]);
-				i++;
-				while(i < argc)
-				{
-					if (argv[i][0]!='-')
+					if (argumentsList->outFileName != NULL)
 					{
-						if (realloc(argumentsList->outFileName, strlen(argumentsList->outFileName) + strlen(argv[i]) + 2) == NULL)
-						{
-							return NULL;
-						}
-						strcat(argumentsList->outFileName, " \0");
-						strcat(argumentsList->outFileName, argv[i]);
-						i++;
+						free(argumentsList->outFileName);
 					}
-					else
+					argumentsList->outFileName = calloc(1, strlen(argv[i])+1);
+					strcat(argumentsList->outFileName, argv[i]);
+					i++;
+					while(i < argc)
 					{
-						break;
+						if (argv[i][0]!='-')
+						{
+							if (realloc(argumentsList->outFileName, strlen(argumentsList->outFileName) + strlen(argv[i]) + 2) == NULL)
+							{
+								return NULL;
+							}
+							strcat(argumentsList->outFileName, " \0");
+							strcat(argumentsList->outFileName, argv[i]);
+							i++;
+						}
+						else
+						{
+							break;
+						}
 					}
 				}
 			}
