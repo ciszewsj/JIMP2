@@ -80,10 +80,14 @@ char* avalibleFileName(char* outFileName, char* format)
 	
 }
 
-void saveToTxt(table* gameTable, char* outFileName)
+int saveToTxt(table* gameTable, char* outFileName)
 {
 	int i, j;
 	FILE* out = fopen(outFileName, "w");
+	if (out == NULL)
+	{
+		return 1;
+	}
 	fprintf(out, "%d %d\n", gameTable->columns, gameTable->rows);
 	for (i = 0; i<gameTable->rows; i++)
 	{
@@ -93,6 +97,7 @@ void saveToTxt(table* gameTable, char* outFileName)
 		}
 		fprintf(out, "\n");
 	}
+	return 0;
 }
 
 void saveToFile(table* gameTable, char* outFileName, int toTxt, int toPicture)
@@ -101,16 +106,28 @@ void saveToFile(table* gameTable, char* outFileName, int toTxt, int toPicture)
 	char* freePictureName = NULL;
 	if (toTxt == 1)
 	{
-		freeTxtOutName = avalibleFileName(outFileName, "txt");
-		saveToTxt(gameTable, freeTxtOutName);
-		printf("Zapisano iterację do pliku tekstowego: %s\n", freeTxtOutName);
+		freeTxtOutName = avalibleFileName(outFileName, "txt\0");
+		if (saveToTxt(gameTable, freeTxtOutName) == 0)
+		{
+			printf("Zapisano iterację do pliku tekstowego: %s\n", freeTxtOutName);
+		}
+		else
+		{
+			printf("Nie udało się zapisać iteracji do pliku tekstowego: %s\n", freeTxtOutName);
+		}
 		free(freeTxtOutName);
 	}
 	if (toPicture == 1)
 	{
-		freePictureName = avalibleFileName(outFileName, "bmp");
-		generateGameTableBitmap(gameTable, freePictureName);
-		printf("Zapisano iterację do pliku tekstowego: %s\n", freePictureName);
+		freePictureName = avalibleFileName(outFileName, "bmp\0");
+		if(generateGameTableBitmap(gameTable, freePictureName) == 0)
+		{
+			printf("Zapisano iterację do pliku graficznego: %s\n", freePictureName);
+		}
+		else
+		{
+			printf("Nie udało się zapisać iteracji do pliku graficznego: %s\n", freePictureName);
+		}
 		free(freePictureName);
 	}
 }

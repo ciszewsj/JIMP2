@@ -54,6 +54,11 @@ int main(int argc, char ** argv)
 			
 			if (compareValue == 0)
 			{
+				printf("Kolejne iteracje programu są takie same. Przerywam działanie.\n");
+				if (argumentsList->ifSaveEveryIteration != 0)
+				{
+					saveToFile(gameTable, argumentsList->outFileName, argumentsList->ifSaveAsTxT, argumentsList->ifSaveAsPicture);
+				}
 				break;
 			}
 			if (argumentsList->ifSbS == 1)
@@ -80,7 +85,7 @@ int main(int argc, char ** argv)
 	}
 	else
 	{
-		printf("Pomoc programu lifeGameEmulator:\n");
+		printHelp();
 	}
 	
 	destroyArguments(argumentsList);

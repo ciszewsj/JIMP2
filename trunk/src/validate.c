@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "validate.h"
 
@@ -27,8 +28,12 @@ int isNumber(char* str)
 arguments* validateArguments(int argc, char ** argv)
 {
 	int i;
-	arguments* argumentsList = calloc(1, sizeof(arguments));
+	char* outFileTmpName;
 	
+	time_t t = time(NULL);
+    struct tm *tm = localtime(&t);
+	
+	arguments* argumentsList = calloc(1, sizeof(arguments));
 	argumentsList->numberOfIteration = 1;
 	argumentsList->typeOfProximity = 0;
 	argumentsList->typeOfArea = 0;
@@ -38,10 +43,19 @@ arguments* validateArguments(int argc, char ** argv)
 	argumentsList->ifSaveAsPicture = 0;
 	argumentsList->ifSaveAsTxT = 0;
 	argumentsList->ifSbS = 0;
-	argumentsList->outFileName = NULL;
 	argumentsList->inFileName = NULL;
 	argumentsList->inFile = NULL;
 	i = 1;
+	
+	
+	
+	outFileTmpName = calloc (21, sizeof(char));
+	
+	snprintf(outFileTmpName, 20,"%d-%d-%d-%d-%d-%d", tm->tm_year + 1900,
+			tm->tm_mon + 1, tm->tm_mday, tm->tm_hour, tm->tm_min, tm->tm_sec);
+			
+	argumentsList->outFileName = outFileTmpName;
+	
 	while (i < argc)
 	{
 		if (strcmp(argv[i], "-dataFile") == 0)
@@ -49,6 +63,7 @@ arguments* validateArguments(int argc, char ** argv)
 			if (argumentsList->inFileName != NULL)
 			{
 				free(argumentsList->inFileName);
+				free(argumentsList->inFile);
 			}
 			i++;
 			if (i < argc)
@@ -58,7 +73,8 @@ arguments* validateArguments(int argc, char ** argv)
 				i++;
 				while(i < argc)
 				{
-					if (argv[i][0]!='-')
+					
+					if (argv[i][0] != '-')
 					{
 						if(realloc(argumentsList->inFileName, strlen(argumentsList->inFileName) + strlen(argv[i]) + 2) == NULL)
 						{
@@ -76,7 +92,7 @@ arguments* validateArguments(int argc, char ** argv)
 				argumentsList->inFile = fopen(argumentsList->inFileName, "r");
 				if (argumentsList->inFile == NULL)
 				{
-					printf("Plik o podanej nazwie nie istnieje. Należy podać nazwę istniejącego pliku wejściowego.\n");
+					printf("Plik o podanej nazwie: %s nie istnieje. Należy podać nazwę istniejącego pliku wejściowego.\n", argumentsList->inFileName);
 				}
 			}
 		}
@@ -112,7 +128,7 @@ arguments* validateArguments(int argc, char ** argv)
 			i++;
 			if (i < argc)
 			{
-				if (isNumber(argv[i]))
+				if (isNumber(argv[i]) == 1)
 				{
 					argumentsList->numberOfIteration = atoi(argv[i]);
 					if (argumentsList->numberOfIteration < 1)
@@ -262,7 +278,7 @@ arguments* validateArguments(int argc, char ** argv)
 				}
 				else if (strcmp(argv[i], "2") == 0)
 				{
-					argumentsList->ifSaveEveryIteration = 1;
+					argumentsList->ifSaveEveryIteration = 2;
 					i++;
 				}
 				else if (argv[i][0] != '-')
@@ -303,6 +319,28 @@ arguments* validateArguments(int argc, char ** argv)
 	}
 	return argumentsList;
 }
+
+void printHelp()
+{
+	printf("\n\nPomoc Programu lifeGameEmulator:\n");
+	printf("Program przeprowadza kolejne iterację gry w życie.\n");
+	printf("Autorzy:\n");
+	printf("-Ciszewski Jakub\n");
+	printf("-Rachachevich Aliaksandra\n\n");
+	printf("Program przyjmuje następujące argumenty wywołania:\n");
+	printf("-dataFile filePath - ścieżka do pliku zawierającego strukturę planszy. Domyślnie struktura wbudowana.\n");
+	printf("-flatArea false|true - zaokrąglenie planszy. Domyślnie zaokrąglona(false).\n");
+	printf("-help - wyświetla pomoc programu\n");
+	printf("-iterations n - ilość iteracji, którą ma wykonać program. n liczba naturalna większa od 0. Domyślnie 1.\n");
+	printf("-outputFilename name - nazwa pliku zapisu struktury. Domyślnie wczytywana przy użyciu czasu lokalnego.\n");
+	printf("-printOnScreen false|true - wyświetlanie planszy na ekran. Domyślnie jest wyświetlana(true).\n");
+	printf("-proximity moore|neumann - wybór typu sąsiedztwa(Moore'a lub von Neumanna). Domyślnie sąsiedztwo Moore(moore).\n");
+	printf("-saveAsPicture false|true - zapis do pliku graficznego. Domyślnie wyłączona(false).\n");
+	printf("-saveAsTxT false|true - zapis do pliku tekstowego. Domyślnie wyłączona(false).\n");
+	printf("-saveEveryIteration 0|1|2 - zapis do pliku następującej iteracji 0-niezapisuje żadnej, 1-zapisuje ostatnią iteracje, 2-zapisuje wszystkie iteracje. Domyślnie 0.\n");
+	printf("-SBS false|true - przejście w tryb step-by-step. Domyślnie false.\n\n\n");
+}
+
 
 void destroyArguments(arguments* argumentsList)
 {
