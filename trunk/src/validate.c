@@ -338,7 +338,7 @@ void printHelp()
 	printf("-saveAsPicture false|true - zapis do pliku graficznego. Domyślnie wyłączona(false).\n");
 	printf("-saveAsTxT false|true - zapis do pliku tekstowego. Domyślnie wyłączona(false).\n");
 	printf("-saveEveryIteration 0|1|2 - zapis do pliku następującej iteracji 0-niezapisuje żadnej, 1-zapisuje ostatnią iteracje, 2-zapisuje wszystkie iteracje. Domyślnie 0.\n");
-	printf("-SBS false|true - przejście w tryb step-by-step. Domyślnie false.\n\n\n");
+	printf("-SBS false|true - przejście w tryb step-by-step. Domyślnie wyłączony(false).\n\n\n");
 }
 
 
