@@ -31,4 +31,5 @@ int main(int argc, char** argv)
 		saveToFile(gameTable, "testsFileResults/test", 1, 1);
 		destroyTable(gameTable);
 	}
+	return 0;
 }

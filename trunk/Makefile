@@ -2,7 +2,9 @@ all:main.o fileOperation.o tableOperation.o printBmp.o proximity.o solver.o vali
 	gcc -Wall --pedantic src/main.c fileOperation.o tableOperation.o printBmp.o proximity.o solver.o validate.o -o bin/lifeGameEmulator
 test_file_operation:fileOperation.o tableOperation.o dataTest.o
 	gcc -Wall --pedantic dataTest.o fileOperation.o tableOperation.o printBmp.o -o tests/testFileOperation
-
+test_arguments_validate:validateArgumentsTest.o validate.o
+	gcc -Wall --pedantic validateArgumentsTest.o validate.o -o tests/testValidateArguments
+	
 main.o: src/main.c
 	cc -c src/main.c
 fileOperation.o:src/fileOperation.c
@@ -19,3 +21,5 @@ validate.o: src/validate.c
 	cc -c src/validate.c
 dataTest.o:src/dataTest.c
 	cc -c src/dataTest.c
+validateArgumentsTest.o:src/validateArgumentsTest.c
+	cc -c src/validateArgumentsTest.c
