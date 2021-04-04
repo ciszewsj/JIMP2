@@ -71,9 +71,9 @@ void printTable(table* gameTable)
 	int i,j;
 	for (i = 0; i<gameTable->rows; i++)
 	{
-		for (j=0; j<gameTable->columns; j++)
+		for (j = 0; j<gameTable->columns; j++)
 		{
-			printf("%c ", gameTable->board[i][j]);
+			printf("%c ", gameTable->board[j][i]);
 		}
 		printf("\n");
 	}

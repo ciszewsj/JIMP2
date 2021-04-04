@@ -105,15 +105,13 @@ int generateGameTableBitmap(table* gameTable, char* outFileName)
 	{
 		image[i] = calloc(gameTable->columns * 3, sizeof(unsigned char));
 	}
-	
 	h = 0;
 	
 	for (j = 0; j < gameTable->rows; j++)
 	{
 		for (i = 0; i < gameTable->columns; i++)
 		{
-			
-			if (gameTable->board[j][i] == aliveCell)
+			if (gameTable->board[i][j] == aliveCell)
 			{
 				for (k = 0; k < 3; k++)
 				{					
@@ -131,7 +129,6 @@ int generateGameTableBitmap(table* gameTable, char* outFileName)
 			}
 		}
 	}
-	
 	for (i = 0; i < gameTable->rows/2; i++)
 	{
 		helpImageTable = image[i];

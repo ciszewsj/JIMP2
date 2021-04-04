@@ -22,7 +22,6 @@ table* readFromFile(FILE* file)
 		}
 		if (size[i] < 3)
 		{
-			printf ("t%d\n", 2);
 			return NULL;
 		}
 	}
@@ -32,34 +31,31 @@ table* readFromFile(FILE* file)
 	{
 		return NULL;
 	}
-	
 	i=0;
 	numberOfChar = size[0] * size[1];
 	while(i < numberOfChar)
 	{
 		if(fscanf(file, "%c",&buf) == EOF)
 		{
+			destroyTable(gameTable);
 			return NULL;
 		}
 		if (buf == aliveCell || buf == deadCell)
 		{
-			gameTable->board[i / gameTable->columns][i % gameTable->columns] = buf;
+			gameTable->board[i % gameTable->columns][i / gameTable->columns] = buf;
 			i++;
 		}
 		else if (buf > 32 && buf < 128)
 		{
+			destroyTable(gameTable);
 			return NULL;
 		}
-		else
-		{
-			
-		}
 	}
-	
 	while(fscanf(file, "%c",&buf) != EOF)
 	{
 		if (buf > 32 && buf < 128)
 		{
+			destroyTable(gameTable);
 			return NULL;
 		}
 	}
@@ -93,10 +89,11 @@ int saveToTxt(table* gameTable, char* outFileName)
 	{
 		for (j=0; j<gameTable->columns; j++)
 		{
-			fprintf(out, "%c ", gameTable->board[i][j]);
+			fprintf(out, "%c ", gameTable->board[j][i]);
 		}
 		fprintf(out, "\n");
 	}
+	fclose(out);
 	return 0;
 }
 

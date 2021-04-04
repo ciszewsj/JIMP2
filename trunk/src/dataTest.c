@@ -8,7 +8,7 @@ int main(int argc, char** argv)
 	table* gameTable;
 	for (i = 1; i < argc; i++)
 	{
-		printf("Rozpoczęto test wczytania i zapisu pliku %s:\n", argv[i]);
+		printf("\nRozpoczęto test wczytania i zapisu pliku %s:\n", argv[i]);
 		in = fopen(argv[i], "r");
 		if (in == NULL)
 		{
