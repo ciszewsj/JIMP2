@@ -11,12 +11,12 @@ struct argumentsStruct{
 	int ifSaveAsPicture;
 	int ifSaveAsTxT;
 	int ifSbS;
-	char * outFileName;
-	char * inFileName;
+	char* outFileName;
+	char* inFileName;
 	FILE * inFile;
 }typedef arguments;
 
-arguments* validateArguments(int argc, char ** argv);
+arguments* validateArguments(int argc, char** argv);
 void printHelp();
 void destroyArguments(arguments* argumentsList);
 #endif
