@@ -40,14 +40,15 @@ int main(int argc, char ** argv)
 	{
 		for (i = 0; i < argumentsList->numberOfIteration; i++)
 		{
-			if (argumentsList->ifSaveEveryIteration == 2 && i != 0)
-			{
-				saveToFile(gameTable, argumentsList->outFileName, argumentsList->ifSaveAsTxT, argumentsList->ifSaveAsPicture);
-			}
 			if (argumentsList->ifPrintOnScreen == 1)
 			{
 				printf("Iteracja %d gry:\n", i);
 				printTable(gameTable);
+				printf("\n\n");
+			}
+			if (argumentsList->ifSaveEveryIteration == 2 && i != 0)
+			{
+				saveToFile(gameTable, argumentsList->outFileName, argumentsList->ifSaveAsTxT, argumentsList->ifSaveAsPicture);
 				printf("\n\n");
 			}
 			compareValue = solveIteration(&gameTable, argumentsList->typeOfProximity, argumentsList->typeOfArea);
@@ -55,10 +56,6 @@ int main(int argc, char ** argv)
 			if (compareValue == 0)
 			{
 				printf("Kolejne iteracje programu są takie same. Przerywam działanie.\n");
-				if (argumentsList->ifSaveEveryIteration != 0)
-				{
-					saveToFile(gameTable, argumentsList->outFileName, argumentsList->ifSaveAsTxT, argumentsList->ifSaveAsPicture);
-				}
 				break;
 			}
 			if (argumentsList->ifSbS == 1)
@@ -77,10 +74,10 @@ int main(int argc, char ** argv)
 				printf("Iteracja %d gry:\n", i);
 				printTable(gameTable);
 			}
-			if (argumentsList->ifSaveEveryIteration != 0)
-			{
-				saveToFile(gameTable, argumentsList->outFileName, argumentsList->ifSaveAsTxT, argumentsList->ifSaveAsPicture);
-			}
+		}
+		if (argumentsList->ifSaveEveryIteration == 1)
+		{
+			saveToFile(gameTable, argumentsList->outFileName, argumentsList->ifSaveAsTxT, argumentsList->ifSaveAsPicture);
 		}
 	}
 	else
