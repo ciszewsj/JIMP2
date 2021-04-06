@@ -26,6 +26,5 @@ int main(int argc, char** argv)
 	{
 		printf("	Plik wejściowy nie istnieje.\n");
 	}
-	printf("\n\n\n");
 	destroyArguments(argumentList);
 }

@@ -180,7 +180,7 @@ arguments* validateArguments(int argc, char ** argv)
 				}
 			}
 		}
-		else if (strcmp(argv[i], "-printOnScreen") == 0)
+		else if (strcmp(argv[i], "–printOnScreen") == 0)
 		{
 			i++;
 			if (i < argc)
@@ -289,7 +289,7 @@ arguments* validateArguments(int argc, char ** argv)
 				}
 				else if (argv[i][0] != '-')
 				{
-					printWrongArgumentValue("-saveEveryIteration", "0 | 1 | 2");
+					printWrongArgumentValue("-saveAsTxt", "0 | 1 | 2");
 					i++;
 				}
 			}
