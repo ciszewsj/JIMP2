@@ -5,6 +5,7 @@ test_file_operation:fileOperation.o tableOperation.o dataTest.o printBmp.o
 test_arguments_validate:validateArgumentsTest.o validate.o
 	gcc -Wall --pedantic validateArgumentsTest.o validate.o -o tests/testValidateArguments
 	
+
 do_file_test:
 	tests/testFileOperation tests/testsFile/dane_1.txt tests/testsFile/dane_2.txt tests/testsFile/dane_3.txt tests/testsFile/dane_4.txt tests/testsFile/dane_4.txt tests/testsFile/dane_5.txt tests/testsFile/dane_6.txt tests/testsFile/dane_7.txt tests/testsFile/dane_8.txt tests/testsFile/dane_9.txt tests/testsFile/dane_10.txt tests/testsFile/zle_dane_1.txt tests/testsFile/zle_dane_2.txt tests/testsFile/zle_dane_3.txt tests/testsFile/zle_dane_4.txt tests/testsFile/zle_dane_5.txt
 	
@@ -17,6 +18,7 @@ do_arg_test:
 	tests/testValidateArguments -help true -iterations a -outputFilename -123 -printOnScreen 1 -proximity neighbour -saveAsPicture yes -saveAsTxT no -SBS ofcourse
 	
 	
+
 main.o: src/main.c
 	cc -c src/main.c
 fileOperation.o:src/fileOperation.c

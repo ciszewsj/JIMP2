@@ -87,7 +87,7 @@ int main(int argc, char ** argv)
 	{
 		printHelp();
 	}
-	
+	destroyTable(gameTable);
 	destroyArguments(argumentsList);
 	
 	return 0;

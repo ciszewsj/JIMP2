@@ -28,7 +28,7 @@ int main(int argc, char** argv)
 			printf("\n\n");
 		}
 		printf("	Rozpoczęto test zapisu danych do pliku:\n");
-		saveToFile(gameTable, "tests/testsFileResults/test", 1, 1);
+		saveToFile(gameTable, "testsFileResults/test", 1, 1);
 		destroyTable(gameTable);
 	}
 	return 0;

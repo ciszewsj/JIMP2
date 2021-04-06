@@ -53,7 +53,7 @@ arguments* validateArguments(int argc, char ** argv)
 	
 	snprintf(outFileTmpName, 20,"%d-%d-%d-%d-%d-%d", tm->tm_year + 1900,
 			tm->tm_mon + 1, tm->tm_mday, tm->tm_hour, tm->tm_min, tm->tm_sec);
-			
+		
 	argumentsList->outFileName = outFileTmpName;
 	
 	while (i < argc)
@@ -351,10 +351,8 @@ void printHelp()
 void destroyArguments(arguments* argumentsList)
 {
 	free(argumentsList->inFileName);
-	free(argumentsList->inFile);
 	free(argumentsList->outFileName);
-	free(argumentsList);
-	
+	free(argumentsList);	
 }
 
 
