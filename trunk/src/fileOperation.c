@@ -11,7 +11,7 @@ table* readFromFile(FILE* file)
 	int size[2];
 	int numberOfChar;
 	int i;
-	table *gameTable;
+	table* gameTable;
 	char buf;
 	
 	for (i = 0; i < 2; i++)
@@ -26,7 +26,7 @@ table* readFromFile(FILE* file)
 		}
 	}
 
-	gameTable = initTable(size[0],size[1]);
+	gameTable = initTable(size[0], size[1]);
 	if(gameTable == NULL)
 	{
 		return NULL;
@@ -35,7 +35,7 @@ table* readFromFile(FILE* file)
 	numberOfChar = size[0] * size[1];
 	while(i < numberOfChar)
 	{
-		if(fscanf(file, "%c",&buf) == EOF)
+		if(fscanf(file, "%c", &buf) == EOF)
 		{
 			destroyTable(gameTable);
 			return NULL;
@@ -51,7 +51,7 @@ table* readFromFile(FILE* file)
 			return NULL;
 		}
 	}
-	while(fscanf(file, "%c",&buf) != EOF)
+	while(fscanf(file, "%c", &buf) != EOF)
 	{
 		if (buf > 32 && buf < 128)
 		{
@@ -85,9 +85,9 @@ int saveToTxt(table* gameTable, char* outFileName)
 		return 1;
 	}
 	fprintf(out, "%d %d\n", gameTable->columns, gameTable->rows);
-	for (i = 0; i<gameTable->rows; i++)
+	for (i = 0; i < gameTable->rows; i++)
 	{
-		for (j=0; j<gameTable->columns; j++)
+		for (j=0; j < gameTable->columns; j++)
 		{
 			fprintf(out, "%c ", gameTable->board[j][i]);
 		}

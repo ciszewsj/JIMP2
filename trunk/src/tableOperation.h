@@ -7,7 +7,7 @@ extern char deadCell;
 struct tableStruct{
 	int columns;
 	int rows;
-	char ** board;
+	char** board;
 }typedef table;
 
 table* initTable(int columns, int rows); 

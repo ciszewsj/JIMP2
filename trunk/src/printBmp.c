@@ -100,7 +100,7 @@ int generateGameTableBitmap(table* gameTable, char* outFileName)
 	int i, j, k, h;
 	unsigned char** image = NULL;
 	unsigned char* helpImageTable = NULL;
-	image = calloc(gameTable->rows, sizeof(unsigned char *));
+	image = calloc(gameTable->rows, sizeof(unsigned char*));
 	for (i = 0; i < gameTable->rows; i++)
 	{
 		image[i] = calloc(gameTable->columns * 3, sizeof(unsigned char));
@@ -115,7 +115,7 @@ int generateGameTableBitmap(table* gameTable, char* outFileName)
 			{
 				for (k = 0; k < 3; k++)
 				{					
-					image[h/(gameTable->columns*3)][h%(gameTable->columns*3) * sizeof(unsigned char)] = 0;
+					image[h / (gameTable->columns * 3)][h % (gameTable->columns * 3) * sizeof(unsigned char)] = 0;
 					h++;
 				}
 			}
@@ -123,13 +123,13 @@ int generateGameTableBitmap(table* gameTable, char* outFileName)
 			{
 				for (k = 0; k < 3; k++)
 				{
-					image[h/(gameTable->columns*3)][h%(gameTable->columns*3) * sizeof(unsigned char)] = 255;
+					image[h / (gameTable->columns * 3)][h % (gameTable->columns * 3) * sizeof(unsigned char)] = 255;
 					h++;
 				}
 			}
 		}
 	}
-	for (i = 0; i < gameTable->rows/2; i++)
+	for (i = 0; i < gameTable->rows / 2; i++)
 	{
 		helpImageTable = image[i];
 		image[i] = image[gameTable->rows - i - 1];

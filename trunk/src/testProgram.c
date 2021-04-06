@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int compareFile(FILE *file1, FILE *file2)
+int compareFile(FILE* file1, FILE* file2)
 {
     char compare1, compare2;
     int res1, res2;

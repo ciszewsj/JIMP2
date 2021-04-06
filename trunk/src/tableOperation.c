@@ -12,7 +12,7 @@ table* initTable(int columns, int rows)
 	newTable = (table*) calloc(1, sizeof(table));
 	newTable->columns = columns;
 	newTable->rows = rows;
-	newTable->board = (char**) calloc(columns,sizeof(char*));
+	newTable->board = (char**) calloc(columns, sizeof(char*));
 	for (i=0; i<columns; i++)
 	{
 		newTable->board[i] = (char*) calloc(rows, sizeof(char));
@@ -22,7 +22,7 @@ table* initTable(int columns, int rows)
 
 table* initDefaultTable()
 {
-	int i,j;
+	int i, j;
 	table* newTable = initTable(3, 3);
 	for (i = 0; i < 3; i++)
 	{
@@ -68,8 +68,8 @@ int compareTable(table* gameTable1, table* gameTable2)
 
 void printTable(table* gameTable)
 {
-	int i,j;
-	for (i = 0; i<gameTable->rows; i++)
+	int i, j;
+	for (i = 0; i < gameTable->rows; i++)
 	{
 		for (j = 0; j<gameTable->columns; j++)
 		{

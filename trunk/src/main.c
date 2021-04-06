@@ -7,7 +7,7 @@
 
 
 
-int main(int argc, char ** argv)
+int main(int argc, char** argv)
 {
 	int compareValue = 1;
 	int i;

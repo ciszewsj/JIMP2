@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
 
 #include "validate.h"
 
@@ -25,7 +26,7 @@ int isNumber(char* str)
 	return 1;
 }
 
-arguments* validateArguments(int argc, char ** argv)
+arguments* validateArguments(int argc, char** argv)
 {
 	int i;
 	char* outFileTmpName;
@@ -146,23 +147,23 @@ arguments* validateArguments(int argc, char ** argv)
 				}
 			}
 		}
-		else if (strcmp(argv[i],"-outputFilename") == 0)
+		else if (strcmp(argv[i], "-outputFilename") == 0)
 		{
 			i++;
 			if (i < argc)
 			{
-				if (argv[i][0]!='-')
+				if (argv[i][0] != '-')
 				{
 					if (argumentsList->outFileName != NULL)
 					{
 						free(argumentsList->outFileName);
 					}
-					argumentsList->outFileName = calloc(1, strlen(argv[i])+1);
+					argumentsList->outFileName = calloc(1, strlen(argv[i]) + 1);
 					strcat(argumentsList->outFileName, argv[i]);
 					i++;
 					while(i < argc)
 					{
-						if (argv[i][0]!='-')
+						if (argv[i][0] != '-')
 						{
 							if (realloc(argumentsList->outFileName, strlen(argumentsList->outFileName) + strlen(argv[i]) + 2) == NULL)
 							{
@@ -180,7 +181,7 @@ arguments* validateArguments(int argc, char ** argv)
 				}
 			}
 		}
-		else if (strcmp(argv[i], "–printOnScreen") == 0)
+		else if (strcmp(argv[i], "-printOnScreen") == 0)
 		{
 			i++;
 			if (i < argc)
@@ -354,5 +355,3 @@ void destroyArguments(arguments* argumentsList)
 	free(argumentsList->outFileName);
 	free(argumentsList);	
 }
-
-
