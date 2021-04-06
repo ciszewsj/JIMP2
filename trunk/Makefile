@@ -11,7 +11,7 @@ do_file_test:
 	
 do_arg_test:
 	tests/testValidateArguments
-	tests/testValidateArguments -help -iterations 10 -proximity neumann -outputFilename test programu -SBS true -saveEveryIteration 2 -dataFile tests/testsFile/dane_1.txt
+	tests/testValidateArguments -help -iterations 10 -proximity neumann -outputFilename test programu -SBS true -saveEveryIteration 1 -dataFile tests/testsFile/dane_1.txt
 	tests/testValidateArguments -SBS true -proximity moore -saveAsTxT false -saveAsPicture true -flatArea true -printOnScreen false -saveAsTxT true
 	tests/testValidateArguments -saveEveryIteration 0 -flatArea true -help -iterations 10 -outputFilename tests/test_zapisu_22 -printOnScreen false -proximity moore -saveAsTxT false -saveEveryIteration 0 -SBS fale
 	tests/testValidateArguments -saveEveryIteration 2 -flatArea false -iterations 10000000000000 -outputFilename tests/test zapisu 22 -printOnScreen true -proximity neumann -saveAsTxT true -saveEveryIteration true -SBS true

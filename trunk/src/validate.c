@@ -273,24 +273,24 @@ arguments* validateArguments(int argc, char** argv)
 			i++;
 			if (i < argc)
 			{
-				if (strcmp(argv[i], "0") == 0)
+				if (strlen(argv[i]) == 1 && argv[i][0] == '0')
 				{
 					argumentsList->ifSaveEveryIteration = 0;
 					i++;
 				}
-				else if (strcmp(argv[i], "1") == 0)
+				else if (strlen(argv[i]) == 1 && argv[i][0] == '1')
 				{
 					argumentsList->ifSaveEveryIteration = 1;
 					i++;
 				}
-				else if (strcmp(argv[i], "2") == 0)
+				else if (strlen(argv[i]) == 1 && argv[i][0] == '2')
 				{
 					argumentsList->ifSaveEveryIteration = 2;
 					i++;
 				}
 				else if (argv[i][0] != '-')
 				{
-					printWrongArgumentValue("-saveAsTxt", "0 | 1 | 2");
+					printWrongArgumentValue("-saveEveryIteration", "0 | 1 | 2");
 					i++;
 				}
 			}
