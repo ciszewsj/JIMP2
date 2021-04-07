@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int compareFile(FILE* file1, FILE* file2)
+int compareFile(FILE *file1, FILE *file2)
 {
     char compare1, compare2;
     int res1, res2;
@@ -38,6 +38,10 @@ int main(int argc, char *argv[])
         printf("\n Niepoprawny numer testu \n");
         return -1;
     }
+    else
+    {
+        printf("\n Numer testu: %d", number_of_test);
+    }
 
     if (strcmp(argv[2], "flat") == 0)
     {
@@ -53,6 +57,8 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+    printf("\n Typ planszy: %s", argv[2]);
+
     if (strcmp(argv[3], "moore") == 0)
     {
         typeOfProximity = 0;
@@ -66,6 +72,7 @@ int main(int argc, char *argv[])
         printf("\n Niepoprawny typ sasiedztwa \n");
         return -1;
     }
+    printf("\n Typ sasiedztwa: %s", argv[3]);
 
     sprintf(filePath, "../%s", argv[4]);
 
@@ -75,6 +82,10 @@ int main(int argc, char *argv[])
         printf("\n Niepoprawny plik testowany\n");
         return -1;
     }
+    else
+    {
+        printf("\n Plik do testowania: %s", argv[4]);
+    }
 
     if (typeOfProximity == 0)
     {
@@ -83,14 +94,14 @@ int main(int argc, char *argv[])
             switch (number_of_test)
             {
             case 1:
-                file2 = fopen("../tests/testsProgramResults/round_moore/Wynik_1.txt", "r");
+                file2 = fopen("testsProgramResults/round_moore/Wynik_1.txt", "r");
                 break;
 
             case 2:
-                file2 = fopen("../tests/testsProgramResults/round_moore/Wynik_2.txt", "r");
+                file2 = fopen("testsProgramResults/round_moore/Wynik_2.txt", "r");
                 break;
             case 3:
-                file2 = fopen("../tests/testsProgramResults/round_moore/Wynik_3.txt", "r");
+                file2 = fopen("testsProgramResults/round_moore/Wynik_3.txt", "r");
                 break;
             }
         }
@@ -99,15 +110,13 @@ int main(int argc, char *argv[])
             switch (number_of_test)
             {
             case 1:
-                file2 = fopen("../tests/testsProgramResults/flat_moore/Wynik_1.txt", "r");
-                if (file2 == NULL)
-                    printf("Bla\n");
+                file2 = fopen("testsProgramResults/flat_moore/Wynik_1.txt", "r");
                 break;
             case 2:
-                file2 = fopen("../tests/testsProgramResults/flat_moore/Wynik_2.txt", "r");
+                file2 = fopen("testsProgramResults/flat_moore/Wynik_2.txt", "r");
                 break;
             case 3:
-                file2 = fopen("../tests/testsProgramResults/flat_moore/Wynik_3.txt", "r");
+                file2 = fopen("testsProgramResults/flat_moore/Wynik_3.txt", "r");
                 break;
             }
         }
@@ -119,13 +128,13 @@ int main(int argc, char *argv[])
             switch (number_of_test)
             {
             case 1:
-                file2 = fopen("../tests/testsProgramResults/round_neumann/Wynik_1.txt", "r");
+                file2 = fopen("testsProgramResults/round_neumann/Wynik_1.txt", "r");
                 break;
             case 2:
-                file2 = fopen("../tests/testsProgramResults/round_neumann/Wynik_2.txt", "r");
+                file2 = fopen("testsProgramResults/round_neumann/Wynik_2.txt", "r");
                 break;
             case 3:
-                file2 = fopen("../tests/testsProgramResults/round_neumann/Wynik_3.txt", "r");
+                file2 = fopen("testsProgramResults/round_neumann/Wynik_3.txt", "r");
                 break;
             }
         }
@@ -134,14 +143,14 @@ int main(int argc, char *argv[])
             switch (number_of_test)
             {
             case 1:
-                file2 = fopen("../tests/testsProgramResults/flat_neumann/Wynik_1.txt", "r");
+                file2 = fopen("testsProgramResults/flat_neumann/Wynik_1.txt", "r");
                 break;
 
             case 2:
-                file2 = fopen("../tests/testsProgramResults/flat_neumann/Wynik_2.txt", "r");
+                file2 = fopen("testsProgramResults/flat_neumann/Wynik_2.txt", "r");
                 break;
             case 3:
-                file2 = fopen("../tests/testsProgramResults/flat_neumann/Wynik_3.txt", "r");
+                file2 = fopen("testsProgramResults/flat_neumann/Wynik_3.txt", "r");
                 break;
             }
         }
