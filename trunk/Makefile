@@ -21,6 +21,12 @@ do_arg_test:
 do_program_test:
 	tests/testProgram
 	
+do_allprogram_test:
+	bin/lifeGameEmulator -iterations 10 -outputFilename tests/testsFileResult/AllProgramResult -proximity neumann -saveAsTxT true -saveAsPicture true -saveEveryIteration 2
+	bin/lifeGameEmulator -iterations 5 -saveEveryIteration 1 -saveAsPicture true -outputFilename tests/testsFileResult/AllProgramResult -flatArea true
+	bin/lifeGameEmulator -iterations 10 -flatArea true
+	bin/lifeGameEmulator -help -iterations 10 -saveAsPicture true
+	bin/lifeGameEmulator -printOnScreen false
 
 main.o: src/main.c
 	cc -c src/main.c
