@@ -1,60 +1,53 @@
 package tankgame;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Structures {
 
-    private List<Integer> xPos;
-    private List<Integer> yPos;
+    private List<Point> pos;
 
-    public Structures(List<Integer> xPos, List<Integer> yPos) {
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public Structures(List<Point> pos) {
+        this.pos = pos;
     }
 
-    private static void getPosStruct(List<Integer> xPos, List<Integer> yPos, int structureID) {
+    public Point getPoint() {
+        if (pos.isEmpty()) {
+            return null;
+        }
+        Point pointToReturn = pos.get(0);
+        pos.remove(pointToReturn);
+        return pointToReturn;
+    }
+
+    private static void getPosStruct(List<Point> pos, int structureID) {
         switch (structureID) {
             case 0:
-                xPos.add(0);
-                yPos.add(0);
+                pos.add(new Point(0, 0));
                 break;
             case 1:
-                xPos.add(0);
-                yPos.add(0);
-                xPos.add(0);
-                yPos.add(1);
+                pos.add(new Point(0, 0));
+                pos.add(new Point(0, 1));
                 break;
             case 2:
-                xPos.add(0);
-                yPos.add(0);
-                xPos.add(1);
-                yPos.add(0);
-                xPos.add(-1);
-                yPos.add(0);
+                pos.add(new Point(0, 0));
+                pos.add(new Point(-1, 0));
+                pos.add(new Point(1, 0));
                 break;
             case 3:
-                xPos.add(0);
-                yPos.add(0);
-                xPos.add(1);
-                yPos.add(0);
-                xPos.add(-1);
-                yPos.add(0);
-                xPos.add(0);
-                yPos.add(1);
+                pos.add(new Point(0, 0));
+                pos.add(new Point(-1, 0));
+                pos.add(new Point(1, 0));
+                pos.add(new Point(0, 1));
                 break;
             case 4:
-                xPos.add(0);
-                yPos.add(1);
-                xPos.add(1);
-                yPos.add(0);
-                xPos.add(-1);
-                yPos.add(0);
-                xPos.add(-1);
-                yPos.add(2);
-                xPos.add(1);
-                yPos.add(2);
+                pos.add(new Point(1, 1));
+                pos.add(new Point(-1, 0));
+                pos.add(new Point(1, 0));
+                pos.add(new Point(1, 2));
+                pos.add(new Point(-1, 2));
                 break;
             default:
                 break;
@@ -62,20 +55,18 @@ public class Structures {
     }
 
     public static Structures getRandomStructure() {
-        List<Integer> xPos = new ArrayList<>();
-        List<Integer> yPos = new ArrayList<>();
+        List<Point> pos = new ArrayList<>();
         Random random = new Random();
         int structureID = random.nextInt() % 5;
-        getPosStruct(xPos, yPos, structureID);
-        return new Structures(xPos, yPos);
+        getPosStruct(pos, structureID);
+        return new Structures(pos);
     }
 
     public static Structures getRandomStructure(long seed) {
-        List<Integer> xPos = new ArrayList<>();
-        List<Integer> yPos = new ArrayList<>();
+        List<Point> pos = new ArrayList<>();
         Random random = new Random(seed);
         int structureID = random.nextInt() % 5;
-        getPosStruct(xPos, yPos, structureID);
-        return new Structures(xPos, yPos);
+        getPosStruct(pos, structureID);
+        return new Structures(pos);
     }
 }
