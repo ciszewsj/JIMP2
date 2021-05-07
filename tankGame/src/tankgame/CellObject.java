@@ -22,6 +22,10 @@ public abstract class CellObject {
         }
     }
 
+    public void removeP1() {
+        P1--;
+    }
+
     public int getP1() {
         return P1;
     }

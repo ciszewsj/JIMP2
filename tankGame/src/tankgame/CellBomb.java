@@ -8,7 +8,18 @@ public class CellBomb extends CellObject {
 
     @Override
     public void destroyCell(Player player) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (isAlive()) {
+            removeP1();
+            if (getP1() <= 0) {
+                player.addPoint(getPointsForDestroy());
+            }
+        }
     }
 
+    public boolean isAlive() {
+        if (getP1() > 0) {
+            return true;
+        }
+        return false;
+    }
 }

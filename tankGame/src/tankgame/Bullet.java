@@ -4,14 +4,23 @@ public class Bullet {
 
     private double R1;
     private double V1;
-    private double moveAngle;
+    private final double moveAngle;
     private double xPos;
     private double yPos;
 
-    private GunSide side;
+    private final GunSide side;
 
-    public Bullet() {
+    public Bullet(double R1, double V1, double moveAngle, double xPos, double yPos, GunSide side) {
+        this.R1 = R1;
+        this.V1 = V1;
+        this.moveAngle = moveAngle;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.side = side;
+    }
 
+    public GunSide getSide() {
+        return side;
     }
 
     public void changeSize(double DR1) {
