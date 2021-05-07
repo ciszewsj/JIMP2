@@ -20,6 +20,7 @@ public class GameController {
     private List<Bullet> bulletList;
     public GameController() {
         FPS = 1 / 30 * 1000;
+        cellBomb = new CellBomb(0, 0, 0);
         cellList = new ArrayList<>();
         bulletList = new ArrayList<>();
     }
@@ -34,6 +35,16 @@ public class GameController {
     public void makeMove() {
 
         try {
+            for (Cell c: cellList)
+            {
+                c.moveCell(FPS);
+            }
+            for (Bullet b : bulletList)
+            {
+                b.makeMove(FPS);
+                b.hitCell(cellList);
+                b.hitCell(cellBomb);
+            }
             sleep(FPS);
         } catch (InterruptedException ex) {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);

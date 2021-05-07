@@ -1,5 +1,7 @@
 package tankgame;
 
+import java.util.List;
+
 public class Bullet {
 
     private double R1;
@@ -30,7 +32,17 @@ public class Bullet {
     public void changeV1(double DV1) {
         V1 -= DV1;
     }
-
+    
+    public void hitCell(List<Cell> cellList)
+    {
+        
+    }
+    
+    public void hitCell(CellBomb cellBomb)
+    {
+        
+    }
+    
     public void makeMove(double deltaTime) {
 
         yPos += V1 * deltaTime * Math.sin(moveAngle);
