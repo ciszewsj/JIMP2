@@ -17,10 +17,9 @@ public class KeyController extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent evt) {
 
-        
         if (pressed == false) {
-            if (evt.getKeyChar() == button) {
-                System.out.println(evt.getKeyChar());
+            if (evt.getKeyCode() == button) {
+                System.out.println(evt.getKeyCode());
                 pressed = true;
             }
         }
@@ -30,13 +29,21 @@ public class KeyController extends KeyAdapter {
     @Override
     public void keyReleased(KeyEvent evt) {
         if (pressed == true) {
-            if (evt.getKeyChar() == button) {
+            if (evt.getKeyCode() == button) {
                 pressed = false;
             }
         }
     }
 
+    public void changePressStatus() {
+        pressed = false;
+    }
+
     public boolean isPressed() {
         return pressed;
+    }
+
+    public int getButton() {
+        return button;
     }
 }

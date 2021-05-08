@@ -28,11 +28,15 @@ public class GameController extends KeyAdapter {
     private KeyController rightPlayerGunUp;
     private KeyController rightPlayerGunDown;
 
+    private ShootKeyController leftPlayerShootController;
+    
     private KeyController leftPlayerUp;
     private KeyController leftPlayerDown;
     private KeyController leftPlayerGunUp;
     private KeyController leftPlayerGunDown;
 
+    private ShootKeyController rightPlayerShootController;
+    
     private GameWindow gameWindow;
 
     public GameController() {
@@ -41,16 +45,27 @@ public class GameController extends KeyAdapter {
         cellList = new ArrayList<>();
         bulletList = new ArrayList<>();
 
-        rightPlayer = new Player(1024 - 100, 1024 / 2, 1, GunSide.RIGHT, 10, 10, 10, bulletList);
+        rightPlayer = new Player(1024 - 100, 1024 / 2, 0, GunSide.RIGHT, 10, 10, 10, bulletList);
 
         leftPlayer = new Player(100, 1024 / 2, 0, GunSide.LEFT, 10, 10, 10, bulletList);
 
-        leftPlayerUp = new KeyController('w');
-        leftPlayerDown = new KeyController('s');
-        leftPlayerGunUp = new KeyController('a');
-        leftPlayerGunDown = new KeyController('d');
+        leftPlayerUp = new KeyController(87);
+        leftPlayerDown = new KeyController(83);
+        leftPlayerGunUp = new KeyController(65);
+        leftPlayerGunDown = new KeyController(68);
+        
+        leftPlayerShootController = new ShootKeyController(88);
+        
+        
+        
+        rightPlayerUp = new KeyController(38);
+        rightPlayerDown = new KeyController(40);
+        rightPlayerGunUp = new KeyController(37);
+        rightPlayerGunDown = new KeyController(39);
 
-        gameWindow = new GameWindow(rightPlayer, leftPlayer, cellBomb, cellList, bulletList, rightPlayerUp, rightPlayerDown, rightPlayerGunUp, rightPlayerGunDown, leftPlayerUp, leftPlayerDown, leftPlayerGunUp, leftPlayerGunDown);
+        rightPlayerShootController = new ShootKeyController(191);
+        
+        gameWindow = new GameWindow(rightPlayer, leftPlayer, cellBomb, cellList, bulletList, rightPlayerUp, rightPlayerDown, rightPlayerGunUp, rightPlayerGunDown, leftPlayerUp, leftPlayerDown, leftPlayerGunUp, leftPlayerGunDown, rightPlayerShootController, leftPlayerShootController);
 
     }
 
@@ -106,5 +121,30 @@ public class GameController extends KeyAdapter {
         if (leftPlayerGunDown.isPressed() == true) {
             leftPlayer.elevateGun(false, FPS);
         }
+        
+        if (leftPlayerShootController.isReadyToShoot()){
+            leftPlayer.shotBullet();
+        }
+        
+        if (rightPlayerUp.isPressed() == true) {
+            rightPlayer.movePlayer(true, FPS);
+        }
+
+        if (rightPlayerDown.isPressed() == true) {
+            rightPlayer.movePlayer(false, FPS);
+        }
+        
+        if (rightPlayerGunUp.isPressed() == true) {
+            rightPlayer.elevateGun(true, FPS);
+        }
+        
+        if (rightPlayerGunDown.isPressed() == true) {
+            rightPlayer.elevateGun(false, FPS);
+        }
+        
+        if (rightPlayerShootController.isReadyToShoot()){
+            rightPlayer.shotBullet();
+        }
+        
     }
 }
