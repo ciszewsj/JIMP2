@@ -6,7 +6,7 @@ public abstract class CellObject {
     private int pointForDestroy;
     private int H1;
 
-    private int maxP1;
+    private final int maxP1;
 
     public CellObject(int P1, int pointForDestroy, int H1) {
         this.P1 = P1;
