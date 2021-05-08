@@ -5,14 +5,11 @@ import java.awt.event.KeyEvent;
 
 public class KeyController extends KeyAdapter {
 
-    private GameController gameController;
-
     private int button;
     private boolean pressed;
 
-    public KeyController(GameController gameController, int button) {
+    public KeyController(int button) {
         this.button = button;
-        this.gameController = gameController;
         this.pressed = false;
 
     }
@@ -20,16 +17,22 @@ public class KeyController extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent evt) {
 
-        if (evt.getKeyChar() == button) {
-            pressed = true;
+        
+        if (pressed == false) {
+            if (evt.getKeyChar() == button) {
+                System.out.println(evt.getKeyChar());
+                pressed = true;
+            }
         }
+
     }
 
     @Override
     public void keyReleased(KeyEvent evt) {
-        if (evt.getKeyChar() == button) {
-            System.err.println("false");
-            pressed = false;
+        if (pressed == true) {
+            if (evt.getKeyChar() == button) {
+                pressed = false;
+            }
         }
     }
 

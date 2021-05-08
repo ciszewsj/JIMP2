@@ -27,7 +27,7 @@ public class GameWindow extends JFrame {
 
     private GameCanvas gameCanvas;
 
-    public GameWindow(Player rightPlayer, Player leftPlayer, CellBomb cellBomb, List<Cell> cellList, List<Bullet> bulletList, GameController gameController) {
+    public GameWindow(Player rightPlayer, Player leftPlayer, CellBomb cellBomb, List<Cell> cellList, List<Bullet> bulletList, KeyController rightPlayerUp, KeyController rightPlayerDown, KeyController rightPlayerGunUp, KeyController rightPlayerGunDown, KeyController leftPlayerUp, KeyController leftPlayerDown, KeyController leftPlayerGunUp, KeyController leftPlayerGunDown) {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         width = 1024;
         height = 1024;
@@ -52,16 +52,23 @@ public class GameWindow extends JFrame {
 
         gameCanvas = new GameCanvas(rightPlayer, leftPlayer, cellBomb, cellList, bulletList);
         JTextField jbutton = new JTextField();
-        jbutton.addKeyListener(new KeyController(gameController, KeyEvent.VK_0));
-        jbutton.addKeyListener(new KeyController(gameController, 's'));
+
+        jbutton.addKeyListener(rightPlayerUp);
+        jbutton.addKeyListener(rightPlayerDown);
+        jbutton.addKeyListener(rightPlayerGunUp);
+        jbutton.addKeyListener(rightPlayerGunDown);
+
+        jbutton.addKeyListener(leftPlayerUp);
+        jbutton.addKeyListener(leftPlayerDown);
+        jbutton.addKeyListener(leftPlayerGunDown);
+        jbutton.addKeyListener(leftPlayerGunUp);
+
         add(jbutton);
         add(gameCanvas);
     }
 
     public void refreshWindow() {
-        gameCanvas = new GameCanvas(rightPlayer, leftPlayer, cellBomb, cellList, bulletList);
         gameCanvas.updateFrame();
-        add(gameCanvas);
     }
 
 }
@@ -168,6 +175,11 @@ class GameCanvas extends JComponent {
         g.drawLine((1024 + 100) / 2, 1024, (1024 + 100) / 2, 1024 - 100);
         g.drawLine((1024 - 100) / 2, 1024 - 100, (1024 + 100) / 2, 1024 - 100);
 
+        g.setColor(Color.RED);
+
+        g.drawLine((1024 - cellBomb.getH1()) / 2, 1024 - 100, (1024 + cellBomb.getH1()) / 2, 1024 - 100);
+
+        g.setColor(Color.BLACK);
         g.drawString(String.valueOf(cellBomb.getP1()), (1024 - (100 + g.getFont().getSize()) / 2) / 2, 1024 - (100 + g.getFont().getSize()) / 2);
 
         g.drawLine((1024 - 300) / 2, 0, (1024 - 300) / 2, 100);

@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class GameController extends KeyAdapter {
 
-    private final long FPS;
+    private final double FPS;
 
     private Player rightPlayer;
     private Player leftPlayer;
@@ -23,21 +23,34 @@ public class GameController extends KeyAdapter {
 
     private List<Bullet> bulletList;
 
-    private KeyController keyController;
+    private KeyController rightPlayerUp;
+    private KeyController rightPlayerDown;
+    private KeyController rightPlayerGunUp;
+    private KeyController rightPlayerGunDown;
+
+    private KeyController leftPlayerUp;
+    private KeyController leftPlayerDown;
+    private KeyController leftPlayerGunUp;
+    private KeyController leftPlayerGunDown;
 
     private GameWindow gameWindow;
 
     public GameController() {
-        FPS = 1 / 30 * 1000;
+        FPS = (double) 1 / (double) 30;
         cellBomb = new CellBomb(9, 9, 9);
         cellList = new ArrayList<>();
         bulletList = new ArrayList<>();
 
-        rightPlayer = new Player(1024 - 100, 1024 / 2, 0, GunSide.RIGHT, 0, 0, 0, bulletList);
+        rightPlayer = new Player(1024 - 100, 1024 / 2, 1, GunSide.RIGHT, 10, 10, 10, bulletList);
 
-        leftPlayer = new Player(100, 1024 / 2, 0, GunSide.LEFT, 0, 0, 0, bulletList);
+        leftPlayer = new Player(100, 1024 / 2, 0, GunSide.LEFT, 10, 10, 10, bulletList);
 
-        gameWindow = new GameWindow(rightPlayer, leftPlayer, cellBomb, cellList, bulletList, this);
+        leftPlayerUp = new KeyController('w');
+        leftPlayerDown = new KeyController('s');
+        leftPlayerGunUp = new KeyController('a');
+        leftPlayerGunDown = new KeyController('d');
+
+        gameWindow = new GameWindow(rightPlayer, leftPlayer, cellBomb, cellList, bulletList, rightPlayerUp, rightPlayerDown, rightPlayerGunUp, rightPlayerGunDown, leftPlayerUp, leftPlayerDown, leftPlayerGunUp, leftPlayerGunDown);
 
     }
 
@@ -54,6 +67,7 @@ public class GameController extends KeyAdapter {
 
     public void makeMove() {
 
+        int timeToSleep = (int) ((double) 100 * FPS);
         while (true) {
             try {
                 gameWindow.refreshWindow();
@@ -66,10 +80,31 @@ public class GameController extends KeyAdapter {
                     b.hitCell(cellList);
                     b.hitCell(cellBomb);
                 }
-                sleep(FPS);
+                moveTanks();
+                gameWindow.refreshWindow();
+                sleep(timeToSleep);
             } catch (InterruptedException ex) {
                 Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+
+    private void moveTanks() {
+
+        if (leftPlayerUp.isPressed() == true) {
+            leftPlayer.movePlayer(true, FPS);
+        }
+
+        if (leftPlayerDown.isPressed() == true) {
+            leftPlayer.movePlayer(false, FPS);
+        }
+        
+        if (leftPlayerGunUp.isPressed() == true) {
+            leftPlayer.elevateGun(true, FPS);
+        }
+        
+        if (leftPlayerGunDown.isPressed() == true) {
+            leftPlayer.elevateGun(false, FPS);
         }
     }
 }

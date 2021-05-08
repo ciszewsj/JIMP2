@@ -23,7 +23,6 @@ public class Player {
     private int points;
 
     private List<Bullet> bulletList;
-    
 
     public Player(double xPos, double yPos, double gunRotation, GunSide gunSide, int PC, int PD, int X1, List<Bullet> bulletList) {
         this.xPos = xPos;
@@ -37,23 +36,23 @@ public class Player {
 
         this.gunSide = gunSide;
 
-        this.maxY = 0;
-        this.minY = 100;
-        this.minRotation = -30;
-        this.maxRotation = 30;
+        this.maxY = 100 + 50;
+        this.minY = 1024 - 100 - 50;
+        this.minRotation = (double) -30 / (double) 180 * Math.PI;
+        this.maxRotation = (double) 30 / (double) 180 * Math.PI;
 
         this.bulletList = bulletList;
     }
 
     public void movePlayer(boolean side, double deltaTime) {
-        if (side) {
-            yPos -= deltaTime * PC;
+        if (side == true) {
+            yPos -= deltaTime * (double) PC;
             if (yPos < maxY) {
                 yPos = maxY;
             }
         } else {
-            yPos += deltaTime * PC;
-            if (yPos < minY) {
+            yPos += deltaTime * (double) PC;
+            if (yPos > minY) {
                 yPos = minY;
             }
         }
@@ -61,13 +60,14 @@ public class Player {
 
     public void elevateGun(boolean side, double deltaTime) {
         if (side) {
-            gunRotation -= deltaTime * PD;
+            gunRotation -= deltaTime * PD / 180 * Math.PI;
             if (gunRotation < minRotation) {
                 gunRotation = minRotation;
+
             }
         } else {
-            gunRotation += deltaTime * PD;
-            if (gunRotation < maxRotation) {
+            gunRotation += deltaTime * PD / 180 * Math.PI;
+            if (gunRotation > maxRotation) {
                 gunRotation = maxRotation;
             }
         }
@@ -92,19 +92,16 @@ public class Player {
             bulletList.add(bullet);
         }
     }
-    
-    public int getXPos()
-    {
+
+    public int getXPos() {
         return (int) xPos;
     }
-    
-    public int getYPos()
-    {
+
+    public int getYPos() {
         return (int) yPos;
     }
-    
-    public double getGunRotation()
-    {
+
+    public double getGunRotation() {
         return gunRotation;
     }
 }
