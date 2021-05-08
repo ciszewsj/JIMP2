@@ -1,5 +1,6 @@
 package tankgame;
 
+import com.sun.java.accessibility.util.AWTEventMonitor;
 import java.awt.EventQueue;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -22,31 +23,26 @@ public class GameController extends KeyAdapter {
 
     private List<Bullet> bulletList;
 
-    private int upRightPlayer;
-    private int downRightPlayer;
-    private int upGunRightPlayer;
-    private int downGunRightPlayer;
-
     private KeyController keyController;
-    
+
     private GameWindow gameWindow;
-    
+
     public GameController() {
         FPS = 1 / 30 * 1000;
-        cellBomb = new CellBomb(0, 0, 0);
+        cellBomb = new CellBomb(9, 9, 9);
         cellList = new ArrayList<>();
         bulletList = new ArrayList<>();
 
-        upRightPlayer = 38;
-        downRightPlayer = 40;
-        
-        keyController = new KeyController(this);
-        
-        gameWindow = new GameWindow(rightPlayer, leftPlayer, cellBomb, cellList, bulletList);
+        rightPlayer = new Player(1024 - 100, 1024 / 2, 0, GunSide.RIGHT, 0, 0, 0, bulletList);
+
+        leftPlayer = new Player(100, 1024 / 2, 0, GunSide.LEFT, 0, 0, 0, bulletList);
+
+        gameWindow = new GameWindow(rightPlayer, leftPlayer, cellBomb, cellList, bulletList, this);
+
     }
 
     public void initGame() {
-    EventQueue.invokeLater(()
+        EventQueue.invokeLater(()
                 -> {
             gameWindow.setVisible(true);
         });
@@ -61,7 +57,7 @@ public class GameController extends KeyAdapter {
         while (true) {
             try {
                 gameWindow.refreshWindow();
-                
+
                 for (Cell c : cellList) {
                     c.moveCell(FPS);
                 }

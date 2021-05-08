@@ -32,17 +32,15 @@ public class Bullet {
     public void changeV1(double DV1) {
         V1 -= DV1;
     }
-    
-    public void hitCell(List<Cell> cellList)
-    {
-        
+
+    public void hitCell(List<Cell> cellList) {
+
     }
-    
-    public void hitCell(CellBomb cellBomb)
-    {
-        
+
+    public void hitCell(CellBomb cellBomb) {
+
     }
-    
+
     public void makeMove(double deltaTime) {
 
         yPos += V1 * deltaTime * Math.sin(moveAngle);
@@ -52,5 +50,27 @@ public class Bullet {
         } else if (side.equals(GunSide.RIGHT)) {
             xPos -= V1 * deltaTime * Math.cos(moveAngle);
         }
+    }
+
+    public static int countOfPlayerBullet(Player player, List<Bullet> bulletList) {
+        int nOfPlayerBullet = 0;
+        for (Bullet b : bulletList) {
+            if (b.getSide().equals(player.getSide())) {
+                nOfPlayerBullet++;
+            }
+        }
+        return nOfPlayerBullet;
+    }
+
+    public int getSize() {
+        return (int) R1;
+    }
+
+    public int getXPos() {
+        return (int) xPos;
+    }
+
+    public int getYPos() {
+        return (int) yPos;
     }
 }

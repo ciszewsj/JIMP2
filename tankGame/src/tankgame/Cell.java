@@ -25,6 +25,14 @@ public class Cell extends CellObject {
         V2 -= DV2;
     }
 
+    public int getXPos() {
+        return (int) xPos;
+    }
+
+    public int getYPos() {
+        return (int) yPos;
+    }
+
     @Override
     public void destroyCell(Player player) {
         removeP1();

@@ -3,27 +3,37 @@ package tankgame;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class KeyController extends KeyAdapter{
-    private int upRight;
-    private int downRight;
-    
+public class KeyController extends KeyAdapter {
+
     private GameController gameController;
-    
-    public KeyController(GameController gameController){
-        upRight = 38;
-        downRight = 40;
+
+    private int button;
+    private boolean pressed;
+
+    public KeyController(GameController gameController, int button) {
+        this.button = button;
         this.gameController = gameController;
+        this.pressed = false;
+
     }
-    
+
     @Override
-    public void keyPressed(KeyEvent e)
-    {
-        System.out.println("wciśnieto");
+    public void keyPressed(KeyEvent evt) {
+
+        if (evt.getKeyChar() == button) {
+            pressed = true;
+        }
     }
-    
+
     @Override
-    public void keyReleased(KeyEvent e)
-    {
-        
+    public void keyReleased(KeyEvent evt) {
+        if (evt.getKeyChar() == button) {
+            System.err.println("false");
+            pressed = false;
+        }
+    }
+
+    public boolean isPressed() {
+        return pressed;
     }
 }

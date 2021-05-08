@@ -23,6 +23,7 @@ public class Player {
     private int points;
 
     private List<Bullet> bulletList;
+    
 
     public Player(double xPos, double yPos, double gunRotation, GunSide gunSide, int PC, int PD, int X1, List<Bullet> bulletList) {
         this.xPos = xPos;
@@ -76,16 +77,34 @@ public class Player {
         points += point;
     }
 
+    public int getPoints() {
+        return points;
+    }
+
+    public GunSide getSide() {
+        return gunSide;
+    }
+
     public void shotBullet() {
-        int nOfPlayerBullet = 0;
-        for (Bullet b : bulletList) {
-            if (b.getSide().equals(gunSide)) {
-                nOfPlayerBullet++;
-            }
-        }
+        int nOfPlayerBullet = Bullet.countOfPlayerBullet(this, bulletList);
         if (nOfPlayerBullet < X1) {
             Bullet bullet = new Bullet(0, 0, gunRotation, xPos, yPos, gunSide);
             bulletList.add(bullet);
         }
+    }
+    
+    public int getXPos()
+    {
+        return (int) xPos;
+    }
+    
+    public int getYPos()
+    {
+        return (int) yPos;
+    }
+    
+    public double getGunRotation()
+    {
+        return gunRotation;
     }
 }
