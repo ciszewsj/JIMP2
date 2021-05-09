@@ -54,12 +54,16 @@ public class GameWindow extends JFrame {
         jbutton.addKeyListener(rightPlayerDown);
         jbutton.addKeyListener(rightPlayerGunUp);
         jbutton.addKeyListener(rightPlayerGunDown);
-
+        
+        jbutton.addKeyListener(rightPlayerShootController);
+        
         jbutton.addKeyListener(leftPlayerUp);
         jbutton.addKeyListener(leftPlayerDown);
         jbutton.addKeyListener(leftPlayerGunDown);
         jbutton.addKeyListener(leftPlayerGunUp);
-
+        
+        jbutton.addKeyListener(leftPlayerShootController);
+        
         add(jbutton);
         add(gameCanvas);
     }
@@ -97,6 +101,8 @@ class GameCanvas extends JComponent {
 
     @Override
     public void paintComponent(Graphics g) {
+        drawBullets(g);
+        drawCells(g);
         drawTanks(g);
         drawMenu(g);
         g.dispose();

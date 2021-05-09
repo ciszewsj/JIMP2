@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,14 +30,14 @@ public class GameController extends KeyAdapter {
     private KeyController rightPlayerGunDown;
 
     private ShootKeyController leftPlayerShootController;
-    
+
     private KeyController leftPlayerUp;
     private KeyController leftPlayerDown;
     private KeyController leftPlayerGunUp;
     private KeyController leftPlayerGunDown;
 
     private ShootKeyController rightPlayerShootController;
-    
+
     private GameWindow gameWindow;
 
     public GameController() {
@@ -53,18 +54,16 @@ public class GameController extends KeyAdapter {
         leftPlayerDown = new KeyController(83);
         leftPlayerGunUp = new KeyController(65);
         leftPlayerGunDown = new KeyController(68);
-        
+
         leftPlayerShootController = new ShootKeyController(88);
-        
-        
-        
+
         rightPlayerUp = new KeyController(38);
         rightPlayerDown = new KeyController(40);
         rightPlayerGunUp = new KeyController(37);
         rightPlayerGunDown = new KeyController(39);
 
-        rightPlayerShootController = new ShootKeyController(191);
-        
+        rightPlayerShootController = new ShootKeyController(17);
+
         gameWindow = new GameWindow(rightPlayer, leftPlayer, cellBomb, cellList, bulletList, rightPlayerUp, rightPlayerDown, rightPlayerGunUp, rightPlayerGunDown, leftPlayerUp, leftPlayerDown, leftPlayerGunUp, leftPlayerGunDown, rightPlayerShootController, leftPlayerShootController);
 
     }
@@ -90,11 +89,17 @@ public class GameController extends KeyAdapter {
                 for (Cell c : cellList) {
                     c.moveCell(FPS);
                 }
-                for (Bullet b : bulletList) {
-                    b.makeMove(FPS);
+
+                for (Iterator<Bullet> it = bulletList.iterator(); it.hasNext();) {
+                    Bullet b = it.next();
+                    b.makeMove(FPS, 1024, 1024);
                     b.hitCell(cellList);
                     b.hitCell(cellBomb);
+                    if (b.isInGameWindow() == false) {
+                        it.remove(); //metoda remove() iteratora
+                    }
                 }
+
                 moveTanks();
                 gameWindow.refreshWindow();
                 sleep(timeToSleep);
@@ -113,19 +118,19 @@ public class GameController extends KeyAdapter {
         if (leftPlayerDown.isPressed() == true) {
             leftPlayer.movePlayer(false, FPS);
         }
-        
+
         if (leftPlayerGunUp.isPressed() == true) {
             leftPlayer.elevateGun(true, FPS);
         }
-        
+
         if (leftPlayerGunDown.isPressed() == true) {
             leftPlayer.elevateGun(false, FPS);
         }
-        
-        if (leftPlayerShootController.isReadyToShoot()){
+
+        if (leftPlayerShootController.isReadyToShoot() == true) {
             leftPlayer.shotBullet();
         }
-        
+
         if (rightPlayerUp.isPressed() == true) {
             rightPlayer.movePlayer(true, FPS);
         }
@@ -133,18 +138,18 @@ public class GameController extends KeyAdapter {
         if (rightPlayerDown.isPressed() == true) {
             rightPlayer.movePlayer(false, FPS);
         }
-        
+
         if (rightPlayerGunUp.isPressed() == true) {
             rightPlayer.elevateGun(true, FPS);
         }
-        
+
         if (rightPlayerGunDown.isPressed() == true) {
             rightPlayer.elevateGun(false, FPS);
         }
-        
-        if (rightPlayerShootController.isReadyToShoot()){
+
+        if (rightPlayerShootController.isReadyToShoot() == true) {
             rightPlayer.shotBullet();
         }
-        
+
     }
 }

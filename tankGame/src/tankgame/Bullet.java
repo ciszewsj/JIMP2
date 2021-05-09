@@ -12,6 +12,8 @@ public class Bullet {
 
     private final GunSide side;
 
+    private boolean isInGameWindow;
+
     public Bullet(double R1, double V1, double moveAngle, double xPos, double yPos, GunSide side) {
         this.R1 = R1;
         this.V1 = V1;
@@ -19,6 +21,8 @@ public class Bullet {
         this.xPos = xPos;
         this.yPos = yPos;
         this.side = side;
+
+        this.isInGameWindow = true;
     }
 
     public GunSide getSide() {
@@ -41,15 +45,23 @@ public class Bullet {
 
     }
 
-    public void makeMove(double deltaTime) {
-
-        yPos += V1 * deltaTime * Math.sin(moveAngle);
+    public void makeMove(double deltaTime, int xWindowSize, int yWindowSize) {
 
         if (side.equals(GunSide.LEFT)) {
             xPos += V1 * deltaTime * Math.cos(moveAngle);
+            yPos += V1 * deltaTime * Math.sin(moveAngle);
         } else if (side.equals(GunSide.RIGHT)) {
             xPos -= V1 * deltaTime * Math.cos(moveAngle);
+            yPos -= V1 * deltaTime * Math.sin(moveAngle);
         }
+
+        if (xPos + R1 < 0 || xPos - R1 > xWindowSize || yPos + R1 < 0 || yPos - R1 > yWindowSize) {
+            isInGameWindow = false;
+        }
+    }
+
+    public boolean isInGameWindow() {
+        return isInGameWindow;
     }
 
     public static int countOfPlayerBullet(Player player, List<Bullet> bulletList) {

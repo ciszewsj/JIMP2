@@ -88,7 +88,7 @@ public class Player {
     public void shotBullet() {
         int nOfPlayerBullet = Bullet.countOfPlayerBullet(this, bulletList);
         if (nOfPlayerBullet < X1) {
-            Bullet bullet = new Bullet(0, 0, gunRotation, xPos, yPos, gunSide);
+            Bullet bullet = new Bullet(10, 10, gunRotation, xPos, yPos, gunSide);
             bulletList.add(bullet);
         }
     }

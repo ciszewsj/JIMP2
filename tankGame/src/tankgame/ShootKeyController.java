@@ -12,7 +12,7 @@ public class ShootKeyController extends KeyController {
     }
 
     public boolean isReadyToShoot() {
-        if (isFire == false) {
+        if (isPressed() == true && isFire == false) {
             isFire = true;
             return true;
         }
