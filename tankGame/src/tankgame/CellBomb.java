@@ -2,8 +2,11 @@ package tankgame;
 
 public class CellBomb extends CellObject {
 
+    private int size;
+
     public CellBomb(int P1, int pointForDestroy, int H1) {
         super(P1, pointForDestroy, H1);
+        this.size = 100;
     }
 
     @Override
@@ -21,5 +24,9 @@ public class CellBomb extends CellObject {
             return true;
         }
         return false;
+    }
+
+    public int getSize() {
+        return size;
     }
 }

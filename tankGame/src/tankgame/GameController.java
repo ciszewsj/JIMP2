@@ -42,7 +42,7 @@ public class GameController extends KeyAdapter {
 
     public GameController() {
         FPS = (double) 1 / (double) 30;
-        cellBomb = new CellBomb(9, 9, 9);
+        cellBomb = new CellBomb(9, 9, 100);
         cellList = new ArrayList<>();
         bulletList = new ArrayList<>();
 
@@ -92,9 +92,9 @@ public class GameController extends KeyAdapter {
 
                 for (Iterator<Bullet> it = bulletList.iterator(); it.hasNext();) {
                     Bullet b = it.next();
-                    b.makeMove(FPS, 1024, 1024);
                     b.hitCell(cellList);
-                    b.hitCell(cellBomb);
+                    b.hitCell(cellBomb, 1024, 1024);
+                    b.makeMove(FPS, 1024, 1024);
                     if (b.isInGameWindow() == false) {
                         it.remove(); //metoda remove() iteratora
                     }

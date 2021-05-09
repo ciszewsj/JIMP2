@@ -10,17 +10,21 @@ public class Bullet {
     private double xPos;
     private double yPos;
 
+    private final Player player;
+
     private final GunSide side;
 
     private boolean isInGameWindow;
 
-    public Bullet(double R1, double V1, double moveAngle, double xPos, double yPos, GunSide side) {
+    public Bullet(double R1, double V1, double moveAngle, double xPos, double yPos, Player player, GunSide side) {
         this.R1 = R1;
         this.V1 = V1;
         this.moveAngle = moveAngle;
         this.xPos = xPos;
         this.yPos = yPos;
         this.side = side;
+
+        this.player = player;
 
         this.isInGameWindow = true;
     }
@@ -41,8 +45,22 @@ public class Bullet {
 
     }
 
-    public void hitCell(CellBomb cellBomb) {
-
+    public void hitCell(CellBomb cellBomb, int xWindowSize, int yWindowSize) {
+        if (isInGameWindow == true) {
+            if (Math.abs(yPos - (yWindowSize - cellBomb.getSize())) < R1) {
+                if (Math.abs(xPos - (1024 - cellBomb.getH1()) / 2) < R1 + cellBomb.getH1() && Math.abs(xPos - (1024 + cellBomb.getH1()) / 2) < R1 + cellBomb.getH1()) {
+                    cellBomb.destroyCell(player);
+                    isInGameWindow = false;
+                }
+            }
+            if (yPos - R1 >= 1024 - cellBomb.getSize()) {
+                if (Math.abs(xPos - (1024 - cellBomb.getSize()) / 2) < R1 + cellBomb.getSize() && Math.abs(xPos - (1024 + cellBomb.getSize()) / 2) < R1 + cellBomb.getSize()) {
+                    {
+                        isInGameWindow = false;
+                    }
+                }
+            }
+        }
     }
 
     public void makeMove(double deltaTime, int xWindowSize, int yWindowSize) {
