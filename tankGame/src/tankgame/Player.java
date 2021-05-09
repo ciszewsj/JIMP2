@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Player {
 
-    private double xPos;
+    private final double xPos;
     private double yPos;
     private double gunRotation;
 
@@ -12,7 +12,7 @@ public class Player {
     private int PD;
     private final int X1;
 
-    private double maxY;
+    private final double maxY;
     private final double minY;
 
     private final GunSide gunSide;
@@ -22,7 +22,7 @@ public class Player {
 
     private int points;
 
-    private List<Bullet> bulletList;
+    private final List<Bullet> bulletList;
 
     public Player(double xPos, double yPos, double gunRotation, GunSide gunSide, int PC, int PD, int X1, List<Bullet> bulletList) {
         this.xPos = xPos;

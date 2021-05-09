@@ -3,7 +3,7 @@ package tankgame;
 public abstract class CellObject {
 
     private int P1;
-    private int pointForDestroy;
+    private final int pointForDestroy;
     private int H1;
 
     private final int maxP1;

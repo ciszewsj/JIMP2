@@ -5,7 +5,7 @@ import java.util.List;
 public class Cell extends CellObject {
 
     private double V2;
-    private double xPos;
+    private final double xPos;
     private double yPos;
 
     private List<Cell> cellList;

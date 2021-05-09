@@ -1,9 +1,7 @@
 package tankgame;
 
-import com.sun.java.accessibility.util.AWTEventMonitor;
 import java.awt.EventQueue;
 import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,30 +13,30 @@ public class GameController extends KeyAdapter {
 
     private final double FPS;
 
-    private Player rightPlayer;
-    private Player leftPlayer;
+    private final Player rightPlayer;
+    private final Player leftPlayer;
 
-    private CellBomb cellBomb;
+    private final CellBomb cellBomb;
 
-    private List<Cell> cellList;
+    private final List<Cell> cellList;
 
-    private List<Bullet> bulletList;
+    private final List<Bullet> bulletList;
 
-    private KeyController rightPlayerUp;
-    private KeyController rightPlayerDown;
-    private KeyController rightPlayerGunUp;
-    private KeyController rightPlayerGunDown;
+    private final KeyController rightPlayerUp;
+    private final KeyController rightPlayerDown;
+    private final KeyController rightPlayerGunUp;
+    private final KeyController rightPlayerGunDown;
 
-    private ShootKeyController leftPlayerShootController;
+    private final ShootKeyController leftPlayerShootController;
 
-    private KeyController leftPlayerUp;
-    private KeyController leftPlayerDown;
-    private KeyController leftPlayerGunUp;
-    private KeyController leftPlayerGunDown;
+    private final KeyController leftPlayerUp;
+    private final KeyController leftPlayerDown;
+    private final KeyController leftPlayerGunUp;
+    private final KeyController leftPlayerGunDown;
 
-    private ShootKeyController rightPlayerShootController;
+    private final ShootKeyController rightPlayerShootController;
 
-    private GameWindow gameWindow;
+    private final GameWindow gameWindow;
 
     public GameController() {
         FPS = (double) 1 / (double) 30;
@@ -96,7 +94,7 @@ public class GameController extends KeyAdapter {
                     b.hitCell(cellBomb, 1024, 1024);
                     b.makeMove(FPS, 1024, 1024);
                     if (b.isInGameWindow() == false) {
-                        it.remove(); //metoda remove() iteratora
+                        it.remove();
                     }
                 }
 

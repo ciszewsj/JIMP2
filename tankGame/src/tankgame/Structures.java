@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Structures {
 
-    private List<Point> pos;
+    private final List<Point> pos;
 
     public Structures(List<Point> pos) {
         this.pos = pos;

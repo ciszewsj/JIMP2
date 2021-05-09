@@ -2,7 +2,7 @@ package tankgame;
 
 public class CellBomb extends CellObject {
 
-    private int size;
+    private final int size;
 
     public CellBomb(int P1, int pointForDestroy, int H1) {
         super(P1, pointForDestroy, H1);
