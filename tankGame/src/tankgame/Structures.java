@@ -43,7 +43,7 @@ public class Structures {
                 pos.add(new Point(0, 1));
                 break;
             case 4:
-                pos.add(new Point(1, 1));
+                pos.add(new Point(0, 1));
                 pos.add(new Point(-1, 0));
                 pos.add(new Point(1, 0));
                 pos.add(new Point(1, 2));

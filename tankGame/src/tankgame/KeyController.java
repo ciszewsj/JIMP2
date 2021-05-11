@@ -19,7 +19,6 @@ public class KeyController extends KeyAdapter {
 
         if (pressed == false) {
             if (evt.getKeyCode() == button) {
-                System.out.println(evt.getKeyCode());
                 pressed = true;
             }
         }

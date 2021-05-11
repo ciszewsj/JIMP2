@@ -1,24 +1,23 @@
 package tankgame;
 
-import java.util.List;
-
 public class Cell extends CellObject {
 
     private double V2;
     private final double xPos;
     private double yPos;
 
-    private List<Cell> cellList;
-
-    public Cell(int P1, int pointForDestroy, int H1, double V2, double xPos, double yPos) {
-        super(P1, pointForDestroy, H1);
+    public Cell(int P1, int H1, double V2, double xPos, double yPos) {
+        super(P1, P1, H1);
         this.V2 = V2;
         this.xPos = xPos;
         this.yPos = yPos;
     }
 
-    public void moveCell(double deltaTime) {
+    public void moveCell(double deltaTime, int gameYSize) {
         yPos += deltaTime * V2;
+        if (yPos - getH1() / 2 > gameYSize) {
+            setP1To0();
+        }
     }
 
     public void changeV2(double DV2) {
@@ -39,7 +38,6 @@ public class Cell extends CellObject {
         if (getP1() <= 0) {
             player.addPoint(getPointsForDestroy());
         }
-        cellList.remove(this);
     }
 
 }

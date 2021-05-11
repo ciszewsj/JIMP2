@@ -30,6 +30,10 @@ public abstract class CellObject {
         return P1;
     }
 
+    public void setP1To0() {
+        P1 = 0;
+    }
+
     public int getH1() {
         return H1;
     }

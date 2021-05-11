@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -24,7 +25,7 @@ public class GameWindow extends JFrame {
 
     private final GameCanvas gameCanvas;
 
-    public GameWindow(Player rightPlayer, Player leftPlayer, CellBomb cellBomb, List<Cell> cellList, List<Bullet> bulletList, KeyController rightPlayerUp, KeyController rightPlayerDown, KeyController rightPlayerGunUp, KeyController rightPlayerGunDown, KeyController leftPlayerUp, KeyController leftPlayerDown, KeyController leftPlayerGunUp, KeyController leftPlayerGunDown, ShootKeyController rightPlayerShootController, ShootKeyController leftPlayerShootController) {
+    public GameWindow(Player rightPlayer, Player leftPlayer, CellBomb cellBomb, List<Cell> cellList, List<Bullet> bulletList, KeyController rightPlayerUp, KeyController rightPlayerDown, KeyController rightPlayerGunUp, KeyController rightPlayerGunDown, KeyController leftPlayerUp, KeyController leftPlayerDown, KeyController leftPlayerGunUp, KeyController leftPlayerGunDown, ShootKeyController rightPlayerShootController, ShootKeyController leftPlayerShootController, double timeToEndGame) {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         width = 1024;
         height = 1024;
@@ -47,7 +48,7 @@ public class GameWindow extends JFrame {
         this.cellList = cellList;
         this.bulletList = bulletList;
 
-        gameCanvas = new GameCanvas(rightPlayer, leftPlayer, cellBomb, cellList, bulletList);
+        gameCanvas = new GameCanvas(rightPlayer, leftPlayer, cellBomb, cellList, bulletList, (int) timeToEndGame);
         JTextField jbutton = new JTextField();
 
         jbutton.addKeyListener(rightPlayerUp);
@@ -68,8 +69,8 @@ public class GameWindow extends JFrame {
         add(gameCanvas);
     }
 
-    public void refreshWindow() {
-        gameCanvas.updateFrame();
+    public void refreshWindow(double timeToEndGame) {
+        gameCanvas.updateFrame((int) timeToEndGame);
     }
 
 }
@@ -84,18 +85,22 @@ class GameCanvas extends JComponent {
     private final List<Cell> cellList;
     private final List<Bullet> bulletList;
 
+    private int timeToEndGame;
+
     private GameCanvas gameCanvas;
 
-    public GameCanvas(Player rightPlayer, Player leftPlayer, CellBomb cellBomb, List<Cell> cellList, List<Bullet> bulletList) {
+    public GameCanvas(Player rightPlayer, Player leftPlayer, CellBomb cellBomb, List<Cell> cellList, List<Bullet> bulletList, int timeToEndGame) {
         this.rightPlayer = rightPlayer;
         this.leftPlayer = leftPlayer;
         this.cellBomb = cellBomb;
         this.cellList = cellList;
         this.bulletList = bulletList;
+        this.timeToEndGame = timeToEndGame;
 
     }
 
-    public void updateFrame() {
+    public void updateFrame(int timeToEndGame) {
+        this.timeToEndGame = timeToEndGame;
         repaint();
     }
 
@@ -110,13 +115,15 @@ class GameCanvas extends JComponent {
 
     private void drawBullets(Graphics g) {
         g.setColor(Color.CYAN);
-        for (Bullet b : bulletList) {
+        List<Bullet> copyOfBulletList = new ArrayList<>(bulletList);
+        for (Bullet b : copyOfBulletList) {
             g.fillOval(b.getXPos() - b.getSize() / 2, b.getYPos() - b.getSize() / 2, b.getSize(), b.getSize());
         }
     }
 
     private void drawCells(Graphics g) {
-        for (Cell c : cellList) {
+        List<Cell> copyOfCells = new ArrayList<>(cellList);
+        for (Cell c : copyOfCells) {
             switch (c.getP1()) {
                 case 1:
                     g.setColor(Color.RED);
@@ -201,7 +208,7 @@ class GameCanvas extends JComponent {
         g.drawLine((1024 + 300) / 2, 0, (1024 + 300) / 2, 100);
         g.drawLine((1024 - 300) / 2, 100, (1024 + 300) / 2, 100);
 
-        g.drawString("00:00", (1024 - (g.getFont().getSize() * 3)) / 2, 100 / 2);
+        g.drawString(convertSecondsToTime(timeToEndGame), (1024 - (g.getFont().getSize() * 3)) / 2, 100 / 2);
 
         g.drawLine(0, 1024 - 100, 200, 1024 - 100);
         g.drawLine(200, 1024 - 100, 200, 1024);
@@ -223,5 +230,20 @@ class GameCanvas extends JComponent {
 
         g.drawString(String.valueOf(rightPlayer.getPoints()), 1024 - (200 + (g.getFont().getSize())) / 2, 100 / 2);
 
+    }
+
+    private String convertSecondsToTime(int seconds) {
+        String timeFormat = "";
+        int minutes = seconds / 60;
+        seconds = seconds - minutes * 60;
+        if (minutes < 10) {
+            timeFormat += 0;
+        }
+        timeFormat += String.valueOf(minutes) + ":";
+        if (seconds < 10) {
+            timeFormat += "0";
+        }
+        timeFormat += String.valueOf(seconds);
+        return timeFormat;
     }
 }

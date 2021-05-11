@@ -42,7 +42,16 @@ public class Bullet {
     }
 
     public void hitCell(List<Cell> cellList) {
-
+        for (Cell c : cellList) {
+            if (isInGameWindow == true) {
+                if (xPos + R1 > c.getXPos() - c.getH1() / 2 && xPos - R1 < c.getXPos() + c.getH1() / 2) {
+                    if (yPos + R1 > c.getYPos() - c.getH1() / 2 && yPos - R1 < c.getYPos() + c.getH1() / 2) {
+                        c.destroyCell(player);
+                        isInGameWindow = false;
+                    }
+                }
+            }
+        }
     }
 
     public void hitCell(CellBomb cellBomb, int xWindowSize, int yWindowSize) {
@@ -82,16 +91,6 @@ public class Bullet {
         return isInGameWindow;
     }
 
-    public static int countOfPlayerBullet(Player player, List<Bullet> bulletList) {
-        int nOfPlayerBullet = 0;
-        for (Bullet b : bulletList) {
-            if (b.getSide().equals(player.getSide())) {
-                nOfPlayerBullet++;
-            }
-        }
-        return nOfPlayerBullet;
-    }
-
     public int getSize() {
         return (int) R1;
     }
@@ -102,5 +101,15 @@ public class Bullet {
 
     public int getYPos() {
         return (int) yPos;
+    }
+
+    public static int countOfPlayerBullet(Player player, List<Bullet> bulletList) {
+        int nOfPlayerBullet = 0;
+        for (Bullet b : bulletList) {
+            if (b.getSide().equals(player.getSide())) {
+                nOfPlayerBullet++;
+            }
+        }
+        return nOfPlayerBullet;
     }
 }
