@@ -1,5 +1,6 @@
 package tankgame;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bullet {
@@ -105,11 +106,8 @@ public class Bullet {
 
     public static int countOfPlayerBullet(Player player, List<Bullet> bulletList) {
         int nOfPlayerBullet = 0;
-        for (Bullet b : bulletList) {
-            if (b.getSide().equals(player.getSide())) {
-                nOfPlayerBullet++;
-            }
-        }
+        List<Bullet> copyOfBulletList = new ArrayList<>(bulletList);
+        nOfPlayerBullet = copyOfBulletList.stream().filter((b) -> (b.getSide().equals(player.getSide()))).map((_item) -> 1).reduce(nOfPlayerBullet, Integer::sum);
         return nOfPlayerBullet;
     }
 }

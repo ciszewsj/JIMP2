@@ -18,6 +18,8 @@ public class GameController extends KeyAdapter {
     private double T3Timer;
     private double T4Timer;
 
+    private boolean gameIsEnd;
+
     private int nextCellSpawnTime;
 
     private final Player rightPlayer;
@@ -74,6 +76,8 @@ public class GameController extends KeyAdapter {
         T3Timer = 0;
         T4Timer = 0;
 
+        gameIsEnd = false;
+
         nextCellSpawnTime = 0;
 
         gameWindow = new GameWindow(rightPlayer, leftPlayer, cellBomb, cellList, bulletList, rightPlayerUp, rightPlayerDown, rightPlayerGunUp, rightPlayerGunDown, leftPlayerUp, leftPlayerDown, leftPlayerGunUp, leftPlayerGunDown, rightPlayerShootController, leftPlayerShootController, T3Timer);
@@ -88,13 +92,13 @@ public class GameController extends KeyAdapter {
     }
 
     private void endGame() {
-
+        gameIsEnd = true;
     }
 
     public void makeMove() {
 
         int timeToSleep = (int) ((double) 100 * FPS);
-        while (true) {
+        while (gameIsEnd == false) {
             try {
                 gameWindow.refreshWindow(T3Timer);
 
@@ -117,10 +121,14 @@ public class GameController extends KeyAdapter {
                 }
 
                 moveTanks();
+                if (cellBomb.getP1() <= 0) {
+                    gameIsEnd = true;
+                }
                 timeAction(timeToSleep);
                 sleep(timeToSleep);
             } catch (InterruptedException ex) {
-                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                gameIsEnd = true;
+                System.out.println("Fatal ERRor");
             }
         }
     }
@@ -138,7 +146,7 @@ public class GameController extends KeyAdapter {
             T2Timer = 0;
         }
         if (T3Timer > 0) {
-            endGame();
+            //endGame();
         }
         if (T4Timer > nextCellSpawnTime) {
             generateNextTimeCellSpawn();
