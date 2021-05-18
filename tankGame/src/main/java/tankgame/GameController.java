@@ -45,11 +45,15 @@ public class GameController extends KeyAdapter {
 
     private final GameWindow gameWindow;
 
-    public GameController() {
+    private final ErrorWindowController errorWindowController;
+
+    public GameController(ErrorWindowController errorWindowController) {
         FPS = (double) 1 / (double) 30;
         cellBomb = new CellBomb(9, 9, 100);
         cellList = new ArrayList<>();
         bulletList = new ArrayList<>();
+
+        this.errorWindowController = errorWindowController;
 
         rightPlayer = new Player(1024 - 100, 1024 / 2, 0, GunSide.RIGHT, 100, 100, 10, bulletList);
 
@@ -98,8 +102,6 @@ public class GameController extends KeyAdapter {
         int timeToSleep = (int) ((double) 100 * FPS);
         while (gameIsEnd == false) {
             try {
-                gameWindow.refreshWindow(T3Timer);
-
                 for (Iterator<Cell> it = cellList.iterator(); it.hasNext();) {
                     Cell c = it.next();
                     c.moveCell(FPS / 10, 1024);
@@ -122,11 +124,22 @@ public class GameController extends KeyAdapter {
                 if (cellBomb.getP1() <= 0) {
                     gameIsEnd = true;
                 }
+
+                if (leftPlayer.ifToManyPoints(999) == true) {
+                    errorWindowController.addErrorMessagePlayerPointError("left");
+                    endGame();
+                }
+                if (rightPlayer.ifToManyPoints(999) == true) {
+                    errorWindowController.addErrorMessagePlayerPointError("right");
+                    endGame();
+                }
+
                 timeAction(timeToSleep);
                 sleep(timeToSleep);
+                gameWindow.refreshWindow(T3Timer);
             } catch (InterruptedException ex) {
                 gameIsEnd = true;
-                System.out.println("Fatal ERRor");
+                errorWindowController.addErrorMessage("Wystąpił wewnętrzny błąd gry.");
             }
         }
     }

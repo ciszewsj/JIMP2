@@ -8,8 +8,8 @@ public class Player {
     private double yPos;
     private double gunRotation;
 
-    private int PC;
-    private int PD;
+    private final int PC;
+    private final int PD;
     private final int X1;
 
     private final double maxY;
@@ -42,6 +42,7 @@ public class Player {
         this.maxRotation = (double) 30 / (double) 180 * Math.PI;
 
         this.bulletList = bulletList;
+
     }
 
     public void movePlayer(boolean side, double deltaTime) {
@@ -75,6 +76,14 @@ public class Player {
 
     public void addPoint(int point) {
         points += point;
+    }
+
+    public boolean ifToManyPoints(int maxPoints) {
+        if (points > maxPoints) {
+            points = maxPoints;
+            return true;
+        }
+        return false;
     }
 
     public int getPoints() {

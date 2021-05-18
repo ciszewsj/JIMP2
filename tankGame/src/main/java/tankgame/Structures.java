@@ -50,7 +50,7 @@ public class Structures {
                 pos.add(new Point(-1, 2));
                 break;
             default:
-                break;
+                pos.add(new Point(0, 0));
         }
     }
 
@@ -65,7 +65,11 @@ public class Structures {
     public static Structures getRandomStructure(long seed) {
         List<Point> pos = new ArrayList<>();
         Random random = new Random(seed);
-        int structureID = random.nextInt() % 5;
+        int structureID = random.nextInt();
+        if (structureID < 0) {
+            structureID *= -1;
+        }
+        structureID = structureID % 5;
         getPosStruct(pos, structureID);
         return new Structures(pos);
     }

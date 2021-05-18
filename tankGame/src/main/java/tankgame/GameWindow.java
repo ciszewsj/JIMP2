@@ -25,6 +25,7 @@ public class GameWindow extends JFrame {
 
     private final GameCanvas gameCanvas;
 
+
     public GameWindow(Player rightPlayer, Player leftPlayer, CellBomb cellBomb, List<Cell> cellList, List<Bullet> bulletList, KeyController rightPlayerUp, KeyController rightPlayerDown, KeyController rightPlayerGunUp, KeyController rightPlayerGunDown, KeyController leftPlayerUp, KeyController leftPlayerDown, KeyController leftPlayerGunUp, KeyController leftPlayerGunDown, ShootKeyController rightPlayerShootController, ShootKeyController leftPlayerShootController, double timeToEndGame) {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         width = 1024;
@@ -47,7 +48,8 @@ public class GameWindow extends JFrame {
         this.cellBomb = cellBomb;
         this.cellList = cellList;
         this.bulletList = bulletList;
-
+        
+        
         gameCanvas = new GameCanvas(rightPlayer, leftPlayer, cellBomb, cellList, bulletList, (int) timeToEndGame);
         JTextField jbutton = new JTextField();
 
