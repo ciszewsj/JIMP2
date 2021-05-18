@@ -94,7 +94,22 @@ public class GameController extends KeyAdapter {
     }
 
     private void endGame() {
+        gameWindow.refreshWindow(T3Timer);
         gameIsEnd = true;
+        String text;
+        if (rightPlayer.getPoints() > leftPlayer.getPoints()) {
+            text = "Gracz prawy wygrał!";
+        } else if (rightPlayer.getPoints() < leftPlayer.getPoints()) {
+            text = "Gracz lewy wygrał!";
+        } else {
+            text = "Mecz zakończył się obustronnym walkowerem!";
+        }
+        WinPlayerWindow winPlayerWindow = new WinPlayerWindow(gameWindow, text);
+        if (winPlayerWindow.getToSave() == true) {
+            gameWindow.saveGameWindow("");
+        }
+        gameWindow.dispose();
+
     }
 
     public void makeMove() {
@@ -156,8 +171,8 @@ public class GameController extends KeyAdapter {
         {
             T2Timer = 0;
         }
-        if (T3Timer > 0) {
-            //endGame();
+        if (T3Timer > 10) {
+            endGame();
         }
         if (T4Timer > nextCellSpawnTime) {
             generateNextTimeCellSpawn();

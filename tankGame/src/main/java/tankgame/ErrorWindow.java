@@ -37,7 +37,8 @@ public class ErrorWindow extends JFrame {
         cointaner = getContentPane();
         cointaner.setBounds((int) size.getWidth() / 2, (int) size.getHeight() / 2, width, height);
         cointaner.add(new JScrollPane(errorListPanel));
-        setBounds((int) size.getWidth() / 2, (int) size.getHeight() / 2, width, height);
+        setSize(width, height);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("ErrorListDescritpion");
         pack();

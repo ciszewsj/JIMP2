@@ -4,8 +4,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -25,7 +29,6 @@ public class GameWindow extends JFrame {
 
     private final GameCanvas gameCanvas;
 
-
     public GameWindow(Player rightPlayer, Player leftPlayer, CellBomb cellBomb, List<Cell> cellList, List<Bullet> bulletList, KeyController rightPlayerUp, KeyController rightPlayerDown, KeyController rightPlayerGunUp, KeyController rightPlayerGunDown, KeyController leftPlayerUp, KeyController leftPlayerDown, KeyController leftPlayerGunUp, KeyController leftPlayerGunDown, ShootKeyController rightPlayerShootController, ShootKeyController leftPlayerShootController, double timeToEndGame) {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         width = 1024;
@@ -38,7 +41,8 @@ public class GameWindow extends JFrame {
         if (y < 0) {
             y = 0;
         }
-        setBounds(x, y, width, height);
+        setSize(width, height);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("tankGame");
         setResizable(false);
@@ -48,8 +52,7 @@ public class GameWindow extends JFrame {
         this.cellBomb = cellBomb;
         this.cellList = cellList;
         this.bulletList = bulletList;
-        
-        
+
         gameCanvas = new GameCanvas(rightPlayer, leftPlayer, cellBomb, cellList, bulletList, (int) timeToEndGame);
         JTextField jbutton = new JTextField();
 
@@ -71,10 +74,22 @@ public class GameWindow extends JFrame {
         add(gameCanvas);
     }
 
-    public void refreshWindow(double timeToEndGame) {
+    public synchronized void refreshWindow(double timeToEndGame) {
         gameCanvas.updateFrame((int) timeToEndGame);
     }
 
+    public synchronized void saveGameWindow(String filename) {
+        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        
+        gameCanvas.paintComponent(img.getGraphics());
+        try {
+            ImageIO.write(img, "png", new File("C://C//Screen.png"));
+            System.out.println("panel saved as image");
+
+        } catch (IOException e) {
+            System.out.println("panel not saved" + e.getMessage());
+        }
+    }
 }
 
 class GameCanvas extends JComponent {
@@ -108,6 +123,7 @@ class GameCanvas extends JComponent {
 
     @Override
     public void paintComponent(Graphics g) {
+        drawBackground(g);
         drawBullets(g);
         drawCells(g);
         drawTanks(g);
@@ -176,7 +192,13 @@ class GameCanvas extends JComponent {
 
     }
 
+    private void drawBackground(Graphics g) {
+        g.setColor(new Color(93, 93, 93));
+        g.fill3DRect(0, 0, 1024, 1024, true);
+    }
+
     private void drawMenu(Graphics g) {
+
         g.setColor(Color.WHITE);
 
         g.fill3DRect((1024 - 100) / 2, 1024 - 100, 100, 100, true);
@@ -236,16 +258,21 @@ class GameCanvas extends JComponent {
 
     private String convertSecondsToTime(int seconds) {
         String timeFormat = "";
-        int minutes = seconds / 60;
-        seconds = seconds - minutes * 60;
-        if (minutes < 10) {
-            timeFormat += 0;
+        if (seconds > 0) {
+            int minutes = seconds / 60;
+            seconds = seconds - minutes * 60;
+
+            if (minutes < 10) {
+                timeFormat += 0;
+            }
+            timeFormat += String.valueOf(minutes) + ":";
+            if (seconds < 10) {
+                timeFormat += "0";
+            }
+            timeFormat += String.valueOf(seconds);
+        } else {
+            timeFormat = "00:00";
         }
-        timeFormat += String.valueOf(minutes) + ":";
-        if (seconds < 10) {
-            timeFormat += "0";
-        }
-        timeFormat += String.valueOf(seconds);
         return timeFormat;
     }
 }
