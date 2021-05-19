@@ -75,7 +75,7 @@ public class SaveGameWindow extends JFrame {
     }
 
     public synchronized String getFilePath() {
-        filePath = pathField.getText();
+        filePath = pathField.getText() + ".png";
         isReadyToSave = false;
         return filePath;
     }

@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import static java.lang.Thread.sleep;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -122,11 +123,16 @@ public class GameController extends KeyAdapter {
                     fileSavePath = saveGameWindow.getFilePath();
                     try {
                         gameWindow.saveGameWindow(fileSavePath);
-                        saveGameWindow.succeededSave(gameWindow.getSavedPath());
+                        saveGameWindow.succeededSave(fileSavePath);
+                    } catch (FileAlreadyExistsException e) {
+                        saveGameWindow.unsucceededSave();
+                        errorWindowController.addErrorFileAlreadyExists(fileSavePath);
                     } catch (FileNotFoundException | NullPointerException e) {
                         saveGameWindow.unsucceededSave();
+                        errorWindowController.addErrorFileSave(fileSavePath);
                     } catch (IOException e) {
                         saveGameWindow.unsucceededSave();
+                        errorWindowController.addErrorFileSave(fileSavePath);
                     }
                 }
             }

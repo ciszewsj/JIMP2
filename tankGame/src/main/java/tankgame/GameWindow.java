@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -21,8 +22,6 @@ public class GameWindow extends JFrame {
     private final int height;
 
     private final GameCanvas gameCanvas;
-
-    private String saveFilePathName;
 
     public GameWindow(Player rightPlayer, Player leftPlayer, CellBomb cellBomb, List<Cell> cellList, List<Bullet> bulletList, KeyController rightPlayerUp, KeyController rightPlayerDown, KeyController rightPlayerGunUp, KeyController rightPlayerGunDown, KeyController leftPlayerUp, KeyController leftPlayerDown, KeyController leftPlayerGunUp, KeyController leftPlayerGunDown, ShootKeyController rightPlayerShootController, ShootKeyController leftPlayerShootController, double timeToEndGame) {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -61,28 +60,27 @@ public class GameWindow extends JFrame {
 
         add(jbutton);
         add(gameCanvas);
-        saveFilePathName = "";
     }
 
     public synchronized void refreshWindow(double timeToEndGame) {
         gameCanvas.updateFrame((int) timeToEndGame);
     }
 
-    public synchronized void saveGameWindow(String filename) throws FileNotFoundException, NullPointerException, IOException {
+    public synchronized void saveGameWindow(String filename) throws FileNotFoundException, NullPointerException, IOException, FileAlreadyExistsException {
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         gameCanvas.paintComponent(img.getGraphics());
         try {
-            ImageIO.write(img, "png", new File(filename + ".png"));
-
+            File tmpDir = new File("/var/tmp");
+            boolean exists = tmpDir.exists();
+            if (exists == true) {
+                ImageIO.write(img, "png", new File(filename + ".png"));
+            } else {
+                throw new FileAlreadyExistsException("Plik o podanej nazwie istnieje");
+            }
         } catch (FileNotFoundException | NullPointerException e) {
             throw e;
         }
-        saveFilePathName = filename + ".png";
-    }
-
-    public synchronized String getSavedPath() {
-        return saveFilePathName;
     }
 }
 

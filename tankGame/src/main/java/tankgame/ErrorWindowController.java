@@ -25,7 +25,17 @@ public class ErrorWindowController {
     }
 
     public void addErrorMessagePlayerPointError(String id) {
-        errorList.add("Player " + id + " earn to much points!");
+        errorList.add("Gracz " + id + " zdobył za dużo punktów!");
+        errorWindow.refreshWindow(errorList);
+    }
+
+    public void addErrorFileAlreadyExists(String filename) {
+        errorList.add("Nie udało zapisać się planszy do pliku: " + filename + ". Plik istnieje.");
+        errorWindow.refreshWindow(errorList);
+    }
+
+    public void addErrorFileSave(String filename) {
+        errorList.add("Nie udało zapisać się planszy do pliku: " + filename + ".");
         errorWindow.refreshWindow(errorList);
     }
 }
