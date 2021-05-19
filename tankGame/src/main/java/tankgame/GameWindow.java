@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +20,9 @@ public class GameWindow extends JFrame {
     private final int width;
     private final int height;
 
-    private final Player rightPlayer;
-    private final Player leftPlayer;
-
-    private final CellBomb cellBomb;
-
-    private final List<Cell> cellList;
-    private final List<Bullet> bulletList;
-
     private final GameCanvas gameCanvas;
+
+    private String saveFilePathName;
 
     public GameWindow(Player rightPlayer, Player leftPlayer, CellBomb cellBomb, List<Cell> cellList, List<Bullet> bulletList, KeyController rightPlayerUp, KeyController rightPlayerDown, KeyController rightPlayerGunUp, KeyController rightPlayerGunDown, KeyController leftPlayerUp, KeyController leftPlayerDown, KeyController leftPlayerGunUp, KeyController leftPlayerGunDown, ShootKeyController rightPlayerShootController, ShootKeyController leftPlayerShootController, double timeToEndGame) {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -46,12 +41,6 @@ public class GameWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("tankGame");
         setResizable(false);
-
-        this.rightPlayer = rightPlayer;
-        this.leftPlayer = leftPlayer;
-        this.cellBomb = cellBomb;
-        this.cellList = cellList;
-        this.bulletList = bulletList;
 
         gameCanvas = new GameCanvas(rightPlayer, leftPlayer, cellBomb, cellList, bulletList, (int) timeToEndGame);
         JTextField jbutton = new JTextField();
@@ -72,23 +61,28 @@ public class GameWindow extends JFrame {
 
         add(jbutton);
         add(gameCanvas);
+        saveFilePathName = "";
     }
 
     public synchronized void refreshWindow(double timeToEndGame) {
         gameCanvas.updateFrame((int) timeToEndGame);
     }
 
-    public synchronized void saveGameWindow(String filename) {
+    public synchronized void saveGameWindow(String filename) throws FileNotFoundException, NullPointerException, IOException {
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        
+
         gameCanvas.paintComponent(img.getGraphics());
         try {
-            ImageIO.write(img, "png", new File("C://C//Screen.png"));
-            System.out.println("panel saved as image");
+            ImageIO.write(img, "png", new File(filename + ".png"));
 
-        } catch (IOException e) {
-            System.out.println("panel not saved" + e.getMessage());
+        } catch (FileNotFoundException | NullPointerException e) {
+            throw e;
         }
+        saveFilePathName = filename + ".png";
+    }
+
+    public synchronized String getSavedPath() {
+        return saveFilePathName;
     }
 }
 

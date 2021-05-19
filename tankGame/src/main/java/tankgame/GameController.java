@@ -2,6 +2,8 @@ package tankgame;
 
 import java.awt.EventQueue;
 import java.awt.event.KeyAdapter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -94,9 +96,13 @@ public class GameController extends KeyAdapter {
     }
 
     private void endGame() {
+        String text;
+        String fileSavePath;
+
+        SaveGameWindow saveGameWindow;
+
         gameWindow.refreshWindow(T3Timer);
         gameIsEnd = true;
-        String text;
         if (rightPlayer.getPoints() > leftPlayer.getPoints()) {
             text = "Gracz prawy wygrał!";
         } else if (rightPlayer.getPoints() < leftPlayer.getPoints()) {
@@ -106,7 +112,26 @@ public class GameController extends KeyAdapter {
         }
         WinPlayerWindow winPlayerWindow = new WinPlayerWindow(gameWindow, text);
         if (winPlayerWindow.getToSave() == true) {
-            gameWindow.saveGameWindow("");
+            saveGameWindow = new SaveGameWindow(320, 240);
+            EventQueue.invokeLater(()
+                    -> {
+                saveGameWindow.setVisible(true);
+            });
+            while (saveGameWindow.isClosed() != true) {
+                if (saveGameWindow.isReadyToSave() == true) {
+                    fileSavePath = saveGameWindow.getFilePath();
+                    try {
+                        gameWindow.saveGameWindow(fileSavePath);
+                        saveGameWindow.succeededSave(gameWindow.getSavedPath());
+                    } catch (FileNotFoundException | NullPointerException e) {
+                        saveGameWindow.unsucceededSave();
+                    } catch (IOException e) {
+                        saveGameWindow.unsucceededSave();
+                    }
+                }
+            }
+            saveGameWindow.dispose();
+
         }
         gameWindow.dispose();
 
@@ -137,7 +162,7 @@ public class GameController extends KeyAdapter {
 
                 moveTanks();
                 if (cellBomb.getP1() <= 0) {
-                    gameIsEnd = true;
+                    endGame();
                 }
 
                 if (leftPlayer.ifToManyPoints(999) == true) {
@@ -171,7 +196,7 @@ public class GameController extends KeyAdapter {
         {
             T2Timer = 0;
         }
-        if (T3Timer > 10) {
+        if (T3Timer > 100) {
             endGame();
         }
         if (T4Timer > nextCellSpawnTime) {
