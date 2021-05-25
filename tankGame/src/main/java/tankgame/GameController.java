@@ -13,6 +13,13 @@ import java.util.List;
 public class GameController extends KeyAdapter {
 
     private final double FPS;
+    private final double toSecond;
+    private final double toTimer;
+
+    private int windowSize;
+    private int playerDistance;
+    
+    private final int maxPoints;
 
     private double T1Timer;
     private double T2Timer;
@@ -21,7 +28,7 @@ public class GameController extends KeyAdapter {
 
     private boolean gameIsEnd;
 
-    private int nextCellSpawnTime;
+    private double nextCellSpawnTime;
 
     private final Player rightPlayer;
     private final Player leftPlayer;
@@ -36,31 +43,37 @@ public class GameController extends KeyAdapter {
     private final KeyController rightPlayerDown;
     private final KeyController rightPlayerGunUp;
     private final KeyController rightPlayerGunDown;
-
     private final ShootKeyController leftPlayerShootController;
 
     private final KeyController leftPlayerUp;
     private final KeyController leftPlayerDown;
     private final KeyController leftPlayerGunUp;
     private final KeyController leftPlayerGunDown;
-
     private final ShootKeyController rightPlayerShootController;
 
     private final GameWindow gameWindow;
 
     private final ErrorWindowController errorWindowController;
 
-    public GameController(ErrorWindowController errorWindowController) {
+    private final GameRules gameRules;
+
+    public GameController(ErrorWindowController errorWindowController, GameRules gameRules) {
         FPS = (double) 1 / (double) 30;
-        cellBomb = new CellBomb(9, 9, 100);
+        toSecond = 10;
+        toTimer = 1000;
+        
+        windowSize = 1024;
+        playerDistance = 100;
+        
+        cellBomb = new CellBomb(gameRules.getPKB(), gameRules.getPW(), gameRules.getH1());
         cellList = new ArrayList<>();
         bulletList = new ArrayList<>();
 
         this.errorWindowController = errorWindowController;
+        this.gameRules = gameRules;
 
-        rightPlayer = new Player(1024 - 100, 1024 / 2, 0, GunSide.RIGHT, 100, 100, 10, bulletList);
-
-        leftPlayer = new Player(100, 1024 / 2, 0, GunSide.LEFT, 100, 100, 10, bulletList);
+        rightPlayer = new Player(windowSize - playerDistance, windowSize / 2, 0, GunSide.RIGHT, gameRules.getPC(), gameRules.getPD(), gameRules.getX1(), bulletList);
+        leftPlayer = new Player(playerDistance, windowSize / 2, 0, GunSide.LEFT, gameRules.getPC(), gameRules.getPD(), gameRules.getX1(), bulletList);
 
         leftPlayerUp = new KeyController(87);
         leftPlayerDown = new KeyController(83);
@@ -80,6 +93,8 @@ public class GameController extends KeyAdapter {
         T2Timer = 0;
         T3Timer = 0;
         T4Timer = 0;
+
+        maxPoints = 999;
 
         gameIsEnd = false;
 
@@ -102,7 +117,7 @@ public class GameController extends KeyAdapter {
 
         SaveGameWindow saveGameWindow;
 
-        gameWindow.refreshWindow(T3Timer);
+        gameWindow.refreshWindow(gameRules.getT3() - T3Timer);
         gameIsEnd = true;
         if (rightPlayer.getPoints() > leftPlayer.getPoints()) {
             text = "Gracz prawy wygrał!";
@@ -150,7 +165,7 @@ public class GameController extends KeyAdapter {
             try {
                 for (Iterator<Cell> it = cellList.iterator(); it.hasNext();) {
                     Cell c = it.next();
-                    c.moveCell(FPS / 10, 1024);
+                    c.moveCell(FPS / toSecond, windowSize);
                     if (c.getP1() <= 0) {
                         it.remove();
                     }
@@ -159,8 +174,8 @@ public class GameController extends KeyAdapter {
                 for (Iterator<Bullet> it = bulletList.iterator(); it.hasNext();) {
                     Bullet b = it.next();
                     b.hitCell(cellList);
-                    b.hitCell(cellBomb, 1024, 1024);
-                    b.makeMove(FPS / 10, 1024, 1024);
+                    b.hitCell(cellBomb, windowSize, windowSize);
+                    b.makeMove(FPS / toSecond, windowSize, windowSize);
                     if (b.isInGameWindow() == false) {
                         it.remove();
                     }
@@ -171,18 +186,18 @@ public class GameController extends KeyAdapter {
                     endGame();
                 }
 
-                if (leftPlayer.ifToManyPoints(999) == true) {
+                if (leftPlayer.ifToManyPoints(maxPoints) == true) {
                     errorWindowController.addErrorMessagePlayerPointError("left");
                     endGame();
                 }
-                if (rightPlayer.ifToManyPoints(999) == true) {
+                if (rightPlayer.ifToManyPoints(maxPoints) == true) {
                     errorWindowController.addErrorMessagePlayerPointError("right");
                     endGame();
                 }
 
                 timeAction(timeToSleep);
                 sleep(timeToSleep);
-                gameWindow.refreshWindow(T3Timer);
+                gameWindow.refreshWindow(gameRules.getT3() - T3Timer);
             } catch (InterruptedException ex) {
                 gameIsEnd = true;
                 errorWindowController.addErrorMessage("Wystąpił wewnętrzny błąd gry.");
@@ -191,71 +206,92 @@ public class GameController extends KeyAdapter {
     }
 
     private void timeAction(int timeToSleep) {
-        T1Timer += (double) timeToSleep / 1000;
-        T2Timer += (double) timeToSleep / 1000;
-        T3Timer += (double) timeToSleep / 1000;
-        T4Timer += (double) timeToSleep / 1000;
-        if (T1Timer > 0) {
+        T1Timer += (double) timeToSleep / toTimer;
+        T2Timer += (double) timeToSleep / toTimer;
+        T3Timer += (double) timeToSleep / toTimer;
+        T4Timer += (double) timeToSleep / toTimer;
+        if (T1Timer > gameRules.getT1()) {
             T1Timer = 0;
+            gameRules.makeT1();
+
+            for (Iterator<Cell> it = cellList.iterator(); it.hasNext();) {
+                Cell c = it.next();
+                c.changeV2(gameRules.getV2());
+                c.changeH1(gameRules.getH1());
+            }
+
+            for (Iterator<Bullet> it = bulletList.iterator(); it.hasNext();) {
+                Bullet b = it.next();
+                b.changeSize(gameRules.getR1());
+                b.changeV1(gameRules.getV1());
+            }
+
+            cellBomb.changeH1(gameRules.getH1());
+
         }
-        if (T2Timer > 0);
-        {
+        if (T2Timer > gameRules.getT2()) {
             T2Timer = 0;
+            for (Iterator<Cell> it = cellList.iterator(); it.hasNext();) {
+                Cell c = it.next();
+                c.addP1();
+            }
+            cellBomb.addP1();
         }
-        if (T3Timer > 100) {
+        if (T3Timer > gameRules.getT3()) {
             endGame();
         }
         if (T4Timer > nextCellSpawnTime) {
             generateNextTimeCellSpawn();
             T4Timer = 0;
+
         }
     }
 
     private void generateNextTimeCellSpawn() {
-        CellGenerator.generateCellStructure(cellList, 100, 100, 1024 / 2);
-        nextCellSpawnTime = (int) (4 * 100 / 100);
+        CellGenerator.generateCellStructure(cellList, gameRules.getH1(), gameRules.getV2(), windowSize / 2);
+        nextCellSpawnTime = 4 * (double) gameRules.getH1() / gameRules.getV2();
     }
 
     private void moveTanks() {
 
         if (leftPlayerUp.isPressed() == true) {
-            leftPlayer.movePlayer(true, FPS / 10);
+            leftPlayer.movePlayer(true, FPS / toSecond);
         }
 
         if (leftPlayerDown.isPressed() == true) {
-            leftPlayer.movePlayer(false, FPS / 10);
+            leftPlayer.movePlayer(false, FPS / toSecond);
         }
 
         if (leftPlayerGunUp.isPressed() == true) {
-            leftPlayer.elevateGun(true, FPS / 10);
+            leftPlayer.elevateGun(true, FPS / toSecond);
         }
 
         if (leftPlayerGunDown.isPressed() == true) {
-            leftPlayer.elevateGun(false, FPS / 10);
+            leftPlayer.elevateGun(false, FPS / toSecond);
         }
 
         if (leftPlayerShootController.isReadyToShoot() == true) {
-            leftPlayer.shotBullet(10, 100);
+            leftPlayer.shotBullet(gameRules.getR1(), gameRules.getV1());
         }
 
         if (rightPlayerUp.isPressed() == true) {
-            rightPlayer.movePlayer(true, FPS / 10);
+            rightPlayer.movePlayer(true, FPS / toSecond);
         }
 
         if (rightPlayerDown.isPressed() == true) {
-            rightPlayer.movePlayer(false, FPS / 10);
+            rightPlayer.movePlayer(false, FPS / toSecond);
         }
 
         if (rightPlayerGunUp.isPressed() == true) {
-            rightPlayer.elevateGun(true, FPS / 10);
+            rightPlayer.elevateGun(true, FPS / toSecond);
         }
 
         if (rightPlayerGunDown.isPressed() == true) {
-            rightPlayer.elevateGun(false, FPS / 10);
+            rightPlayer.elevateGun(false, FPS / toSecond);
         }
 
         if (rightPlayerShootController.isReadyToShoot() == true) {
-            rightPlayer.shotBullet(10, 100);
+            rightPlayer.shotBullet(gameRules.getR1(), gameRules.getV1());
         }
 
     }

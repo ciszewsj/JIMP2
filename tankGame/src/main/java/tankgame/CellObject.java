@@ -42,8 +42,8 @@ public abstract class CellObject {
         return pointForDestroy;
     }
 
-    public void reduceH1(int DH1) {
-        H1 -= DH1;
+    public void changeH1(int DH1) {
+        H1 = DH1;
     }
 
     public abstract void destroyCell(Player player);

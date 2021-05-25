@@ -35,11 +35,11 @@ public class Bullet {
     }
 
     public void changeSize(double DR1) {
-        R1 -= DR1;
+        R1 = DR1;
     }
 
     public void changeV1(double DV1) {
-        V1 -= DV1;
+        V1 = DV1;
     }
 
     public void hitCell(List<Cell> cellList) {

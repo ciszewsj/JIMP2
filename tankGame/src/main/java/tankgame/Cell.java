@@ -21,7 +21,7 @@ public class Cell extends CellObject {
     }
 
     public void changeV2(double DV2) {
-        V2 -= DV2;
+        V2 = DV2;
     }
 
     public int getXPos() {
