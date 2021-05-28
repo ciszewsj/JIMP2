@@ -38,4 +38,14 @@ public class ErrorWindowController {
         errorList.add("Nie udało zapisać się planszy do pliku: " + filename + ".");
         errorWindow.refreshWindow(errorList);
     }
+    
+    public void addErrorFileRead(String filename) {
+        errorList.add("Nie udało otworzyć plik: " + filename + ".");
+        errorWindow.refreshWindow(errorList);
+    }
+    
+    public void addErrorParametrNotExists(String parametr) {
+        errorList.add("Nie istnieje parametr: " + parametr + ".");
+        errorWindow.refreshWindow(errorList);
+    }
 }
