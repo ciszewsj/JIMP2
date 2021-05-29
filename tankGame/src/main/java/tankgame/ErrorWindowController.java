@@ -40,7 +40,7 @@ public class ErrorWindowController {
     }
     
     public void addErrorFileRead(String filename) {
-        errorList.add("Nie udało otworzyć plik: " + filename + ".");
+        errorList.add("Nie udało otworzyć pliku: " + filename + ".");
         errorWindow.refreshWindow(errorList);
     }
     
