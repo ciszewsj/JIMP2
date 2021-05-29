@@ -1,6 +1,6 @@
 package tankgame;
 
-public class GameRules {
+public class GameRules implements Cloneable {
 
     private static int V1 = 100;
     private static int X1 = 15;
@@ -198,4 +198,11 @@ public class GameRules {
     public static int getDH1() {
         return DH1;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        GameRules gameRules = (GameRules) super.clone();
+        return gameRules;
+    }
+
 }

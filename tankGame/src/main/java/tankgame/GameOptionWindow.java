@@ -20,7 +20,9 @@ public class GameOptionWindow {
     public static final Object lock = new Object();
     public static JFrame frame;
 
-    public void GameOptionWindow() {
+    private GameRules gameRules;
+
+    public GameOptionWindow(GameRules gameRules) {
         frame = new JFrame("TankGame");
         GameOption.frame = frame;
         frame.setPreferredSize(new Dimension(1000, 500));
@@ -28,6 +30,8 @@ public class GameOptionWindow {
         createComponentsMenu(frame.getContentPane());
         frame.pack();
         frame.setVisible(true);
+
+        this.gameRules = gameRules;
     }
 
     public void createComponentsMenu(Container container) {
@@ -59,7 +63,7 @@ public class GameOptionWindow {
 
         Button save = new Button("Save");
         save.addActionListener((ActionEvent e) -> {
-            GameOption.ReadFromFile(textField.getText());
+            GameOption.ReadFromFile(textField.getText(), gameRules);
             System.out.println("Udano");
             textArea.setViewportView(ScrollPanel());
             textArea.setPreferredSize(new Dimension(10, 100));

@@ -2,22 +2,27 @@ package tankgame;
 
 public class TankGame {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         while (true) {
             ErrorWindowController errorWindowController = new ErrorWindowController(360, 1024);
-            
-            GameOptionWindow gameOptionWindow = new GameOptionWindow();
+            GameRules gameRules = new GameRules();
+            GameOptionWindow gameOptionWindow = new GameOptionWindow(gameRules);
             synchronized (gameOptionWindow.lock) {
                 try {
                     gameOptionWindow.lock.wait();
                 } catch (InterruptedException e) {
                 }
             }
-            GameRules gameRules = new GameRules();
-            GameController gameController = new GameController(errorWindowController, gameRules);
+            try{
+            GameController gameController = new GameController(errorWindowController,(GameRules) gameRules.clone());
             gameController.initGame();
             gameController.makeMove();
         }
+        catch(CloneNotSupportedException e)
+        {
+            errorWindowController.addErrorMessage("Nie udało zacząć się gry ---> Błąd wewnętrzny.");
+        }
+            }
     }
 
 }
