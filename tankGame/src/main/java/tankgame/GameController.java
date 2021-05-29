@@ -16,9 +16,9 @@ public class GameController extends KeyAdapter {
     private final double toSecond;
     private final double toTimer;
 
-    private int windowSize;
-    private int playerDistance;
-    
+    private final int windowSize;
+    private final int playerDistance;
+
     private final int maxPoints;
 
     private double T1Timer;
@@ -61,10 +61,10 @@ public class GameController extends KeyAdapter {
         FPS = (double) 1 / (double) 30;
         toSecond = 10;
         toTimer = 1000;
-        
+
         windowSize = 1024;
         playerDistance = 100;
-        
+
         cellBomb = new CellBomb(gameRules.getPKB(), gameRules.getPW(), gameRules.getH1());
         cellList = new ArrayList<>();
         bulletList = new ArrayList<>();
@@ -72,8 +72,8 @@ public class GameController extends KeyAdapter {
         this.errorWindowController = errorWindowController;
         this.gameRules = gameRules;
 
-        rightPlayer = new Player(windowSize - playerDistance, windowSize / 2, 0, GunSide.RIGHT, gameRules.getPC(), gameRules.getPD(), gameRules.getX1(), bulletList);
-        leftPlayer = new Player(playerDistance, windowSize / 2, 0, GunSide.LEFT, gameRules.getPC(), gameRules.getPD(), gameRules.getX1(), bulletList);
+        rightPlayer = new Player(windowSize - playerDistance, windowSize / 2, 0, GunSide.RIGHT, gameRules.getPC(), gameRules.getPD(), gameRules.getX1(), 100, 150, bulletList, windowSize, 100);
+        leftPlayer = new Player(playerDistance, windowSize / 2, 0, GunSide.LEFT, gameRules.getPC(), gameRules.getPD(), gameRules.getX1(), 100, 150, bulletList, windowSize, 100);
 
         leftPlayerUp = new KeyController(87);
         leftPlayerDown = new KeyController(83);

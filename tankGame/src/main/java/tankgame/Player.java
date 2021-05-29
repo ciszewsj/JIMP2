@@ -24,7 +24,10 @@ public class Player {
 
     private final List<Bullet> bulletList;
 
-    public Player(double xPos, double yPos, double gunRotation, GunSide gunSide, int PC, int PD, int X1, List<Bullet> bulletList) {
+    private final int tankSize;
+    private final int gunSize;
+
+    public Player(double xPos, double yPos, double gunRotation, GunSide gunSide, int PC, int PD, int X1, int tankSize, int gunSize, List<Bullet> bulletList, int yWindowSize, int yBarSize) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.gunRotation = gunRotation;
@@ -36,13 +39,15 @@ public class Player {
 
         this.gunSide = gunSide;
 
-        this.maxY = 100 + 50;
-        this.minY = 1024 - 100 - 50;
+        this.maxY = yBarSize + tankSize / 2;
+        this.minY = yWindowSize - yBarSize - tankSize / 2;
         this.minRotation = (double) -30 / (double) 180 * Math.PI;
         this.maxRotation = (double) 30 / (double) 180 * Math.PI;
 
         this.bulletList = bulletList;
 
+        this.tankSize = tankSize;
+        this.gunSize = gunSize;
     }
 
     public void movePlayer(boolean side, double deltaTime) {
@@ -96,8 +101,19 @@ public class Player {
 
     public void shotBullet(double R1, double V1) {
         int nOfPlayerBullet = Bullet.countOfPlayerBullet(this, bulletList);
+        int dXPos = 0;
+        int dYPos = 0;
         if (nOfPlayerBullet < X1) {
-            Bullet bullet = new Bullet(R1, V1, gunRotation, xPos, yPos, this, gunSide);
+
+            if (gunSide.equals(GunSide.LEFT)) {
+                dXPos += gunSize * Math.cos(gunRotation);
+                dYPos += gunSize * Math.sin(gunRotation);
+            } else if (gunSide.equals(GunSide.RIGHT)) {
+                dXPos -= gunSize * Math.cos(gunRotation);
+                dYPos -= gunSize * Math.sin(gunRotation);
+            }
+
+            Bullet bullet = new Bullet(R1, V1, gunRotation, xPos + dXPos, yPos + dYPos, this, gunSide);
             bulletList.add(bullet);
         }
     }
@@ -113,4 +129,13 @@ public class Player {
     public double getGunRotation() {
         return gunRotation;
     }
+
+    public int getTankSize() {
+        return tankSize;
+    }
+
+    public int getGunSize() {
+        return gunSize;
+    }
+
 }

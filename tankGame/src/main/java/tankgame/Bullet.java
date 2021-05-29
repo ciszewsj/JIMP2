@@ -43,12 +43,14 @@ public class Bullet {
     }
 
     public void hitCell(List<Cell> cellList) {
-        for (Cell c : cellList) {
-            if (isInGameWindow == true) {
-                if (xPos + R1 > c.getXPos() - c.getH1() / 2 && xPos - R1 < c.getXPos() + c.getH1() / 2) {
-                    if (yPos + R1 > c.getYPos() - c.getH1() / 2 && yPos - R1 < c.getYPos() + c.getH1() / 2) {
-                        c.destroyCell(player);
-                        isInGameWindow = false;
+        if (isInGameWindow == true) {
+            for (Cell c : cellList) {
+                if (c.getP1() > 0) {
+                    if (xPos + R1 > c.getXPos() - c.getH1() / 2 && xPos - R1 < c.getXPos() + c.getH1() / 2) {
+                        if (yPos + R1 > c.getYPos() - c.getH1() / 2 && yPos - R1 < c.getYPos() + c.getH1() / 2) {
+                            c.destroyCell(player);
+                            isInGameWindow = false;
+                        }
                     }
                 }
             }
@@ -57,14 +59,14 @@ public class Bullet {
 
     public void hitCell(CellBomb cellBomb, int xWindowSize, int yWindowSize) {
         if (isInGameWindow == true) {
-            if (Math.abs(yPos - (yWindowSize - cellBomb.getSize())) < R1) {
-                if (Math.abs(xPos - (1024 - cellBomb.getH1()) / 2) < R1 + cellBomb.getH1() && Math.abs(xPos - (1024 + cellBomb.getH1()) / 2) < R1 + cellBomb.getH1()) {
+            if (Math.abs(yPos - (yWindowSize - cellBomb.getYSize())) < R1) {
+                if (Math.abs(xPos - (xWindowSize - cellBomb.getH1()) / 2) < R1 + cellBomb.getH1() && Math.abs(xPos - (xWindowSize + cellBomb.getH1()) / 2) < R1 + cellBomb.getH1()) {
                     cellBomb.destroyCell(player);
                     isInGameWindow = false;
                 }
             }
-            if (yPos - R1 >= 1024 - cellBomb.getSize()) {
-                if (Math.abs(xPos - (1024 - cellBomb.getSize()) / 2) < R1 + cellBomb.getSize() && Math.abs(xPos - (1024 + cellBomb.getSize()) / 2) < R1 + cellBomb.getSize()) {
+            if (yPos - R1 >= yWindowSize - cellBomb.getYSize()) {
+                if (Math.abs(xPos - (xWindowSize - cellBomb.getXSize()) / 2) < R1 + cellBomb.getXSize() && Math.abs(xPos - (xWindowSize + cellBomb.getXSize()) / 2) < R1 + cellBomb.getXSize()) {
                     {
                         isInGameWindow = false;
                     }

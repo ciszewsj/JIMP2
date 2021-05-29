@@ -86,6 +86,14 @@ public class GameWindow extends JFrame {
 
 class GameCanvas extends JComponent {
 
+    private final int size;
+
+    private final int xBarSize;
+    private final int yBarSize;
+
+    private final int xClockSize;
+    private final int yClockSize;
+
     private final Player rightPlayer;
     private final Player leftPlayer;
 
@@ -99,6 +107,13 @@ class GameCanvas extends JComponent {
     private GameCanvas gameCanvas;
 
     public GameCanvas(Player rightPlayer, Player leftPlayer, CellBomb cellBomb, List<Cell> cellList, List<Bullet> bulletList, int timeToEndGame) {
+
+        size = 1024;
+        xBarSize = 200;
+        yBarSize = 100;
+        xClockSize = 300;
+        yClockSize = 100;
+
         this.rightPlayer = rightPlayer;
         this.leftPlayer = leftPlayer;
         this.cellBomb = cellBomb;
@@ -174,8 +189,8 @@ class GameCanvas extends JComponent {
     private void drawTanks(Graphics g) {
         g.setColor(Color.GREEN);
 
-        g.fill3DRect(leftPlayer.getXPos() - 50, leftPlayer.getYPos() - 50, 100, 100, true);
-        g.fill3DRect(rightPlayer.getXPos() - 50, rightPlayer.getYPos() - 50, 100, 100, true);
+        g.fill3DRect(leftPlayer.getXPos() - leftPlayer.getTankSize() / 2, leftPlayer.getYPos() - leftPlayer.getTankSize() / 2, leftPlayer.getTankSize(), leftPlayer.getTankSize(), true);
+        g.fill3DRect(rightPlayer.getXPos() - rightPlayer.getTankSize() / 2, rightPlayer.getYPos() - rightPlayer.getTankSize() / 2, rightPlayer.getTankSize(), rightPlayer.getTankSize(), true);
 
         g.setColor(Color.BLACK);
 
@@ -186,65 +201,65 @@ class GameCanvas extends JComponent {
 
     private void drawBackground(Graphics g) {
         g.setColor(new Color(93, 93, 93));
-        g.fill3DRect(0, 0, 1024, 1024, true);
+        g.fill3DRect(0, 0, size, size, true);
     }
 
     private void drawMenu(Graphics g) {
 
         g.setColor(Color.WHITE);
 
-        g.fill3DRect((1024 - 100) / 2, 1024 - 100, 100, 100, true);
+        g.fill3DRect((size - cellBomb.getXSize()) / 2, size - cellBomb.getYSize(), cellBomb.getXSize(), cellBomb.getYSize(), true);
 
-        g.fill3DRect((1024 - 300) / 2, 0, 300, 100, true);
+        g.fill3DRect((size - xClockSize) / 2, 0, xClockSize, yClockSize, true);
 
-        g.fill3DRect(0, 0, 200, 100, true);
+        g.fill3DRect(0, 0, xBarSize, yBarSize, true);
 
-        g.fill3DRect(1024 - 200, 0, 200, 100, true);
+        g.fill3DRect(size - xBarSize, 0, xBarSize, yBarSize, true);
 
-        g.fill3DRect(0, 1024 - 100, 200, 100, true);
+        g.fill3DRect(0, size - yBarSize, xBarSize, yBarSize, true);
 
-        g.fill3DRect(1024 - 200, 1024 - 100, 200, 100, true);
+        g.fill3DRect(size - xBarSize, size - yBarSize, xBarSize, yBarSize, true);
 
         g.setColor(Color.BLACK);
 
         g.setFont(g.getFont().deriveFont(30f));
 
-        g.drawLine((1024 - 100) / 2, 1024, (1024 - 100) / 2, 1024 - 100);
-        g.drawLine((1024 + 100) / 2, 1024, (1024 + 100) / 2, 1024 - 100);
-        g.drawLine((1024 - 100) / 2, 1024 - 100, (1024 + 100) / 2, 1024 - 100);
+        g.drawLine((size - cellBomb.getXSize()) / 2, size, (size - cellBomb.getXSize()) / 2, size - cellBomb.getYSize());
+        g.drawLine((size + cellBomb.getXSize()) / 2, size, (size + cellBomb.getXSize()) / 2, size - cellBomb.getYSize());
+        g.drawLine((size - cellBomb.getXSize()) / 2, size - cellBomb.getYSize(), (size + cellBomb.getXSize()) / 2, size - cellBomb.getYSize());
 
         g.setColor(Color.RED);
 
-        g.drawLine((1024 - cellBomb.getH1()) / 2, 1024 - 100, (1024 + cellBomb.getH1()) / 2, 1024 - 100);
+        g.drawLine((size - cellBomb.getH1()) / 2, size - cellBomb.getYSize(), (size + cellBomb.getH1()) / 2, size - cellBomb.getYSize());
 
         g.setColor(Color.BLACK);
-        g.drawString(String.valueOf(cellBomb.getP1()), (1024 - (100 + g.getFont().getSize()) / 2) / 2, 1024 - (100 + g.getFont().getSize()) / 2);
+        g.drawString(String.valueOf(cellBomb.getP1()), (size - (cellBomb.getXSize() + g.getFont().getSize()) / 2) / 2, size - (cellBomb.getYSize() + g.getFont().getSize()) / 2);
 
-        g.drawLine((1024 - 300) / 2, 0, (1024 - 300) / 2, 100);
-        g.drawLine((1024 + 300) / 2, 0, (1024 + 300) / 2, 100);
-        g.drawLine((1024 - 300) / 2, 100, (1024 + 300) / 2, 100);
+        g.drawLine((size - xClockSize) / 2, 0, (size - xClockSize) / 2, yClockSize);
+        g.drawLine((size + xClockSize) / 2, 0, (size + xClockSize) / 2, yClockSize);
+        g.drawLine((size - xClockSize) / 2, yClockSize, (size + xClockSize) / 2, yClockSize);
 
-        g.drawString(convertSecondsToTime(timeToEndGame), (1024 - (g.getFont().getSize() * 3)) / 2, 100 / 2);
+        g.drawString(convertSecondsToTime(timeToEndGame), (size - (g.getFont().getSize() * 3)) / 2, yClockSize / 2);
 
-        g.drawLine(0, 1024 - 100, 200, 1024 - 100);
-        g.drawLine(200, 1024 - 100, 200, 1024);
+        g.drawLine(0, size - yBarSize, xBarSize, size - yBarSize);
+        g.drawLine(xBarSize, size - yBarSize, xBarSize, size);
 
-        g.drawString(String.valueOf(Bullet.countOfPlayerBullet(leftPlayer, bulletList)), (200 - (g.getFont().getSize())) / 2, 1024 - 100 / 2);
+        g.drawString(String.valueOf(Bullet.countOfPlayerBullet(leftPlayer, bulletList)), (xBarSize - (g.getFont().getSize())) / 2, size - yBarSize / 2);
 
-        g.drawLine(1024, 1024 - 100, 1024 - 200, 1024 - 100);
-        g.drawLine(1024 - 200, 1024 - 100, 1024 - 200, 1024);
+        g.drawLine(size, size - yBarSize, size - xBarSize, size - yBarSize);
+        g.drawLine(size - xBarSize, size - yBarSize, size - xBarSize, size);
 
-        g.drawString(String.valueOf(Bullet.countOfPlayerBullet(rightPlayer, bulletList)), 1024 - (200 + (g.getFont().getSize())) / 2, 1024 - 100 / 2);
+        g.drawString(String.valueOf(Bullet.countOfPlayerBullet(rightPlayer, bulletList)), size - (xBarSize + (g.getFont().getSize())) / 2, size - yBarSize / 2);
 
-        g.drawLine(0, 100, 200, 100);
-        g.drawLine(200, 100, 200, 0);
+        g.drawLine(0, yBarSize, xBarSize, yBarSize);
+        g.drawLine(xBarSize, yBarSize, xBarSize, 0);
 
-        g.drawString(String.valueOf(leftPlayer.getPoints()), (200 - (g.getFont().getSize())) / 2, 100 / 2);
+        g.drawString(String.valueOf(leftPlayer.getPoints()), (xBarSize - (g.getFont().getSize())) / 2, yBarSize / 2);
 
-        g.drawLine(1024, 100, 1024 - 200, 100);
-        g.drawLine(1024 - 200, 100, 1024 - 200, 0);
+        g.drawLine(size, yBarSize, size - xBarSize, yBarSize);
+        g.drawLine(size - xBarSize, yBarSize, size - xBarSize, 0);
 
-        g.drawString(String.valueOf(rightPlayer.getPoints()), 1024 - (200 + (g.getFont().getSize())) / 2, 100 / 2);
+        g.drawString(String.valueOf(rightPlayer.getPoints()), size - (xBarSize + (g.getFont().getSize())) / 2, yBarSize / 2);
 
     }
 
