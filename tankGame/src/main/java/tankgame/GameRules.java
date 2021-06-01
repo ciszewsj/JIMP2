@@ -2,200 +2,267 @@ package tankgame;
 
 public class GameRules implements Cloneable {
 
-    private static int V1 = 100;
-    private static int X1 = 15;
-    private static int R1 = 20;
+    private int V1 = 100;
+    private int X1 = 15;
+    private int R1 = 20;
 
-    private static int V2 = 100;
-    private static int H1 = 256;
-    private static int PW = 10;
+    private int V2 = 100;
+    private int H1 = 256;
+    private int PW = 10;
 
-    private static int PC = 100;
-    private static int PD = 30;
-    private static int PKB = 9;
+    private int PC = 100;
+    private int PD = 30;
+    private int PKB = 9;
 
-    private static int T1 = 10;
+    private int T1 = 10;
 
-    private static int DV1 = 20;
-    private static int DV2 = 25;
-    private static int DR1 = 5;
-    private static int DH1 = 20;
+    private int DV1 = 20;
+    private int DV2 = 25;
+    private int DR1 = 5;
+    private int DH1 = 20;
 
-    private static int T2 = 5;
-    private static int T3 = 60;
+    private int T2 = 5;
+    private int T3 = 60;
 
-    public static void setV1(int V1) {
-        if (V1 > 0 || V1 < 32768) {
-            GameRules.V1 = V1;
+    public void setV1(int V1, ErrorWindowController error) {
+        int min = 0;
+        int max = 32768;
+        if (V1 > min && V1 < max) {
+            this.V1 = V1;
+        } else {
+            error.addErrorParametrValue("V1", min, max);
         }
     }
 
-    public static void setX1(int X1) {
-        if (X1 > 0 || X1 < 128) {
-            GameRules.X1 = X1;
+    public void setX1(int X1, ErrorWindowController error) {
+        int min = 0;
+        int max = 128;
+        if (X1 > min && X1 < max) {
+            this.X1 = X1;
+        } else {
+            error.addErrorParametrValue("X1", min, max);
         }
     }
 
-    public static void setR1(int R1) {
-        if (R1 > 0 || R1 < 128) {
-            GameRules.R1 = R1;
+    public void setR1(int R1, ErrorWindowController error) {
+        int min = 0;
+        int max = 128;
+        if (R1 > min && R1 < max) {
+            this.R1 = R1;
+        } else {
+            error.addErrorParametrValue("R1", min, max);
         }
     }
 
-    public static void setV2(int V2) {
-        if (V2 >= 0 || V2 < 32768) {
-            GameRules.V2 = V2;
+    public void setV2(int V2, ErrorWindowController error) {
+        int min = 0;
+        int max = 32768;
+        if (V2 > min && V2 < max) {
+            this.V2 = V2;
+        } else {
+            error.addErrorParametrValue("V2", min, max);
         }
     }
 
-    public static void setH1(int H1) {
-        if (H1 >= 0 || H1 < 256) {
-            GameRules.H1 = H1;
+    public void setH1(int H1, ErrorWindowController error) {
+        int min = 0;
+        int max = 256;
+        if (H1 > min && H1 < max) {
+            this.H1 = H1;
+        } else {
+            error.addErrorParametrValue("H1", min, max);
         }
     }
 
-    public static void setPW(int PW) {
-        if (PW >= 0 || PW < 1000) {
-            GameRules.PW = PW;
+    public void setPW(int PW, ErrorWindowController error) {
+        int min = 0;
+        int max = 1000;
+        if (PW > min && PW < max) {
+            this.PW = PW;
+        } else {
+            error.addErrorParametrValue("PW", min, max);
         }
     }
 
-    public static void setPC(int PC) {
-        if (PC > 0 || PC < 256) {
-            GameRules.PC = PC;
+    public void setPC(int PC, ErrorWindowController error) {
+        int min = 0;
+        int max = 32768;
+        if (PC > min && PC < max) {
+            this.PC = PC;
+        } else {
+            error.addErrorParametrValue("PC", min, max);
         }
     }
 
-    public static void setPD(int PD) {
-        if (PD > 0 || PD < 128) {
-            GameRules.PD = PD;
+    public void setPD(int PD, ErrorWindowController error) {
+        int min = 0;
+        int max = 128;
+        if (PD > min && PD < max) {
+            this.PD = PD;
+        } else {
+            error.addErrorParametrValue("PD", min, max);
         }
     }
 
-    public static void setPKB(int PKB) {
-        if (PKB > 0 || H1 < 999) {
-            GameRules.PKB = PKB;
+    public void setPKB(int PKB, ErrorWindowController error) {
+        int min = 0;
+        int max = 999;
+        if (PKB > min && PKB < max) {
+            this.PKB = PKB;
+        } else {
+            error.addErrorParametrValue("PKB", min, max);
         }
     }
 
-    public static void setT1(int T1) {
-        if (T1 > 0 || T1 < 32768) {
-            GameRules.T1 = T1;
+    public void setT1(int T1, ErrorWindowController error) {
+        int min = 0;
+        int max = 32768;
+        if (T1 > min && T1 < max) {
+            this.T1 = T1;
+        } else {
+            error.addErrorParametrValue("T1", min, max);
         }
     }
 
-    public static void setDV1(int DV1) {
-        if (DV1 > 0 || DV1 < 32768) {
-            GameRules.DV1 = DV1;
+    public void setDV1(int DV1, ErrorWindowController error) {
+        int min = 0;
+        int max = 32768;
+        if (DV1 > min && DV1 < max) {
+            this.DV1 = DV1;
+        } else {
+            error.addErrorParametrValue("DV1", min, max);
         }
     }
 
-    public static void setDV2(int DV2) {
-        if (PKB > 0 || H1 < 999) {
-            GameRules.DV2 = DV2;
+    public void setDV2(int DV2, ErrorWindowController error) {
+        int min = 0;
+        int max = 999;
+        if (DV2 > min && DV2 < max) {
+            this.DV2 = DV2;
+        } else {
+            error.addErrorParametrValue("DV2", min, max);
         }
     }
 
-    public static void setDR1(int DR1) {
-        if (DR1 > 0 || DR1 < 256) {
-            GameRules.DR1 = DR1;
+    public void setDR1(int DR1, ErrorWindowController error) {
+        int min = 0;
+        int max = 256;
+        if (DR1 > min && DR1 < max) {
+            this.DR1 = DR1;
+        } else {
+            error.addErrorParametrValue("DR1", min, max);
         }
     }
 
-    public static void setDH1(int DH1) {
-        if (DH1 > 0 || DH1 < 256) {
-            GameRules.DH1 = DH1;
+    public void setDH1(int DH1, ErrorWindowController error) {
+        int min = 0;
+        int max = 256;
+        if (DH1 > min && DH1 < max) {
+            this.DH1 = DH1;
+        } else {
+            error.addErrorParametrValue("DH1", min, max);
         }
     }
 
-    public static void setT2(int T2) {
-        if (T2 > 0 || T2 < 32768) {
-            GameRules.T2 = T2;
+    public void setT2(int T2, ErrorWindowController error) {
+        int min = 0;
+        int max = 32768;
+        if (T2 > min && T2 < max) {
+            this.T2 = T2;
+        } else {
+            error.addErrorParametrValue("T2", min, max);
         }
     }
 
-    public static void setT3(int T3) {
-        if (T3 > 0 || T3 < 32768) {
-            GameRules.T3 = T3;
+    public void setT3(int T3, ErrorWindowController error) {
+        int min = 0;
+        int max = 32768;
+        if (T3 > min && T3 < max) {
+            this.T3 = T3;
+        } else {
+            error.addErrorParametrValue("T3", min, max);
+        }
+
+    }
+
+    public void makeT1() {
+
+        if (V1 + DV1 > 0 && V1 + DV1 < 32768) {
+            V1 += DV1;
+        }
+        if (V2 + DV2 > 0 && V2 + DV2 < 32768) {
+            V2 += DV2;
+        }
+        if (R1 - DR1 > 0 && R1 - DR1 < 256) {
+            R1 -= DR1;
+        }
+
+        if (H1 - DH1 > 0 && H1 - DH1 < 256) {
+            H1 -= DH1;
         }
     }
 
-    public static void makeT1() {
-        V1 += DV1;
-
-        V2 += DV2;
-
-        R1 -= DR1;
-        if (R1 < 1) {
-            R1 = 1;
-        }
-        H1 -= DH1;
-        if (H1 < 1) {
-            H1 = 1;
-        }
-    }
-
-    public static int getV1() {
+    public int getV1() {
         return V1;
     }
 
-    public static int getX1() {
+    public int getX1() {
         return X1;
     }
 
-    public static int getR1() {
+    public int getR1() {
         return R1;
     }
 
-    public static int getV2() {
+    public int getV2() {
         return V2;
     }
 
-    public static int getH1() {
+    public int getH1() {
         return H1;
     }
 
-    public static int getPW() {
+    public int getPW() {
         return PW;
     }
 
-    public static int getPC() {
+    public int getPC() {
         return PC;
     }
 
-    public static int getPD() {
+    public int getPD() {
         return PD;
     }
 
-    public static int getPKB() {
+    public int getPKB() {
         return PKB;
     }
 
-    public static int getT1() {
+    public int getT1() {
         return T1;
     }
 
-    public static int getT2() {
+    public int getT2() {
         return T2;
     }
 
-    public static int getT3() {
+    public int getT3() {
         return T3;
     }
 
-    public static int getDV1() {
+    public int getDV1() {
         return DV1;
     }
 
-    public static int getDV2() {
+    public int getDV2() {
         return DV2;
     }
 
-    public static int getDR1() {
+    public int getDR1() {
         return DR1;
     }
 
-    public static int getDH1() {
+    public int getDH1() {
         return DH1;
     }
 

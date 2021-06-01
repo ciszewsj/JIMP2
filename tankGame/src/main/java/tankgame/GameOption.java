@@ -10,8 +10,9 @@ import javax.swing.JOptionPane;
 public class GameOption {
 
     public static JFrame frame;
-
-    public static void ReadFromFile(String path, GameRules gameRules) {
+    
+    
+    public static void ReadFromFile(String path, GameRules gameRules, ErrorWindowController error) {
         try {
             FileReader file = new FileReader(new File(path));
             try (Scanner scanner = new Scanner(file)) {
@@ -28,42 +29,55 @@ public class GameOption {
                         int value = Integer.parseInt(subLine[1]);
                         switch (variable.toUpperCase()) {
                             case "V1":
-                                gameRules.setV1(value);
+                                gameRules.setV1(value, error);
                                 break;
                             case "X1":
-                                gameRules.setX1(value);
+                                gameRules.setX1(value, error);
                                 break;
                             case "R1":
-                                gameRules.setR1(value);
+                                gameRules.setR1(value, error);
                                 break;
                             case "V2":
-                                gameRules.setV2(value);
+                                gameRules.setV2(value, error);
                                 break;
                             case "H1":
-                                gameRules.setH1(value);
+                                gameRules.setH1(value, error);
                                 break;
                             case "T1":
-                                gameRules.setT1(value);
+                                gameRules.setT1(value, error);
                                 break;
                             case "DV1":
-                                gameRules.setDV1(value);
+                                gameRules.setDV1(value, error);
                                 break;
                             case "DV2":
-                                gameRules.setDV2(value);
+                                gameRules.setDV2(value, error);
                                 break;
                             case "DR1":
-                                gameRules.setDR1(value);
+                                gameRules.setDR1(value, error);
                                 break;
                             case "DH1":
-                                gameRules.setDH1(value);
+                                gameRules.setDH1(value, error);
                                 break;
                             case "T2":
-                                gameRules.setT2(value);
+                                gameRules.setT2(value, error);
                                 break;
                             case "T3":
-                                gameRules.setT3(value);
+                                gameRules.setT3(value, error);
+                                break;
+                            case "PW":
+                                gameRules.setPW(value, error);
+                                break;
+                            case "PC":
+                                gameRules.setPC(value, error);
+                                break;
+                            case "PKB":
+                                gameRules.setPKB(value, error);
+                                break;
+                            case "PD":
+                                gameRules.setPD(value, error);
                                 break;
                             default:
+                                error.addErrorParametrNotExists(variable.toUpperCase());
                                 parametrNotExists(variable.toUpperCase());
                                 break;
 
@@ -78,12 +92,13 @@ public class GameOption {
             };
         } catch (FileNotFoundException e) {
             unsucceededReadFile(path);
+            error.addErrorMessage("Nie udało się otworzyć pliku: " + path);
         }
     }
 
     public static void unsucceededReadFile(String filename) {
         JOptionPane.showMessageDialog(frame,
-                "Nie udało się otworzyć plik: " + filename + ".");
+                "Nie udało się otworzyć pliku: " + filename + ".");
     }
 
     public static void parametrNotExists(String parametr) {

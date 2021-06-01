@@ -1,6 +1,5 @@
 package tankgame;
 
-import java.awt.Container;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractListModel;
@@ -11,26 +10,25 @@ import javax.swing.JScrollPane;
 public class ErrorWindow extends JFrame {
 
     private JList errorListPanel;
-    private Container cointaner;
+    private final JScrollPane jsp;
 
     public ErrorWindow(int width, int height, List<String> errorList) {
 
-        errorListPanel = new JList(new ConvertListObject(errorList));
-        cointaner = getContentPane();
-        cointaner.add(new JScrollPane(errorListPanel));
-        setSize(width, height);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("ErrorListDescritpion");
-        pack();
-
+        setSize(width, height);
+        errorListPanel = new JList(new ConvertListObject(errorList));
+        jsp = new JScrollPane();
+        jsp.setViewportView(errorListPanel);
+        add(jsp);
     }
 
     public void refreshWindow(List<String> errorList) {
         errorListPanel = new JList(new ConvertListObject(errorList));
-        cointaner = getContentPane();
-        cointaner.add(new JScrollPane(errorListPanel));
-        pack();
+        jsp.setViewportView(errorListPanel);
+        revalidate();
+        repaint();
     }
 
 }

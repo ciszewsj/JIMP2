@@ -20,9 +20,13 @@ public class GameOptionWindow {
     public static final Object lock = new Object();
     public static JFrame frame;
 
-    private GameRules gameRules;
+    private final GameRules gameRules;
+    private ErrorWindowController error;
 
-    public GameOptionWindow(GameRules gameRules) {
+    public GameOptionWindow(GameRules gameRules, ErrorWindowController error) {
+        this.gameRules = gameRules;
+        this.error = error;
+
         frame = new JFrame("TankGame");
         GameOption.frame = frame;
         frame.setPreferredSize(new Dimension(1000, 500));
@@ -31,7 +35,6 @@ public class GameOptionWindow {
         frame.pack();
         frame.setVisible(true);
 
-        this.gameRules = gameRules;
     }
 
     public void createComponentsMenu(Container container) {
@@ -63,7 +66,7 @@ public class GameOptionWindow {
 
         Button save = new Button("Save");
         save.addActionListener((ActionEvent e) -> {
-            GameOption.ReadFromFile(textField.getText(), gameRules);
+            GameOption.ReadFromFile(textField.getText(), gameRules, error);
             System.out.println("Udano");
             textArea.setViewportView(ScrollPanel());
             textArea.setPreferredSize(new Dimension(10, 100));
@@ -99,23 +102,23 @@ public class GameOptionWindow {
 
     public JTextArea ScrollPanel() {
 
-        System.out.println("qwertyuiop" + Integer.toString(GameRules.getV1()));
-        String TEXT = "V1 = " + Integer.toString(GameRules.getV1()) + "\n"
-                + "V2 = " + Integer.toString(GameRules.getV2()) + "\n"
-                + "X1 = " + Integer.toString(GameRules.getX1()) + "\n"
-                + "R1 = " + Integer.toString(GameRules.getR1()) + "\n"
-                + "H1 = " + Integer.toString(GameRules.getH1()) + "\n"
-                + "PW = " + Integer.toString(GameRules.getPW()) + "\n"
-                + "PC = " + Integer.toString(GameRules.getPC()) + "\n"
-                + "PD = " + Integer.toString(GameRules.getPD()) + "\n"
-                + "PKB = " + Integer.toString(GameRules.getPKB()) + "\n"
-                + "T1 = " + Integer.toString(GameRules.getT1()) + "\n"
-                + "DV1 = " + Integer.toString(GameRules.getDV1()) + "\n"
-                + "DV2 = " + Integer.toString(GameRules.getDV2()) + "\n"
-                + "DR1 = " + Integer.toString(GameRules.getDR1()) + "\n"
-                + "DH1 = " + Integer.toString(GameRules.getDH1()) + "\n"
-                + "T2 = " + Integer.toString(GameRules.getT2()) + "\n"
-                + "T3 = " + Integer.toString(GameRules.getT3());
+        System.out.println("qwertyuiop" + gameRules.getV1());
+        String TEXT = "V1 = " + gameRules.getV1() + "\n"
+                + "V2 = " + gameRules.getV2() + "\n"
+                + "X1 = " + gameRules.getX1() + "\n"
+                + "R1 = " + gameRules.getR1() + "\n"
+                + "H1 = " + gameRules.getH1() + "\n"
+                + "PW = " + gameRules.getPW() + "\n"
+                + "PC = " + gameRules.getPC() + "\n"
+                + "PD = " + gameRules.getPD() + "\n"
+                + "PKB = " + gameRules.getPKB() + "\n"
+                + "T1 = " + gameRules.getT1() + "\n"
+                + "DV1 = " + gameRules.getDV1() + "\n"
+                + "DV2 = " + gameRules.getDV2() + "\n"
+                + "DR1 = " + gameRules.getDR1() + "\n"
+                + "DH1 = " + gameRules.getDH1() + "\n"
+                + "T2 = " + gameRules.getT2() + "\n"
+                + "T3 = " + gameRules.getT3();
         JTextArea text = new JTextArea(10, 20);
         text.setText(TEXT);
         text.setEditable(false);
