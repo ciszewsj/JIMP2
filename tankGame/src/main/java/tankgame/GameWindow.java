@@ -1,17 +1,9 @@
 package tankgame;
 
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.ComponentOrientation;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.TextField;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,10 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 public class GameWindow extends JFrame {
@@ -114,8 +103,6 @@ class GameCanvas extends JComponent {
     private final List<Bullet> bulletList;
 
     private int timeToEndGame;
-
-    private GameCanvas gameCanvas;
 
     public GameCanvas(Player rightPlayer, Player leftPlayer, CellBomb cellBomb, List<Cell> cellList, List<Bullet> bulletList, int timeToEndGame) {
 
@@ -294,4 +281,3 @@ class GameCanvas extends JComponent {
         return timeFormat;
     }
 }
-

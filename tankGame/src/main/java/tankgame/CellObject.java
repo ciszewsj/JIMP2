@@ -17,7 +17,7 @@ public abstract class CellObject {
     }
 
     public void addP1() {
-        if (P1 < 9) {
+        if (P1 < maxP1) {
             P1++;
         }
     }

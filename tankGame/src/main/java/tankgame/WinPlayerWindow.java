@@ -11,11 +11,7 @@ public class WinPlayerWindow {
         int result = JOptionPane.showConfirmDialog(frame, text + "\n" + "Czy chcesz zapisać wygląd planszy ?", "GameResults",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
-        if (result == JOptionPane.YES_OPTION) {
-            toSave = true;
-        } else {
-            toSave = false;
-        }
+        toSave = result == JOptionPane.YES_OPTION;
     }
 
     public boolean getToSave() {

@@ -14,10 +14,11 @@ public class ErrorWindow extends JFrame {
 
     public ErrorWindow(int width, int height, List<String> errorList) {
 
+        setSize(width, height);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("ErrorListDescritpion");
-        setSize(width, height);
+
         errorListPanel = new JList(new ConvertListObject(errorList));
         jsp = new JScrollPane();
         jsp.setViewportView(errorListPanel);

@@ -21,7 +21,7 @@ public class GameOptionWindow {
     public static JFrame frame;
 
     private final GameRules gameRules;
-    private ErrorWindowController error;
+    private final ErrorWindowController error;
 
     public GameOptionWindow(GameRules gameRules, ErrorWindowController error) {
         this.gameRules = gameRules;
@@ -34,6 +34,7 @@ public class GameOptionWindow {
         createComponentsMenu(frame.getContentPane());
         frame.pack();
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
 
     }
 

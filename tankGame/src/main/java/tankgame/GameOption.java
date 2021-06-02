@@ -10,8 +10,7 @@ import javax.swing.JOptionPane;
 public class GameOption {
 
     public static JFrame frame;
-    
-    
+
     public static void ReadFromFile(String path, GameRules gameRules, ErrorWindowController error) {
         try {
             FileReader file = new FileReader(new File(path));

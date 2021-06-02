@@ -13,7 +13,7 @@ public class SaveGameWindow extends JFrame {
     private boolean isClosed;
     private boolean isReadyToSave;
     private String filePath;
-    private JTextField pathField;
+    private final JTextField pathField;
 
     public SaveGameWindow(int width, int height) {
         isClosed = false;

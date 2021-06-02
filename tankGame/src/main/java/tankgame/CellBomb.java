@@ -22,16 +22,14 @@ public class CellBomb extends CellObject {
     }
 
     public boolean isAlive() {
-        if (getP1() > 0) {
-            return true;
-        }
-        return false;
+        return getP1() > 0;
     }
 
     public int getXSize() {
         return xSize;
     }
-    public int getYSize(){
+
+    public int getYSize() {
         return ySize;
     }
 }

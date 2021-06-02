@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ErrorWindowController {
 
-    private List<String> errorList;
+    private final List<String> errorList;
     private ErrorWindow errorWindow;
 
     public ErrorWindowController(int width, int height) {
