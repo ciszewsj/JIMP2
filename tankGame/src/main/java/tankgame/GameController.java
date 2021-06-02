@@ -166,7 +166,7 @@ public class GameController extends KeyAdapter {
                 for (Iterator<Cell> it = cellList.iterator(); it.hasNext();) {
                     Cell c = it.next();
                     c.moveCell(FPS / toSecond, windowSize);
-                    if (c.getP1() <= 0) {
+                    if (!c.isAlive()) {
                         it.remove();
                     }
                 }
@@ -182,7 +182,7 @@ public class GameController extends KeyAdapter {
                 }
 
                 moveTanks();
-                if (cellBomb.getP1() <= 0) {
+                if (!cellBomb.isAlive()) {
                     endGame();
                 }
 

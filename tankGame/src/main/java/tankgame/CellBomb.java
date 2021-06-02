@@ -21,10 +21,6 @@ public class CellBomb extends CellObject {
         }
     }
 
-    public boolean isAlive() {
-        return getP1() > 0;
-    }
-
     public int getXSize() {
         return xSize;
     }

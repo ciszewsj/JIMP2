@@ -45,11 +45,12 @@ public class Bullet {
     public void hitCell(List<Cell> cellList) {
         if (isInGameWindow == true) {
             for (Cell c : cellList) {
-                if (c.getP1() > 0) {
+                if (c.isAlive()) {
                     if (xPos + R1 > c.getXPos() - c.getH1() / 2 && xPos - R1 < c.getXPos() + c.getH1() / 2) {
                         if (yPos + R1 > c.getYPos() - c.getH1() / 2 && yPos - R1 < c.getYPos() + c.getH1() / 2) {
                             c.destroyCell(player);
                             isInGameWindow = false;
+                            break;
                         }
                     }
                 }
@@ -75,6 +76,12 @@ public class Bullet {
         }
     }
 
+    public void checkIfBulletIsInGameWindow(int xWindowSize, int yWindowSize) {
+        if (xPos + R1 < 0 || xPos - R1 > xWindowSize || yPos + R1 < 0 || yPos - R1 > yWindowSize) {
+            isInGameWindow = false;
+        }
+    }
+
     public void makeMove(double deltaTime, int xWindowSize, int yWindowSize) {
 
         if (side.equals(GunSide.LEFT)) {
@@ -84,10 +91,7 @@ public class Bullet {
             xPos -= V1 * deltaTime * Math.cos(moveAngle);
             yPos -= V1 * deltaTime * Math.sin(moveAngle);
         }
-
-        if (xPos + R1 < 0 || xPos - R1 > xWindowSize || yPos + R1 < 0 || yPos - R1 > yWindowSize) {
-            isInGameWindow = false;
-        }
+        checkIfBulletIsInGameWindow(xWindowSize, yWindowSize);
     }
 
     public boolean isInGameWindow() {

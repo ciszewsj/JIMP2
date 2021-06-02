@@ -34,9 +34,11 @@ public class Cell extends CellObject {
 
     @Override
     public void destroyCell(Player player) {
-        removeP1();
-        if (getP1() <= 0) {
-            player.addPoint(getPointsForDestroy());
+        if (isAlive()) {
+            removeP1();
+            if (getP1() == 0) {
+                player.addPoint(getPointsForDestroy());
+            }
         }
     }
 

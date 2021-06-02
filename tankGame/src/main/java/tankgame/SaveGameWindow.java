@@ -39,6 +39,7 @@ public class SaveGameWindow extends JFrame {
         });
 
         JPanel p = new JPanel();
+        setSize(width, height);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -46,9 +47,7 @@ public class SaveGameWindow extends JFrame {
         p.add(pathField);
         p.add(confirmButton);
         p.add(closeButton);
-        setSize(width, height);
         add(p);
-        pack();
     }
 
     public void succeededSave(String filename) {

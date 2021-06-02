@@ -17,7 +17,7 @@ public abstract class CellObject {
     }
 
     public void addP1() {
-        if (P1 < maxP1) {
+        if (P1 < maxP1 && P1 > 0) {
             P1++;
         }
     }
@@ -41,7 +41,11 @@ public abstract class CellObject {
     public int getPointsForDestroy() {
         return pointForDestroy;
     }
-
+    
+    public boolean isAlive() {
+        return getP1() > 0;
+    }
+    
     public void changeH1(int DH1) {
         H1 = DH1;
     }
