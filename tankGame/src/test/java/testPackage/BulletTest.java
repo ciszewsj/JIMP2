@@ -360,4 +360,21 @@ public class BulletTest {
         assertEquals(100, bullet.getSize());
 
     }
+
+    @Test
+    public void changeV1Test() {
+        Bullet bullet = new Bullet(10, 10, 0, 0, 0, player, GunSide.LEFT);
+
+        assertEquals(0, bullet.getXPos());
+
+        bullet.makeMove(1, xWindowSize, yWindowSize);
+
+        assertEquals(10, bullet.getXPos());
+
+        bullet.changeV1(20);
+
+        bullet.makeMove(1, xWindowSize, yWindowSize);
+
+        assertEquals(30, bullet.getXPos());
+    }
 }
