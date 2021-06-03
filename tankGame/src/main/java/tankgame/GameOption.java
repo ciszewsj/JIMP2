@@ -15,11 +15,11 @@ public class GameOption {
         try {
             FileReader file = new FileReader(new File(path));
             try (Scanner scanner = new Scanner(file)) {
-                String line = scanner.nextLine();
                 String[] subLine;
                 String withoutSpaces;
                 String delimeter = "=";
                 while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
                     withoutSpaces = line.replaceAll("\\s+", "");
                     subLine = withoutSpaces.split(delimeter);
                     String variable = subLine[0];
@@ -81,7 +81,6 @@ public class GameOption {
                                 break;
 
                         }
-                        line = scanner.nextLine();
                     } else {
                         invalidDataFormat(variable, subLine[1]);
                         break;

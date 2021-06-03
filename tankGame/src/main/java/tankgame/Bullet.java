@@ -46,13 +46,31 @@ public class Bullet {
         if (isInGameWindow == true) {
             for (Cell c : cellList) {
                 if (c.isAlive()) {
-                    if (xPos + R1 > c.getXPos() - c.getH1() / 2 && xPos - R1 < c.getXPos() + c.getH1() / 2) {
-                        if (yPos + R1 > c.getYPos() - c.getH1() / 2 && yPos - R1 < c.getYPos() + c.getH1() / 2) {
-                            c.destroyCell(player);
-                            isInGameWindow = false;
-                            break;
-                        }
+                    double x, y;
+                    if (xPos > c.getXPos() - c.getH1() / 2 && xPos < c.getXPos() + c.getH1() / 2) {
+                        x = xPos;
+                    } else if (xPos < c.getXPos() - c.getH1() / 2) {
+                        x = c.getXPos() - c.getH1() / 2;
+                    } else {
+                        x = c.getXPos() + c.getH1() / 2;
                     }
+                    x -= xPos;
+
+                    if (yPos > c.getYPos() - c.getH1() / 2 && yPos < c.getYPos() + c.getH1() / 2) {
+                        y = yPos;
+                    } else if (yPos < c.getYPos() - c.getH1() / 2) {
+                        y = c.getYPos() - c.getH1() / 2;
+                    } else {
+                        y = c.getYPos() + c.getH1() / 2;
+                    }
+                    y -= yPos;
+
+                    if (x * x + y * y < R1 * R1) {
+                        c.destroyCell(player);
+                        isInGameWindow = false;
+                        break;
+                    }
+
                 }
             }
         }
@@ -60,17 +78,43 @@ public class Bullet {
 
     public void hitCell(CellBomb cellBomb, int xWindowSize, int yWindowSize) {
         if (isInGameWindow == true) {
-            if (Math.abs(yPos - (yWindowSize - cellBomb.getYSize())) < R1) {
-                if (Math.abs(xPos - (xWindowSize - cellBomb.getH1()) / 2) < R1 + cellBomb.getH1() && Math.abs(xPos - (xWindowSize + cellBomb.getH1()) / 2) < R1 + cellBomb.getH1()) {
-                    cellBomb.destroyCell(player);
-                    isInGameWindow = false;
-                }
+            double x, y;
+
+            y = yWindowSize - cellBomb.getYSize();
+
+            if (xPos < xWindowSize / 2 - cellBomb.getH1() / 2) {
+                x = (xWindowSize - cellBomb.getH1()) / 2;
+            } else if (xPos > xWindowSize / 2 + cellBomb.getH1() / 2) {
+                x = (xWindowSize + cellBomb.getH1()) / 2;
+            } else {
+                x = xPos;
             }
-            if (yPos - R1 >= yWindowSize - cellBomb.getYSize()) {
-                if (Math.abs(xPos - (xWindowSize - cellBomb.getXSize()) / 2) < R1 + cellBomb.getXSize() && Math.abs(xPos - (xWindowSize + cellBomb.getXSize()) / 2) < R1 + cellBomb.getXSize()) {
-                    {
-                        isInGameWindow = false;
-                    }
+
+            x -= xPos;
+            y -= yPos;
+            if (x * x + y * y < R1 * R1) {
+                cellBomb.destroyCell(player);
+                isInGameWindow = false;
+            }
+            if (isInGameWindow) {
+                if (yPos > yWindowSize - cellBomb.getYSize()) {
+                    y = yPos;
+                } else {
+                    y = yWindowSize - cellBomb.getYSize();
+                }
+
+                if (xPos < xWindowSize / 2 - cellBomb.getXSize() / 2) {
+                    x = (xWindowSize - cellBomb.getXSize()) / 2;
+                } else if (xPos > xWindowSize / 2 + cellBomb.getXSize() / 2) {
+                    x = (xWindowSize + cellBomb.getXSize()) / 2;
+                } else {
+                    x = xPos;
+                }
+
+                y -= yPos;
+                x -= xPos;
+                if (x * x + y * y < R1 * R1) {
+                    isInGameWindow = false;
                 }
             }
         }

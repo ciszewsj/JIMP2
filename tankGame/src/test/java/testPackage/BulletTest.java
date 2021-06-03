@@ -219,35 +219,35 @@ public class BulletTest {
 
         bullet.hitCell(cellList);
 
-        assertEquals(8, cell.getP1());
-        assertTrue(!bullet.isInGameWindow());
+        assertEquals(9, cell.getP1());
+        assertTrue(bullet.isInGameWindow());
 
         cell.addP1();
         bullet = new Bullet(10, 10, 0, xWindowSize / 2 - 14, yWindowSize / 2 + 14, player, GunSide.LEFT);
 
         bullet.hitCell(cellList);
 
-        assertEquals(8, cell.getP1());
-        assertTrue(!bullet.isInGameWindow());
+        assertEquals(9, cell.getP1());
+        assertTrue(bullet.isInGameWindow());
 
         cell.addP1();
         bullet = new Bullet(10, 10, 0, xWindowSize / 2 + 14, yWindowSize / 2 + 14, player, GunSide.LEFT);
 
         bullet.hitCell(cellList);
 
-        assertEquals(8, cell.getP1());
-        assertTrue(!bullet.isInGameWindow());
+        assertEquals(9, cell.getP1());
+        assertTrue(bullet.isInGameWindow());
 
         cell.addP1();
         bullet = new Bullet(10, 10, 0, xWindowSize / 2 + 14, yWindowSize / 2 - 14, player, GunSide.LEFT);
 
         bullet.hitCell(cellList);
 
-        assertEquals(8, cell.getP1());
-        assertTrue(!bullet.isInGameWindow());
+        assertEquals(9, cell.getP1());
+        assertTrue(bullet.isInGameWindow());
 
         while (cell.isAlive()) {
-            bullet = new Bullet(10, 10, 0, xWindowSize / 2 + 14, yWindowSize / 2 - 14, player, GunSide.LEFT);
+            bullet = new Bullet(10, 10, 0, xWindowSize / 2, yWindowSize / 2, player, GunSide.LEFT);
             bullet.hitCell(cellList);
         }
 
@@ -275,7 +275,7 @@ public class BulletTest {
 
         cellBomb.addP1();
 
-        bullet = new Bullet(10, 10, 0, xWindowSize / 2 - 59, yWindowSize - cellBomb.getYSize() + 10 / 2, player, GunSide.LEFT);
+        bullet = new Bullet(10, 10, 0, xWindowSize / 2 - 59, yWindowSize - cellBomb.getYSize() + 9 / 2, player, GunSide.LEFT);
         bullet.hitCell(cellBomb, xWindowSize, yWindowSize);
 
         assertEquals(8, cellBomb.getP1());
@@ -283,15 +283,15 @@ public class BulletTest {
 
         cellBomb.addP1();
 
-        bullet = new Bullet(10, 10, 0, xWindowSize / 2 - 60, yWindowSize - cellBomb.getYSize() + 10 / 2, player, GunSide.LEFT);
+        bullet = new Bullet(10, 10, 0, xWindowSize / 2 - 60, yWindowSize - cellBomb.getYSize() + 9 / 2, player, GunSide.LEFT);
         bullet.hitCell(cellBomb, xWindowSize, yWindowSize);
 
         assertEquals(9, cellBomb.getP1());
-        assertTrue(bullet.isInGameWindow());
+        assertTrue(!bullet.isInGameWindow());
 
         cellBomb.addP1();
 
-        bullet = new Bullet(10, 10, 0, xWindowSize / 2 + 59, yWindowSize - cellBomb.getYSize() + 10 / 2, player, GunSide.LEFT);
+        bullet = new Bullet(10, 10, 0, xWindowSize / 2 + 58, yWindowSize - cellBomb.getYSize() + 9 / 2, player, GunSide.LEFT);
         bullet.hitCell(cellBomb, xWindowSize, yWindowSize);
 
         assertEquals(8, cellBomb.getP1());
@@ -299,15 +299,15 @@ public class BulletTest {
 
         cellBomb.addP1();
 
-        bullet = new Bullet(10, 10, 0, xWindowSize / 2 + 60, yWindowSize - cellBomb.getYSize() + 10 / 2, player, GunSide.LEFT);
+        bullet = new Bullet(10, 10, 0, xWindowSize / 2 + 59, yWindowSize - cellBomb.getYSize() + 9 / 2, player, GunSide.LEFT);
         bullet.hitCell(cellBomb, xWindowSize, yWindowSize);
 
-        assertEquals(9, cellBomb.getP1());
-        assertTrue(bullet.isInGameWindow());
+        assertEquals(8, cellBomb.getP1());
+        assertTrue(!bullet.isInGameWindow());
 
         cellBomb.addP1();
 
-        bullet = new Bullet(10, 10, 0, xWindowSize / 2 - 59, yWindowSize - cellBomb.getYSize() + 11, player, GunSide.LEFT);
+        bullet = new Bullet(10, 10, 0, xWindowSize / 2 - 59, yWindowSize - cellBomb.getYSize() + 10, player, GunSide.LEFT);
         bullet.hitCell(cellBomb, xWindowSize, yWindowSize);
 
         assertEquals(9, cellBomb.getP1());
@@ -315,7 +315,7 @@ public class BulletTest {
 
         cellBomb.addP1();
 
-        bullet = new Bullet(10, 10, 0, xWindowSize / 2 - 60, yWindowSize - cellBomb.getYSize() + 11, player, GunSide.LEFT);
+        bullet = new Bullet(10, 10, 0, xWindowSize / 2 - 60, yWindowSize - cellBomb.getYSize() + 10, player, GunSide.LEFT);
         bullet.hitCell(cellBomb, xWindowSize, yWindowSize);
 
         assertEquals(9, cellBomb.getP1());
@@ -340,7 +340,7 @@ public class BulletTest {
         cellBomb.addP1();
 
         while (cellBomb.isAlive()) {
-            bullet = new Bullet(10, 10, 0, xWindowSize / 2 + 59, yWindowSize - cellBomb.getYSize() + 10 / 2, player, GunSide.LEFT);
+            bullet = new Bullet(10, 10, 0, xWindowSize / 2, yWindowSize - cellBomb.getYSize() + 10 / 2, player, GunSide.LEFT);
             bullet.hitCell(cellBomb, xWindowSize, yWindowSize);
         }
         assertTrue(!cellBomb.isAlive());

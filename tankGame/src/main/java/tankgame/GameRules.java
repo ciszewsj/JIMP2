@@ -46,7 +46,7 @@ public class GameRules implements Cloneable {
 
     public void setR1(int R1, ErrorWindowController error) {
         int min = 0;
-        int max = 128;
+        int max = 256;
         if (R1 > min && R1 < max) {
             this.R1 = R1;
         } else {
@@ -116,7 +116,7 @@ public class GameRules implements Cloneable {
 
     public void setT1(int T1, ErrorWindowController error) {
         int min = 0;
-        int max = 32768;
+        int max = 3600;
         if (T1 > min && T1 < max) {
             this.T1 = T1;
         } else {
@@ -166,7 +166,7 @@ public class GameRules implements Cloneable {
 
     public void setT2(int T2, ErrorWindowController error) {
         int min = 0;
-        int max = 32768;
+        int max = 3600;
         if (T2 > min && T2 < max) {
             this.T2 = T2;
         } else {
@@ -176,7 +176,7 @@ public class GameRules implements Cloneable {
 
     public void setT3(int T3, ErrorWindowController error) {
         int min = 0;
-        int max = 32768;
+        int max = 3600;
         if (T3 > min && T3 < max) {
             this.T3 = T3;
         } else {

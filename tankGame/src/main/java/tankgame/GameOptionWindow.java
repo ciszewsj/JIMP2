@@ -68,7 +68,6 @@ public class GameOptionWindow {
         Button save = new Button("Save");
         save.addActionListener((ActionEvent e) -> {
             GameOption.ReadFromFile(textField.getText(), gameRules, error);
-            System.out.println("Udano");
             textArea.setViewportView(ScrollPanel());
             textArea.setPreferredSize(new Dimension(10, 100));
             constraints.gridx = 0;
@@ -103,7 +102,6 @@ public class GameOptionWindow {
 
     public JTextArea ScrollPanel() {
 
-        System.out.println("qwertyuiop" + gameRules.getV1());
         String TEXT = "V1 = " + gameRules.getV1() + "\n"
                 + "V2 = " + gameRules.getV2() + "\n"
                 + "X1 = " + gameRules.getX1() + "\n"
