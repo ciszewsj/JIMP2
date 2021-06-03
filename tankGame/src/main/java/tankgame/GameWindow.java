@@ -71,9 +71,9 @@ public class GameWindow extends JFrame {
 
         gameCanvas.paintComponent(img.getGraphics());
         try {
-            File tmpDir = new File("/var/tmp");
-            boolean exists = tmpDir.exists();
-            if (exists == true) {
+            File file = new File(filename);
+            boolean exists = file.exists();
+            if (exists == false) {
                 ImageIO.write(img, "png", new File(filename + ".png"));
             } else {
                 throw new FileAlreadyExistsException("Plik o podanej nazwie istnieje");

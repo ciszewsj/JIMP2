@@ -41,7 +41,7 @@ public class PlayerTest {
 
     @After
     public void tearDown() {
-        
+
     }
 
     @Test

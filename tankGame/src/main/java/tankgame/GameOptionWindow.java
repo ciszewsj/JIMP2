@@ -58,14 +58,14 @@ public class GameOptionWindow {
         constraints.gridheight = 2;
         container.add(textArea, constraints);
 
-        TextField textField = new TextField("Path");
+        TextField textField = new TextField("testData/test2.txt");
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.gridwidth = 2;
         constraints.gridheight = 1;
         container.add(textField, constraints);
 
-        Button save = new Button("Save");
+        Button save = new Button("Wczytaj");
         save.addActionListener((ActionEvent e) -> {
             GameOption.ReadFromFile(textField.getText(), gameRules, error);
             textArea.setViewportView(ScrollPanel());
