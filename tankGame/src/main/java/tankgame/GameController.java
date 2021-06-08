@@ -65,7 +65,7 @@ public class GameController extends KeyAdapter {
         windowSize = 1024;
         playerDistance = 100;
 
-        cellBomb = new CellBomb(gameRules.getPKB(), gameRules.getPW(), gameRules.getH1());
+        cellBomb = new CellBomb(gameRules.getPKB(), gameRules.getPW(), gameRules.getH1(), gameRules.getPKB());
         cellList = new ArrayList<>();
         bulletList = new ArrayList<>();
 

@@ -5,8 +5,8 @@ public class CellBomb extends CellObject {
     private final int xSize;
     private final int ySize;
 
-    public CellBomb(int P1, int pointForDestroy, int H1) {
-        super(P1, pointForDestroy, H1);
+    public CellBomb(int P1, int pointForDestroy, int H1, int maxP1) {
+        super(P1, pointForDestroy, H1, maxP1);
         this.xSize = 256;
         this.ySize = 100;
     }

@@ -28,7 +28,7 @@ public class CellBombTest {
 
     @Before
     public void setUp() {
-        cellBomb = new CellBomb(9, 9, 100);
+        cellBomb = new CellBomb(9, 9, 100, 9);
         player = new Player(0, 0, 0, GunSide.LEFT, 0, 0, 0, 0, 0, null, 0, 0);
     }
 

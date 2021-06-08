@@ -8,12 +8,12 @@ public abstract class CellObject {
 
     private final int maxP1;
 
-    public CellObject(int P1, int pointForDestroy, int H1) {
+    public CellObject(int P1, int pointForDestroy, int H1, int maxP1) {
         this.P1 = P1;
         this.pointForDestroy = pointForDestroy;
         this.H1 = H1;
 
-        this.maxP1 = 9;
+        this.maxP1 = maxP1;
     }
 
     public void addP1() {
@@ -41,11 +41,11 @@ public abstract class CellObject {
     public int getPointsForDestroy() {
         return pointForDestroy;
     }
-    
+
     public boolean isAlive() {
         return getP1() > 0;
     }
-    
+
     public void changeH1(int DH1) {
         H1 = DH1;
     }

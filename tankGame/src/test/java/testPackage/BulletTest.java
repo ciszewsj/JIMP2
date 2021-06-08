@@ -257,7 +257,7 @@ public class BulletTest {
 
     @Test
     public void hitBulletOnCellBombTest() {
-        CellBomb cellBomb = new CellBomb(9, 9, 100);
+        CellBomb cellBomb = new CellBomb(9, 9, 100, 9);
 
         Bullet bullet = new Bullet(10, 10, 0, xWindowSize / 2, yWindowSize - cellBomb.getYSize() + 10 / 2, player, GunSide.LEFT);
         bullet.hitCell(cellBomb, xWindowSize, yWindowSize);

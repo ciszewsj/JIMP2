@@ -7,7 +7,7 @@ public class Cell extends CellObject {
     private double yPos;
 
     public Cell(int P1, int H1, double V2, double xPos, double yPos) {
-        super(P1, P1, H1);
+        super(P1, P1, H1, 9);
         this.V2 = V2;
         this.xPos = xPos;
         this.yPos = yPos;
